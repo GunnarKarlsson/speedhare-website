@@ -38,19 +38,28 @@ Restart Vite after changing `.env`.
 
 ## Scripts
 
-| Script                 | Description                                                                                 |
-| ---------------------- | ------------------------------------------------------------------------------------------- |
-| `npm run dev`          | Vite dev server                                                                             |
-| `npm run build`        | Production build → `dist/`                                                                  |
-| `npm run preview`      | Serve the production build locally                                                          |
-| `npm run typecheck`    | TypeScript (`tsc --noEmit`)                                                                 |
-| `npm run lint`         | ESLint                                                                                      |
-| `npm run format`       | Prettier write                                                                              |
-| `npm run format:check` | Prettier check                                                                              |
-| `npm run ci`           | `format:check` → `lint` → `typecheck` → `npm audit --omit=dev --audit-level=high` → `build` |
+| Script                  | Description                                                                                 |
+| ----------------------- | ------------------------------------------------------------------------------------------- |
+| `npm run dev`           | Vite dev server                                                                             |
+| `npm run build`         | Production build → `dist/`                                                                  |
+| `npm run preview`       | Serve the production build locally                                                          |
+| `npm run typecheck`     | TypeScript (`tsc --noEmit`)                                                                 |
+| `npm run lint`          | ESLint                                                                                      |
+| `npm run format`        | Prettier write                                                                              |
+| `npm run format:check`  | Prettier check                                                                              |
+| `npm run ci`            | `format:check` → `lint` → `typecheck` → `npm audit --omit=dev --audit-level=high` → `build` |
+| `npm run s3:sync`       | Upload `dist/` to `S3_BUCKET`                                                               |
+| `npm run cf:invalidate` | Invalidate `CLOUDFRONT_DISTRIBUTION_ID`                                                     |
+| `npm run deploy`        | `build` → `s3:sync` → `cf:invalidate`                                                       |
 
 ```bash
 npm run ci
 ```
 
-CI on GitHub Actions runs the same `npm run ci` on pushes and pull requests to `main`. There is no release or deploy workflow yet.
+GitHub Actions runs `npm run ci` on pushes and pull requests to `main`. There is no GitHub deploy workflow.
+
+## Deploy
+
+Production deploys are local: `npm run deploy`. That needs the [AWS CLI](https://aws.amazon.com/cli/) and credentials that can write the bucket and create a CloudFront invalidation.
+
+`VITE_API_ORIGIN`, `S3_BUCKET`, and `CLOUDFRONT_DISTRIBUTION_ID` come from `.env.production` (gitignored; see `.env.example`). They are not exposed to the browser except `VITE_API_ORIGIN`, which is baked in at build time.

@@ -11,12 +11,12 @@
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src eslint.config.mjs vite.config.ts",
+    "lint": "eslint src eslint.config.mjs vite.config.ts scripts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "ci": "npm run format:check && npm run lint && npm run typecheck && npm audit --omit=dev --audit-level=high && npm run build",
-    "s3:sync": "aws s3 sync dist/ s3://speedhare.io --delete",
-    "cf:invalidate": "aws cloudfront create-invalidation --distribution-id E3E90CX64A9PDU --paths \"/*\"",
+    "s3:sync": "node scripts/run-aws.mjs s3-sync",
+    "cf:invalidate": "node scripts/run-aws.mjs cf-invalidate",
     "deploy": "npm run build && npm run s3:sync && npm run cf:invalidate"
   },
   "dependencies": {
