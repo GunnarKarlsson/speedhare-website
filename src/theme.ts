@@ -1,15 +1,25 @@
 import { createTheme } from "@mui/material/styles";
-import { SITE_BACKGROUND } from "./colors";
+import { createNewHomeTheme } from "./new_home/newHomeTheme";
+import type { ThemeMode } from "./new_home/themeMode";
 
-export const theme = createTheme({
-  palette: {
-    mode: "light",
-    primary: { main: "#1565c0" },
-    background: {
-      default: SITE_BACKGROUND,
+export function createAppTheme(mode: ThemeMode) {
+  const nh = createNewHomeTheme(mode);
+  return createTheme({
+    palette: {
+      mode,
+      primary: { main: nh.blue },
+      background: {
+        default: nh.bg,
+        paper: nh.card,
+      },
+      text: {
+        primary: nh.white,
+        secondary: nh.muted,
+      },
+      divider: nh.border,
     },
-  },
-  typography: {
-    fontFamily: '"IoskeleyMono", monospace',
-  },
-});
+    typography: {
+      fontFamily: nh.sans,
+    },
+  });
+}

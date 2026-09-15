@@ -86,9 +86,3 @@ export function createNewHomeTheme(mode: ThemeMode): NewHomeTheme {
     mono: 'ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace',
   };
 }
-
-/**
- * Backward-compatible dark tokens for pages that still import `nh` directly.
- * Keeping this avoids runtime/compile breaks while mode-aware migration is in progress.
- */
-export const nh = createNewHomeTheme("dark");

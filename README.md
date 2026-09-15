@@ -2,6 +2,7 @@
 
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fspeedhare.io&label=speedhare.io)](https://speedhare.io)
 [![CI](https://github.com/GunnarKarlsson/speedhare-website/actions/workflows/ci.yml/badge.svg)](https://github.com/GunnarKarlsson/speedhare-website/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-source--available-lightgrey)](LICENSE)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vite.dev)
@@ -38,28 +39,23 @@ Restart Vite after changing `.env`.
 
 ## Scripts
 
-| Script                  | Description                                                                                 |
-| ----------------------- | ------------------------------------------------------------------------------------------- |
-| `npm run dev`           | Vite dev server                                                                             |
-| `npm run build`         | Production build → `dist/`                                                                  |
-| `npm run preview`       | Serve the production build locally                                                          |
-| `npm run typecheck`     | TypeScript (`tsc --noEmit`)                                                                 |
-| `npm run lint`          | ESLint                                                                                      |
-| `npm run format`        | Prettier write                                                                              |
-| `npm run format:check`  | Prettier check                                                                              |
-| `npm run ci`            | `format:check` → `lint` → `typecheck` → `npm audit --omit=dev --audit-level=high` → `build` |
-| `npm run s3:sync`       | Upload `dist/` to `S3_BUCKET`                                                               |
-| `npm run cf:invalidate` | Invalidate `CLOUDFRONT_DISTRIBUTION_ID`                                                     |
-| `npm run deploy`        | `build` → `s3:sync` → `cf:invalidate`                                                       |
+| Script                 | Description                                                                                 |
+| ---------------------- | ------------------------------------------------------------------------------------------- |
+| `npm run dev`          | Vite dev server                                                                             |
+| `npm run build`        | Production build → `dist/`                                                                  |
+| `npm run preview`      | Serve the production build locally                                                          |
+| `npm run typecheck`    | TypeScript (`tsc --noEmit`)                                                                 |
+| `npm run lint`         | ESLint                                                                                      |
+| `npm run format`       | Prettier write                                                                              |
+| `npm run format:check` | Prettier check                                                                              |
+| `npm run ci`           | `format:check` → `lint` → `typecheck` → `npm audit --omit=dev --audit-level=high` → `build` |
 
 ```bash
 npm run ci
 ```
 
-GitHub Actions runs `npm run ci` on pushes and pull requests to `main`. There is no GitHub deploy workflow.
+GitHub Actions runs `npm run ci` on pushes and pull requests to `main`.
 
-## Deploy
+## License
 
-Production deploys are local: `npm run deploy`. That needs the [AWS CLI](https://aws.amazon.com/cli/) and credentials that can write the bucket and create a CloudFront invalidation.
-
-`VITE_API_ORIGIN`, `S3_BUCKET`, and `CLOUDFRONT_DISTRIBUTION_ID` come from `.env.production` (gitignored; see `.env.example`). They are not exposed to the browser except `VITE_API_ORIGIN`, which is baked in at build time.
+Source-available. No license is granted except with written permission from Bahn Labs Ltd. See [LICENSE](LICENSE).

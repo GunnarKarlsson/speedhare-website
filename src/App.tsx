@@ -1,10 +1,8 @@
 import { useEffect } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { Layout } from "./components/Layout";
 import { AllRacesPage } from "./new_home/AllRacesPage";
 import { HongKongRunningRacesPage } from "./new_home/HongKongRunningRacesPage";
 import { NewHomePage } from "./new_home/NewHomePage";
-import { ThemeModeProvider } from "./new_home/ThemeModeProvider";
 import { CalculatorPage } from "./pages/CalculatorPage";
 import { AboutPage, DataPolicyPage, TermsConditionsPage } from "./pages/InfoPages";
 import { RaceDetailPage } from "./pages/RaceDetailPage";
@@ -25,7 +23,7 @@ function ScrollToTopOnRouteChange() {
 
 export default function App() {
   return (
-    <ThemeModeProvider>
+    <>
       <ScrollToTopOnRouteChange />
       <Routes>
         <Route path="/" element={<NewHomePage />} />
@@ -49,10 +47,8 @@ export default function App() {
         />
         <Route path="speed-distance-time-calculator" element={<CalculatorPage />} />
         <Route path="vo2max-calculator" element={<Vo2MaxCalculatorPage />} />
-        <Route element={<Layout />}>
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </ThemeModeProvider>
+    </>
   );
 }

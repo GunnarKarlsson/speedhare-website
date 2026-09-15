@@ -1,4 +1,6 @@
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { useMemo, useState, type ReactNode } from "react";
+import { createAppTheme } from "../theme";
 import { ThemeModeContext, type ThemeMode, type ThemeModeContextValue } from "./themeMode";
 
 function getInitialMode(): ThemeMode {
@@ -23,5 +25,14 @@ export function ThemeModeProvider({ children }: { children: ReactNode }) {
     [mode],
   );
 
-  return <ThemeModeContext.Provider value={value}>{children}</ThemeModeContext.Provider>;
+  const muiTheme = useMemo(() => createAppTheme(mode), [mode]);
+
+  return (
+    <ThemeModeContext.Provider value={value}>
+      <ThemeProvider theme={muiTheme}>
+        <CssBaseline enableColorScheme />
+        {children}
+      </ThemeProvider>
+    </ThemeModeContext.Provider>
+  );
 }
