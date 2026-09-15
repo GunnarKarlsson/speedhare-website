@@ -1,6 +1,7 @@
 # speedhare
 
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fspeedhare.io&label=speedhare.io)](https://speedhare.io)
+[![CI](https://github.com/GunnarKarlsson/speedhare-website/actions/workflows/ci.yml/badge.svg)](https://github.com/GunnarKarlsson/speedhare-website/actions/workflows/ci.yml)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vite.dev)
@@ -28,9 +29,28 @@ Open [http://localhost:5173](http://localhost:5173).
 
 With `VITE_API_ORIGIN` unset (the default), the app calls `/api/v1` on localhost and Vite proxies `/api` to `API_PROXY_TARGET` from `.env`.
 
-| `.env` value | API |
-| --- | --- |
-| `API_PROXY_TARGET=http://127.0.0.1:80` | Local API |
+| `.env` value                                | API            |
+| ------------------------------------------- | -------------- |
+| `API_PROXY_TARGET=http://127.0.0.1:80`      | Local API      |
 | `API_PROXY_TARGET=https://api.speedhare.io` | Production API |
 
 Restart Vite after changing `.env`.
+
+## Scripts
+
+| Script                 | Description                                                                                 |
+| ---------------------- | ------------------------------------------------------------------------------------------- |
+| `npm run dev`          | Vite dev server                                                                             |
+| `npm run build`        | Production build → `dist/`                                                                  |
+| `npm run preview`      | Serve the production build locally                                                          |
+| `npm run typecheck`    | TypeScript (`tsc --noEmit`)                                                                 |
+| `npm run lint`         | ESLint                                                                                      |
+| `npm run format`       | Prettier write                                                                              |
+| `npm run format:check` | Prettier check                                                                              |
+| `npm run ci`           | `format:check` → `lint` → `typecheck` → `npm audit --omit=dev --audit-level=high` → `build` |
+
+```bash
+npm run ci
+```
+
+CI on GitHub Actions runs the same `npm run ci` on pushes and pull requests to `main`. There is no release or deploy workflow yet.

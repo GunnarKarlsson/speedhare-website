@@ -80,11 +80,29 @@ export function NewHomeRaceCard({ race, titleAccent }: NewHomeRaceCardProps) {
         >
           {typeLabel.toUpperCase()}
         </Typography>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, color: nh.muted, fontFamily: nh.sans, fontSize: "0.8rem" }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 0.5,
+            color: nh.muted,
+            fontFamily: nh.sans,
+            fontSize: "0.8rem",
+          }}
+        >
           <CalendarMonthIcon sx={{ fontSize: 18 }} />
           {race.date}
         </Box>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, color: nh.muted, fontFamily: nh.sans, fontSize: "0.8rem" }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 0.5,
+            color: nh.muted,
+            fontFamily: nh.sans,
+            fontSize: "0.8rem",
+          }}
+        >
           <PlaceIcon sx={{ fontSize: 18 }} />
           {loc}
         </Box>
@@ -107,7 +125,14 @@ export function NewHomeRaceCard({ race, titleAccent }: NewHomeRaceCardProps) {
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <PersonOutlineIcon sx={{ color: nh.blue, fontSize: 22 }} />
           <Box>
-            <Typography sx={{ fontFamily: nh.mono, fontSize: "0.6rem", color: nh.blue, letterSpacing: "0.06em" }}>
+            <Typography
+              sx={{
+                fontFamily: nh.mono,
+                fontSize: "0.6rem",
+                color: nh.blue,
+                letterSpacing: "0.06em",
+              }}
+            >
               RESULTS
             </Typography>
             <Typography sx={{ fontFamily: nh.sans, fontWeight: 700, color: nh.blue }}>
@@ -118,16 +143,32 @@ export function NewHomeRaceCard({ race, titleAccent }: NewHomeRaceCardProps) {
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <AccessTimeIcon sx={{ color: nh.muted, fontSize: 22 }} />
           <Box>
-            <Typography sx={{ fontFamily: nh.mono, fontSize: "0.6rem", color: nh.muted, letterSpacing: "0.06em" }}>
+            <Typography
+              sx={{
+                fontFamily: nh.mono,
+                fontSize: "0.6rem",
+                color: nh.muted,
+                letterSpacing: "0.06em",
+              }}
+            >
               MEAN
             </Typography>
-            <Typography sx={{ fontFamily: nh.sans, fontWeight: 700, color: nh.white }}>{summaryValue(extras, "Mean")}</Typography>
+            <Typography sx={{ fontFamily: nh.sans, fontWeight: 700, color: nh.white }}>
+              {summaryValue(extras, "Mean")}
+            </Typography>
           </Box>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <AccessTimeIcon sx={{ color: nh.muted, fontSize: 22 }} />
           <Box>
-            <Typography sx={{ fontFamily: nh.mono, fontSize: "0.6rem", color: nh.muted, letterSpacing: "0.06em" }}>
+            <Typography
+              sx={{
+                fontFamily: nh.mono,
+                fontSize: "0.6rem",
+                color: nh.muted,
+                letterSpacing: "0.06em",
+              }}
+            >
               MEDIAN
             </Typography>
             <Typography sx={{ fontFamily: nh.sans, fontWeight: 700, color: nh.white }}>
@@ -161,7 +202,11 @@ export function NewHomeRaceCard({ race, titleAccent }: NewHomeRaceCardProps) {
           "&:hover": { color: nh.white },
         }}
       >
-        {open ? <KeyboardArrowUpIcon sx={{ fontSize: 18 }} /> : <ExpandMoreIcon sx={{ fontSize: 18 }} />}
+        {open ? (
+          <KeyboardArrowUpIcon sx={{ fontSize: 18 }} />
+        ) : (
+          <ExpandMoreIcon sx={{ fontSize: 18 }} />
+        )}
         {open ? "COLLAPSE" : "SHOW DETAILS"}
       </Box>
 
@@ -191,10 +236,19 @@ export function NewHomeRaceCard({ race, titleAccent }: NewHomeRaceCardProps) {
                     border: `1px solid ${nh.blueBadgeBorder}`,
                   }}
                 >
-                  <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue, opacity: 0.95 }}>
+                  <Typography
+                    sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue, opacity: 0.95 }}
+                  >
                     {m.label}
                   </Typography>
-                  <Typography sx={{ fontFamily: nh.sans, fontWeight: 700, color: nh.blue, fontSize: "1.1rem" }}>
+                  <Typography
+                    sx={{
+                      fontFamily: nh.sans,
+                      fontWeight: 700,
+                      color: nh.blue,
+                      fontSize: "1.1rem",
+                    }}
+                  >
                     {m.value}
                   </Typography>
                 </Box>
@@ -219,7 +273,11 @@ export function NewHomeRaceCard({ race, titleAccent }: NewHomeRaceCardProps) {
             <Box
               sx={{
                 display: "grid",
-                gridTemplateColumns: { xs: "repeat(2, 1fr)", sm: "repeat(3, 1fr)", md: "repeat(4, 1fr)" },
+                gridTemplateColumns: {
+                  xs: "repeat(2, 1fr)",
+                  sm: "repeat(3, 1fr)",
+                  md: "repeat(4, 1fr)",
+                },
                 gap: 1,
               }}
             >
@@ -234,10 +292,24 @@ export function NewHomeRaceCard({ race, titleAccent }: NewHomeRaceCardProps) {
                     border: `1px solid ${nh.border}`,
                   }}
                 >
-                  <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted, textTransform: "lowercase" }}>
+                  <Typography
+                    sx={{
+                      fontFamily: nh.mono,
+                      fontSize: "0.65rem",
+                      color: nh.muted,
+                      textTransform: "lowercase",
+                    }}
+                  >
                     {m.label.replace(/^Sub /, "sub ")}
                   </Typography>
-                  <Typography sx={{ fontFamily: nh.sans, fontWeight: 700, color: nh.white, fontSize: "0.95rem" }}>
+                  <Typography
+                    sx={{
+                      fontFamily: nh.sans,
+                      fontWeight: 700,
+                      color: nh.white,
+                      fontSize: "0.95rem",
+                    }}
+                  >
                     {m.value}
                   </Typography>
                 </Box>
@@ -260,7 +332,7 @@ export function NewHomeRaceCard({ race, titleAccent }: NewHomeRaceCardProps) {
         }}
       >
         <Typography sx={{ fontFamily: nh.mono, fontSize: "0.7rem", color: nh.muted }}>
-          ID:{race.id} // {typeLabel} // {loc}
+          ID:{race.id} {"//"} {typeLabel} {"//"} {loc}
         </Typography>
         <Link
           component={RouterLink}

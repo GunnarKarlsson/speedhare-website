@@ -167,7 +167,15 @@ export function NewHomeNav({ activeDistance, navContext = "home" }: NewHomeNavPr
             </Link>
           </Box>
 
-          <Box sx={{ gridArea: "search", justifySelf: "end", display: "flex", alignItems: "center", gap: 0.5 }}>
+          <Box
+            sx={{
+              gridArea: "search",
+              justifySelf: "end",
+              display: "flex",
+              alignItems: "center",
+              gap: 0.5,
+            }}
+          >
             <IconButton
               aria-label="Search"
               onClick={() => navigate("/search")}

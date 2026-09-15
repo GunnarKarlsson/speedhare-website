@@ -20,7 +20,10 @@ export function formatRaceType(raceType: string | null | undefined): string {
  * Matches 1st, 2nd, 3rd, 4th–20th, 21st, 22nd, 23rd, 24th, …
  */
 function fixOrdinalSuffixesAfterDigits(s: string): string {
-  return s.replace(/\b(\d+)(st|nd|rd|th)\b/gi, (_, digits: string, suf: string) => `${digits}${suf.toLowerCase()}`);
+  return s.replace(
+    /\b(\d+)(st|nd|rd|th)\b/gi,
+    (_, digits: string, suf: string) => `${digits}${suf.toLowerCase()}`,
+  );
 }
 
 /** Normalize event titles to title case for UI display. */

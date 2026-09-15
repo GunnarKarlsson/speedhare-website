@@ -55,8 +55,12 @@ function tablePaginationSx(
     ...(isDark
       ? {
           "& .MuiIconButton-root": { color: nh.white },
-          "& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows": { color: `${nh.muted}` },
-          "& .MuiSelect-select, & .MuiNativeSelect-select, & .MuiInputBase-input": { color: nh.white },
+          "& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows": {
+            color: `${nh.muted}`,
+          },
+          "& .MuiSelect-select, & .MuiNativeSelect-select, & .MuiInputBase-input": {
+            color: nh.white,
+          },
           "& .MuiOutlinedInput-notchedOutline": { borderColor: nh.border },
           "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
             borderColor: "rgba(255,255,255,0.35)",
@@ -246,7 +250,9 @@ export function RacesPage({ visualVariant = "light" }: RacesPageProps) {
       {loading ? (
         <CircularProgress sx={isDark ? { color: nh.blue } : undefined} />
       ) : rows.length === 0 ? (
-        <Typography sx={{ color: isDark ? nh.muted : "text.secondary" }}>No races available</Typography>
+        <Typography sx={{ color: isDark ? nh.muted : "text.secondary" }}>
+          No races available
+        </Typography>
       ) : (
         <>
           <TablePagination
@@ -265,62 +271,18 @@ export function RacesPage({ visualVariant = "light" }: RacesPageProps) {
             sx={tablePaginationSx(nh, isDark, isMobile, { marginBottom: 1 })}
           />
           <Paper elevation={0} sx={{ boxShadow: "none", border: 0, bgcolor: "transparent" }}>
-          <TableContainer sx={{ border: 0, bgcolor: "transparent" }}>
-            <Table
-              size="small"
-              sx={{ borderCollapse: "separate", borderSpacing: 0, width: "100%", tableLayout: "fixed" }}
-            >
-              <TableHead sx={{ bgcolor: "transparent" }}>
-                <TableRow>
-                  <TableCell
-                    sx={{
-                      bgcolor: "transparent",
-                      borderBottom: 0,
-                      ...(isDark
-                        ? {
-                            color: nh.muted,
-                            fontFamily: nh.mono,
-                            fontSize: "0.7rem",
-                            letterSpacing: "0.08em",
-                          }
-                        : {}),
-                    }}
-                  >
-                    Date
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      bgcolor: "transparent",
-                      borderBottom: 0,
-                      ...(isDark
-                        ? {
-                            color: nh.muted,
-                            fontFamily: nh.mono,
-                            fontSize: "0.7rem",
-                            letterSpacing: "0.08em",
-                          }
-                        : {}),
-                    }}
-                  >
-                    Name
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      bgcolor: "transparent",
-                      borderBottom: 0,
-                      ...(isDark
-                        ? {
-                            color: nh.muted,
-                            fontFamily: nh.mono,
-                            fontSize: "0.7rem",
-                            letterSpacing: "0.08em",
-                          }
-                        : {}),
-                    }}
-                  >
-                    Type
-                  </TableCell>
-                  {!isMobile ? (
+            <TableContainer sx={{ border: 0, bgcolor: "transparent" }}>
+              <Table
+                size="small"
+                sx={{
+                  borderCollapse: "separate",
+                  borderSpacing: 0,
+                  width: "100%",
+                  tableLayout: "fixed",
+                }}
+              >
+                <TableHead sx={{ bgcolor: "transparent" }}>
+                  <TableRow>
                     <TableCell
                       sx={{
                         bgcolor: "transparent",
@@ -335,90 +297,71 @@ export function RacesPage({ visualVariant = "light" }: RacesPageProps) {
                           : {}),
                       }}
                     >
-                      Location
+                      Date
                     </TableCell>
-                  ) : null}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((r, idx) => {
-                  const extra = raceListExtras(r.aggregates, r.metadata);
-                  const hasExtra =
-                    extra.summaryMetrics.length > 0 ||
-                    extra.thresholdMetrics.length > 0 ||
-                    extra.metadataMetrics.length > 0;
-                  return (
-                    <Fragment key={r.id}>
-                      <TableRow
-                        hover
-                        onClick={() => navigate(racePath(r.slug))}
+                    <TableCell
+                      sx={{
+                        bgcolor: "transparent",
+                        borderBottom: 0,
+                        ...(isDark
+                          ? {
+                              color: nh.muted,
+                              fontFamily: nh.mono,
+                              fontSize: "0.7rem",
+                              letterSpacing: "0.08em",
+                            }
+                          : {}),
+                      }}
+                    >
+                      Name
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        bgcolor: "transparent",
+                        borderBottom: 0,
+                        ...(isDark
+                          ? {
+                              color: nh.muted,
+                              fontFamily: nh.mono,
+                              fontSize: "0.7rem",
+                              letterSpacing: "0.08em",
+                            }
+                          : {}),
+                      }}
+                    >
+                      Type
+                    </TableCell>
+                    {!isMobile ? (
+                      <TableCell
                         sx={{
-                          cursor: "pointer",
-                          ...(isDark ? { "&:hover": { bgcolor: "rgba(255,255,255,0.04)" } } : {}),
+                          bgcolor: "transparent",
+                          borderBottom: 0,
+                          ...(isDark
+                            ? {
+                                color: nh.muted,
+                                fontFamily: nh.mono,
+                                fontSize: "0.7rem",
+                                letterSpacing: "0.08em",
+                              }
+                            : {}),
                         }}
                       >
-                        <TableCell
-                          sx={{
-                            borderTop: "1px solid",
-                            borderLeft: "1px solid",
-                            borderColor: gridLine,
-                            borderTopLeftRadius: 6,
-                            borderBottom: hasExtra ? "none" : `1px solid ${gridLine}`,
-                            ...(hasExtra ? {} : { borderBottomLeftRadius: 6 }),
-                            color: isDark ? nh.white : undefined,
-                            fontFamily: isDark ? nh.sans : undefined,
-                          }}
-                        >
-                          {r.date}
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            borderTop: "1px solid",
-                            borderColor: gridLine,
-                            borderBottom: hasExtra ? "none" : `1px solid ${gridLine}`,
-                            wordBreak: "break-word",
-                            color: isDark ? nh.white : undefined,
-                            fontFamily: isDark ? nh.sans : undefined,
-                          }}
-                        >
-                          {r.name}
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            borderTop: "1px solid",
-                            borderColor: gridLine,
-                            borderBottom: hasExtra ? "none" : `1px solid ${gridLine}`,
-                            ...(isMobile ? { borderRight: "1px solid", borderTopRightRadius: 6 } : {}),
-                            ...(!hasExtra && isMobile ? { borderBottomRightRadius: 6 } : {}),
-                            whiteSpace: "normal",
-                            overflowWrap: "anywhere",
-                            wordBreak: "break-word",
-                            color: isDark ? nh.white : undefined,
-                            fontFamily: isDark ? nh.sans : undefined,
-                          }}
-                        >
-                          {formatRaceType(r.race_type)}
-                        </TableCell>
-                        {!isMobile ? (
-                          <TableCell
-                            sx={{
-                              borderTop: "1px solid",
-                              borderRight: "1px solid",
-                              borderColor: gridLine,
-                              borderTopRightRadius: 6,
-                              borderBottom: hasExtra ? "none" : `1px solid ${gridLine}`,
-                              wordBreak: "break-word",
-                              ...(hasExtra ? {} : { borderBottomRightRadius: 6 }),
-                              color: isDark ? nh.muted : undefined,
-                              fontFamily: isDark ? nh.sans : undefined,
-                            }}
-                          >
-                            {r.location ?? "—"}
-                          </TableCell>
-                        ) : null}
-                      </TableRow>
-                      {hasExtra ? (
+                        Location
+                      </TableCell>
+                    ) : null}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map((r, idx) => {
+                    const extra = raceListExtras(r.aggregates, r.metadata);
+                    const hasExtra =
+                      extra.summaryMetrics.length > 0 ||
+                      extra.thresholdMetrics.length > 0 ||
+                      extra.metadataMetrics.length > 0;
+                    return (
+                      <Fragment key={r.id}>
                         <TableRow
+                          hover
                           onClick={() => navigate(racePath(r.slug))}
                           sx={{
                             cursor: "pointer",
@@ -426,132 +369,211 @@ export function RacesPage({ visualVariant = "light" }: RacesPageProps) {
                           }}
                         >
                           <TableCell
-                            colSpan={isMobile ? 3 : 4}
                             sx={{
+                              borderTop: "1px solid",
                               borderLeft: "1px solid",
-                              borderRight: "1px solid",
-                              borderBottom: "1px solid",
                               borderColor: gridLine,
-                              borderBottomLeftRadius: 6,
-                              borderBottomRightRadius: 6,
-                              py: 1,
-                              bgcolor: extraRowBg,
+                              borderTopLeftRadius: 6,
+                              borderBottom: hasExtra ? "none" : `1px solid ${gridLine}`,
+                              ...(hasExtra ? {} : { borderBottomLeftRadius: 6 }),
+                              color: isDark ? nh.white : undefined,
+                              fontFamily: isDark ? nh.sans : undefined,
                             }}
                           >
-                            {extra.summaryMetrics.length > 0 ? (
-                              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75 }}>
-                                {extra.summaryMetrics.map((m) => (
-                                  <MetricTag
-                                    key={`summary-${m.label}`}
-                                    label={m.label}
-                                    value={m.value}
-                                    darkTextColor={nh.white}
-                                    isDark={isDark}
-                                    color={
-                                      m.label.startsWith("Top ")
-                                        ? isDark
-                                          ? nh.blue
-                                          : "#007FFF"
-                                        : m.label === "Finishers" ||
-                                            m.label === "Mean" ||
-                                            m.label === "Median"
-                                          ? isDark
-                                            ? "#22c55e"
-                                            : "#2E7D32"
-                                          : "#9E9E9E"
-                                    }
-                                  />
-                                ))}
-                              </Box>
-                            ) : null}
-                            {extra.thresholdMetrics.length > 0 ? (
-                              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75, mt: 0.75 }}>
-                                {extra.thresholdMetrics.map((m) => (
-                                  <MetricTag
-                                    key={`threshold-${m.label}`}
-                                    label={m.label}
-                                    value={m.value}
-                                    darkTextColor={nh.white}
-                                    isDark={isDark}
-                                    color="#9E9E9E"
-                                  />
-                                ))}
-                              </Box>
-                            ) : null}
-                            {extra.metadataMetrics.length > 0 ? (
-                              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75, mt: 0.75 }}>
-                                {extra.metadataMetrics.map((m) => (
-                                  <Box
-                                    key={`meta-${m.label}`}
-                                    sx={{
-                                      display: "inline-flex",
-                                      alignItems: "stretch",
-                                      border: "1px solid",
-                                      borderColor: "#9C27B0",
-                                      borderRadius: 1,
-                                      overflow: "hidden",
-                                      bgcolor: isDark ? nh.card : "#fff",
-                                    }}
-                                  >
-                                    <Box
-                                      sx={{
-                                        px: 1,
-                                        py: 0.25,
-                                        bgcolor: "#9C27B0",
-                                        color: "#fff",
-                                        fontSize: "0.75rem",
-                                        fontWeight: 600,
-                                        lineHeight: 1.6,
-                                      }}
-                                    >
-                                      {m.label}
-                                    </Box>
-                                    <Box
-                                      sx={{
-                                        px: 1,
-                                        py: 0.25,
-                                        borderLeft: "1px solid",
-                                        borderColor: "#9C27B0",
-                                        color: isDark ? nh.white : "#000",
-                                        fontSize: "0.75rem",
-                                        lineHeight: 1.6,
-                                      }}
-                                    >
-                                      {m.value}
-                                    </Box>
-                                  </Box>
-                                ))}
-                              </Box>
-                            ) : null}
+                            {r.date}
                           </TableCell>
+                          <TableCell
+                            sx={{
+                              borderTop: "1px solid",
+                              borderColor: gridLine,
+                              borderBottom: hasExtra ? "none" : `1px solid ${gridLine}`,
+                              wordBreak: "break-word",
+                              color: isDark ? nh.white : undefined,
+                              fontFamily: isDark ? nh.sans : undefined,
+                            }}
+                          >
+                            {r.name}
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              borderTop: "1px solid",
+                              borderColor: gridLine,
+                              borderBottom: hasExtra ? "none" : `1px solid ${gridLine}`,
+                              ...(isMobile
+                                ? { borderRight: "1px solid", borderTopRightRadius: 6 }
+                                : {}),
+                              ...(!hasExtra && isMobile ? { borderBottomRightRadius: 6 } : {}),
+                              whiteSpace: "normal",
+                              overflowWrap: "anywhere",
+                              wordBreak: "break-word",
+                              color: isDark ? nh.white : undefined,
+                              fontFamily: isDark ? nh.sans : undefined,
+                            }}
+                          >
+                            {formatRaceType(r.race_type)}
+                          </TableCell>
+                          {!isMobile ? (
+                            <TableCell
+                              sx={{
+                                borderTop: "1px solid",
+                                borderRight: "1px solid",
+                                borderColor: gridLine,
+                                borderTopRightRadius: 6,
+                                borderBottom: hasExtra ? "none" : `1px solid ${gridLine}`,
+                                wordBreak: "break-word",
+                                ...(hasExtra ? {} : { borderBottomRightRadius: 6 }),
+                                color: isDark ? nh.muted : undefined,
+                                fontFamily: isDark ? nh.sans : undefined,
+                              }}
+                            >
+                              {r.location ?? "—"}
+                            </TableCell>
+                          ) : null}
                         </TableRow>
-                      ) : null}
-                      {idx < rows.length - 1 ? (
-                        <TableRow>
-                          <TableCell colSpan={isMobile ? 3 : 4} sx={{ border: 0, p: 0, height: 10 }} />
-                        </TableRow>
-                      ) : null}
-                    </Fragment>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            component="div"
-            count={total}
-            page={page}
-            showFirstButton
-            showLastButton
-            onPageChange={(_, p) => setPage(p)}
-            rowsPerPage={pageSize}
-            onRowsPerPageChange={(e) => {
-              setPageSize(parseInt(e.target.value, 10));
-              setPage(0);
-            }}
-            rowsPerPageOptions={[10, 20, 50]}
-            sx={tablePaginationSx(nh, isDark, isMobile)}
-          />
+                        {hasExtra ? (
+                          <TableRow
+                            onClick={() => navigate(racePath(r.slug))}
+                            sx={{
+                              cursor: "pointer",
+                              ...(isDark
+                                ? { "&:hover": { bgcolor: "rgba(255,255,255,0.04)" } }
+                                : {}),
+                            }}
+                          >
+                            <TableCell
+                              colSpan={isMobile ? 3 : 4}
+                              sx={{
+                                borderLeft: "1px solid",
+                                borderRight: "1px solid",
+                                borderBottom: "1px solid",
+                                borderColor: gridLine,
+                                borderBottomLeftRadius: 6,
+                                borderBottomRightRadius: 6,
+                                py: 1,
+                                bgcolor: extraRowBg,
+                              }}
+                            >
+                              {extra.summaryMetrics.length > 0 ? (
+                                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75 }}>
+                                  {extra.summaryMetrics.map((m) => (
+                                    <MetricTag
+                                      key={`summary-${m.label}`}
+                                      label={m.label}
+                                      value={m.value}
+                                      darkTextColor={nh.white}
+                                      isDark={isDark}
+                                      color={
+                                        m.label.startsWith("Top ")
+                                          ? isDark
+                                            ? nh.blue
+                                            : "#007FFF"
+                                          : m.label === "Finishers" ||
+                                              m.label === "Mean" ||
+                                              m.label === "Median"
+                                            ? isDark
+                                              ? "#22c55e"
+                                              : "#2E7D32"
+                                            : "#9E9E9E"
+                                      }
+                                    />
+                                  ))}
+                                </Box>
+                              ) : null}
+                              {extra.thresholdMetrics.length > 0 ? (
+                                <Box
+                                  sx={{ display: "flex", flexWrap: "wrap", gap: 0.75, mt: 0.75 }}
+                                >
+                                  {extra.thresholdMetrics.map((m) => (
+                                    <MetricTag
+                                      key={`threshold-${m.label}`}
+                                      label={m.label}
+                                      value={m.value}
+                                      darkTextColor={nh.white}
+                                      isDark={isDark}
+                                      color="#9E9E9E"
+                                    />
+                                  ))}
+                                </Box>
+                              ) : null}
+                              {extra.metadataMetrics.length > 0 ? (
+                                <Box
+                                  sx={{ display: "flex", flexWrap: "wrap", gap: 0.75, mt: 0.75 }}
+                                >
+                                  {extra.metadataMetrics.map((m) => (
+                                    <Box
+                                      key={`meta-${m.label}`}
+                                      sx={{
+                                        display: "inline-flex",
+                                        alignItems: "stretch",
+                                        border: "1px solid",
+                                        borderColor: "#9C27B0",
+                                        borderRadius: 1,
+                                        overflow: "hidden",
+                                        bgcolor: isDark ? nh.card : "#fff",
+                                      }}
+                                    >
+                                      <Box
+                                        sx={{
+                                          px: 1,
+                                          py: 0.25,
+                                          bgcolor: "#9C27B0",
+                                          color: "#fff",
+                                          fontSize: "0.75rem",
+                                          fontWeight: 600,
+                                          lineHeight: 1.6,
+                                        }}
+                                      >
+                                        {m.label}
+                                      </Box>
+                                      <Box
+                                        sx={{
+                                          px: 1,
+                                          py: 0.25,
+                                          borderLeft: "1px solid",
+                                          borderColor: "#9C27B0",
+                                          color: isDark ? nh.white : "#000",
+                                          fontSize: "0.75rem",
+                                          lineHeight: 1.6,
+                                        }}
+                                      >
+                                        {m.value}
+                                      </Box>
+                                    </Box>
+                                  ))}
+                                </Box>
+                              ) : null}
+                            </TableCell>
+                          </TableRow>
+                        ) : null}
+                        {idx < rows.length - 1 ? (
+                          <TableRow>
+                            <TableCell
+                              colSpan={isMobile ? 3 : 4}
+                              sx={{ border: 0, p: 0, height: 10 }}
+                            />
+                          </TableRow>
+                        ) : null}
+                      </Fragment>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              component="div"
+              count={total}
+              page={page}
+              showFirstButton
+              showLastButton
+              onPageChange={(_, p) => setPage(p)}
+              rowsPerPage={pageSize}
+              onRowsPerPageChange={(e) => {
+                setPageSize(parseInt(e.target.value, 10));
+                setPage(0);
+              }}
+              rowsPerPageOptions={[10, 20, 50]}
+              sx={tablePaginationSx(nh, isDark, isMobile)}
+            />
           </Paper>
         </>
       )}

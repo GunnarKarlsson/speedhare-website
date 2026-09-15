@@ -211,7 +211,10 @@ function mapHalfMarathonRow(row: HalfMarathonStatsRow): StatsRow {
   };
 }
 
-function defaultSorts(): Record<StatsRaceType, { key: StatsColumnKey; direction: TableSortDirection }> {
+function defaultSorts(): Record<
+  StatsRaceType,
+  { key: StatsColumnKey; direction: TableSortDirection }
+> {
   return {
     "5k": { key: "date", direction: "desc" },
     "10k": { key: "date", direction: "desc" },
@@ -297,10 +300,7 @@ export function StatsPage() {
         setLoading(true);
         setError(null);
 
-        const [siteAggregates, stats] = await Promise.all([
-          getSummaryStats(),
-          getRoadRaceStats(),
-        ]);
+        const [siteAggregates, stats] = await Promise.all([getSummaryStats(), getRoadRaceStats()]);
 
         if (!cancelled) {
           setSite(siteAggregates);
@@ -386,7 +386,10 @@ export function StatsPage() {
         >
           STATS
         </Typography>
-        <Typography component="h1" sx={{ fontWeight: 800, fontSize: { xs: "2rem", sm: "2.75rem" }, mb: 1.5 }}>
+        <Typography
+          component="h1"
+          sx={{ fontWeight: 800, fontSize: { xs: "2rem", sm: "2.75rem" }, mb: 1.5 }}
+        >
           Race Stats
         </Typography>
         <Typography sx={{ color: nh.muted, lineHeight: 1.8, maxWidth: 900, mb: 4 }}>
@@ -407,7 +410,10 @@ export function StatsPage() {
 
               return (
                 <Box key={table.raceType} sx={{ minWidth: 0 }}>
-                  <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: "1.35rem", sm: "1.65rem" }, mb: 1.5 }}>
+                  <Typography
+                    component="h2"
+                    sx={{ fontWeight: 800, fontSize: { xs: "1.35rem", sm: "1.65rem" }, mb: 1.5 }}
+                  >
                     {table.title}
                   </Typography>
                   <Paper
@@ -467,7 +473,10 @@ export function StatsPage() {
                                         [table.raceType]: {
                                           key: column.key,
                                           direction:
-                                            existing.key === column.key && existing.direction === "asc" ? "desc" : "asc",
+                                            existing.key === column.key &&
+                                            existing.direction === "asc"
+                                              ? "desc"
+                                              : "asc",
                                         },
                                       };
                                     });
@@ -477,9 +486,10 @@ export function StatsPage() {
                                     "& .MuiTableSortLabel-icon": {
                                       color: `${nh.white} !important`,
                                     },
-                                    "& .MuiTableSortLabel-iconDirectionAsc, & .MuiTableSortLabel-iconDirectionDesc": {
-                                      ml: 0.25,
-                                    },
+                                    "& .MuiTableSortLabel-iconDirectionAsc, & .MuiTableSortLabel-iconDirectionDesc":
+                                      {
+                                        ml: 0.25,
+                                      },
                                   }}
                                 >
                                   {column.label}
@@ -522,7 +532,10 @@ export function StatsPage() {
                           ))}
                           {rows.length === 0 ? (
                             <TableRow>
-                              <TableCell colSpan={table.columns.length} sx={{ color: nh.muted, py: 3 }}>
+                              <TableCell
+                                colSpan={table.columns.length}
+                                sx={{ color: nh.muted, py: 3 }}
+                              >
                                 No races available.
                               </TableCell>
                             </TableRow>

@@ -41,7 +41,9 @@ export function NewHomeHero({ site, latestRaces, hasRaceData }: NewHomeHeroProps
       >
         {k}
       </Typography>
-      <Typography sx={{ fontFamily: nh.sans, fontWeight: 700, fontSize: { xs: "1.75rem", md: "2.25rem" } }}>
+      <Typography
+        sx={{ fontFamily: nh.sans, fontWeight: 700, fontSize: { xs: "1.75rem", md: "2.25rem" } }}
+      >
         {v}
       </Typography>
     </Box>
@@ -109,7 +111,9 @@ export function NewHomeHero({ site, latestRaces, hasRaceData }: NewHomeHeroProps
           {stat("TOTAL RESULTS", site.totalResults.toLocaleString())}
           {stat("RACE TYPES", String(site.distinctRaceTypes))}
         </Box>
-        <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", letterSpacing: "0.1em", color: nh.faint }}>
+        <Typography
+          sx={{ fontFamily: nh.mono, fontSize: "0.65rem", letterSpacing: "0.1em", color: nh.faint }}
+        >
           ↓ SCROLL TO EXPLORE
         </Typography>
       </Box>
@@ -146,7 +150,9 @@ export function NewHomeHero({ site, latestRaces, hasRaceData }: NewHomeHeroProps
                   "&:hover": { bgcolor: nh.cardHover, borderColor: nh.blue },
                 }}
               >
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, alignItems: "center", mb: 1.5 }}>
+                <Box
+                  sx={{ display: "flex", flexWrap: "wrap", gap: 1, alignItems: "center", mb: 1.5 }}
+                >
                   {isLatest ? (
                     <Typography
                       sx={{
@@ -192,7 +198,17 @@ export function NewHomeHero({ site, latestRaces, hasRaceData }: NewHomeHeroProps
                 >
                   {race.name}
                 </Typography>
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, color: nh.muted, fontFamily: nh.sans, fontSize: "0.8rem", mb: 2 }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 2,
+                    color: nh.muted,
+                    fontFamily: nh.sans,
+                    fontSize: "0.8rem",
+                    mb: 2,
+                  }}
+                >
                   <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
                     <CalendarMonthIcon sx={{ fontSize: 16 }} />
                     {formatShortRaceDate(race.date)}
@@ -204,7 +220,14 @@ export function NewHomeHero({ site, latestRaces, hasRaceData }: NewHomeHeroProps
                 </Box>
                 <Box sx={{ display: "flex", gap: 3, flexWrap: "wrap" }}>
                   <Box>
-                    <Typography sx={{ fontFamily: nh.mono, fontSize: "0.6rem", color: nh.blue, letterSpacing: "0.06em" }}>
+                    <Typography
+                      sx={{
+                        fontFamily: nh.mono,
+                        fontSize: "0.6rem",
+                        color: nh.blue,
+                        letterSpacing: "0.06em",
+                      }}
+                    >
                       RESULTS
                     </Typography>
                     <Typography sx={{ fontFamily: nh.sans, fontWeight: 700, color: nh.blue }}>
@@ -212,16 +235,34 @@ export function NewHomeHero({ site, latestRaces, hasRaceData }: NewHomeHeroProps
                     </Typography>
                   </Box>
                   <Box>
-                    <Typography sx={{ fontFamily: nh.mono, fontSize: "0.6rem", color: nh.muted, letterSpacing: "0.06em" }}>
+                    <Typography
+                      sx={{
+                        fontFamily: nh.mono,
+                        fontSize: "0.6rem",
+                        color: nh.muted,
+                        letterSpacing: "0.06em",
+                      }}
+                    >
                       MEDIAN
                     </Typography>
-                    <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>{metricFromExtras(race, "Median")}</Typography>
+                    <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
+                      {metricFromExtras(race, "Median")}
+                    </Typography>
                   </Box>
                   <Box>
-                    <Typography sx={{ fontFamily: nh.mono, fontSize: "0.6rem", color: nh.muted, letterSpacing: "0.06em" }}>
+                    <Typography
+                      sx={{
+                        fontFamily: nh.mono,
+                        fontSize: "0.6rem",
+                        color: nh.muted,
+                        letterSpacing: "0.06em",
+                      }}
+                    >
                       MEAN
                     </Typography>
-                    <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>{metricFromExtras(race, "Mean")}</Typography>
+                    <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
+                      {metricFromExtras(race, "Mean")}
+                    </Typography>
                   </Box>
                 </Box>
               </Box>

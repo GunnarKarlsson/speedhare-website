@@ -55,7 +55,14 @@ function absoluteUrl(path: string) {
   return `${window.location.origin}${normalizedPath}`;
 }
 
-export function SeoHead({ title, description, canonicalPath, robots, keywords, jsonLd }: SeoHeadProps) {
+export function SeoHead({
+  title,
+  description,
+  canonicalPath,
+  robots,
+  keywords,
+  jsonLd,
+}: SeoHeadProps) {
   useEffect(() => {
     document.title = title;
 

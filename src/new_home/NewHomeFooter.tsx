@@ -46,7 +46,9 @@ export function NewHomeFooter({ site, hasRaceData }: NewHomeFooterProps) {
   );
 
   const resultsLabel =
-    site.totalResults >= 1000 ? `${Math.floor(site.totalResults / 1000)}K+` : site.totalResults.toLocaleString();
+    site.totalResults >= 1000
+      ? `${Math.floor(site.totalResults / 1000)}K+`
+      : site.totalResults.toLocaleString();
 
   return (
     <Box component="footer" sx={{ bgcolor: nh.bg, borderTop: `1px solid ${nh.border}`, mt: 6 }}>
@@ -99,24 +101,38 @@ export function NewHomeFooter({ site, hasRaceData }: NewHomeFooterProps) {
                 </Box>
               </Typography>
             </Box>
-            <Typography sx={{ fontFamily: nh.sans, color: nh.muted, fontSize: "0.9rem", lineHeight: 1.6, mb: 3 }}>
+            <Typography
+              sx={{
+                fontFamily: nh.sans,
+                color: nh.muted,
+                fontSize: "0.9rem",
+                lineHeight: 1.6,
+                mb: 3,
+              }}
+            >
               Comprehensive race results and performance analytics for road races in Hong Kong.
             </Typography>
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
               <Box>
-                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.6rem", color: nh.muted }}>EVENTS</Typography>
+                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.6rem", color: nh.muted }}>
+                  EVENTS
+                </Typography>
                 <Typography sx={{ fontFamily: nh.sans, fontWeight: 700, fontSize: "1.25rem" }}>
                   {site.totalRaces.toLocaleString()}
                 </Typography>
               </Box>
               <Box>
-                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.6rem", color: nh.muted }}>RESULTS</Typography>
+                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.6rem", color: nh.muted }}>
+                  RESULTS
+                </Typography>
                 <Typography sx={{ fontFamily: nh.sans, fontWeight: 700, fontSize: "1.25rem" }}>
                   {resultsLabel}
                 </Typography>
               </Box>
               <Box>
-                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.6rem", color: nh.muted }}>LOCATION</Typography>
+                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.6rem", color: nh.muted }}>
+                  LOCATION
+                </Typography>
                 <Typography sx={{ fontFamily: nh.sans, fontWeight: 700, fontSize: "1.25rem" }}>
                   HK
                 </Typography>
@@ -160,20 +176,52 @@ export function NewHomeFooter({ site, hasRaceData }: NewHomeFooterProps) {
         </Typography>
         <Box sx={{ display: "flex", alignItems: "center", gap: 2, flexWrap: "wrap" }}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-            <Link component={RouterLink} to="/about" sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted, textDecoration: "none", "&:hover": { color: nh.blue } }}>
+            <Link
+              component={RouterLink}
+              to="/about"
+              sx={{
+                fontFamily: nh.mono,
+                fontSize: "0.65rem",
+                color: nh.muted,
+                textDecoration: "none",
+                "&:hover": { color: nh.blue },
+              }}
+            >
               About
             </Link>
-            <Link component={RouterLink} to="/terms" sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted, textDecoration: "none", "&:hover": { color: nh.blue } }}>
+            <Link
+              component={RouterLink}
+              to="/terms"
+              sx={{
+                fontFamily: nh.mono,
+                fontSize: "0.65rem",
+                color: nh.muted,
+                textDecoration: "none",
+                "&:hover": { color: nh.blue },
+              }}
+            >
               T&C
             </Link>
-            <Link component={RouterLink} to="/data-policy" sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted, textDecoration: "none", "&:hover": { color: nh.blue } }}>
+            <Link
+              component={RouterLink}
+              to="/data-policy"
+              sx={{
+                fontFamily: nh.mono,
+                fontSize: "0.65rem",
+                color: nh.muted,
+                textDecoration: "none",
+                "&:hover": { color: nh.blue },
+              }}
+            >
               Data Policy
             </Link>
           </Box>
           {hasRaceData ? (
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: "#22c55e" }} />
-              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>SYSTEM ONLINE</Typography>
+              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>
+                SYSTEM ONLINE
+              </Typography>
             </Box>
           ) : null}
         </Box>

@@ -9,7 +9,10 @@ export interface SiteAggregates {
   distinctRaceTypes: number;
 }
 
-export async function fetchAllRacesForNewHome(): Promise<{ races: RaceListItem[]; site: SiteAggregates }> {
+export async function fetchAllRacesForNewHome(): Promise<{
+  races: RaceListItem[];
+  site: SiteAggregates;
+}> {
   const races: RaceListItem[] = [];
   let page = 1;
   const sitePromise = getSummaryStats();

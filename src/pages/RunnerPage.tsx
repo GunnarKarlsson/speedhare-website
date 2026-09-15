@@ -1,10 +1,4 @@
-import {
-  Alert,
-  Box,
-  CircularProgress,
-  Link as MuiLink,
-  Typography,
-} from "@mui/material";
+import { Alert, Box, CircularProgress, Link as MuiLink, Typography } from "@mui/material";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getRace, getRunnerDetail, searchRacesByRunner } from "../api";
@@ -190,163 +184,398 @@ function RunnerDetailBody({
 
   return (
     <>
-        <MuiLink
-          component={RouterLink}
-          to={race ? racePath(race.slug) : `/races/${runner.race_id}`}
-          underline="none"
+      <MuiLink
+        component={RouterLink}
+        to={race ? racePath(race.slug) : `/races/${runner.race_id}`}
+        underline="none"
+        sx={{
+          display: "inline-flex",
+          alignItems: "center",
+          mb: 2,
+          color: nh.muted,
+          fontFamily: nh.mono,
+          fontSize: "0.72rem",
+          letterSpacing: "0.08em",
+          "&:hover": { color: nh.white },
+        }}
+      >
+        ← BACK TO RACE
+      </MuiLink>
+
+      <Box
+        sx={{
+          border: `1px solid ${nh.border}`,
+          borderRadius: 2,
+          bgcolor: nh.card,
+          p: { xs: 2, sm: 2.5 },
+          mb: 2,
+        }}
+      >
+        <Typography
           sx={{
-            display: "inline-flex",
-            alignItems: "center",
-            mb: 2,
-            color: nh.muted,
             fontFamily: nh.mono,
-            fontSize: "0.72rem",
+            fontSize: "0.65rem",
+            color: nh.blue,
             letterSpacing: "0.08em",
-            "&:hover": { color: nh.white },
+            mb: 0.75,
           }}
         >
-          ← BACK TO RACE
-        </MuiLink>
+          RUNNER DETAILS
+        </Typography>
+        <Typography
+          component="h1"
+          sx={{
+            fontFamily: nh.sans,
+            fontWeight: 800,
+            fontSize: { xs: "1.3rem", sm: "1.8rem" },
+            mb: 0.5,
+          }}
+        >
+          {displayEnglishName || runner.name_zh.trim() || "—"}
+        </Typography>
+        {runner.name_zh.trim() ? (
+          <Typography sx={{ fontFamily: nh.sans, color: nh.muted, fontSize: "1.05rem", mb: 1 }}>
+            {runner.name_zh}
+          </Typography>
+        ) : null}
+        <Typography sx={{ fontFamily: nh.mono, color: nh.muted, fontSize: "0.72rem", mb: 1.25 }}>
+          BIB {runner.bib}
+          {runner.gender ? ` // ${runner.gender}` : ""} {"//"} {runner.category}
+        </Typography>
+        {race ? (
+          <MuiLink
+            component={RouterLink}
+            to={racePath(race.slug)}
+            underline="hover"
+            sx={{ color: nh.muted, fontFamily: nh.sans }}
+          >
+            {race.name}
+          </MuiLink>
+        ) : null}
 
-        <Box sx={{ border: `1px solid ${nh.border}`, borderRadius: 2, bgcolor: nh.card, p: { xs: 2, sm: 2.5 }, mb: 2 }}>
-          <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue, letterSpacing: "0.08em", mb: 0.75 }}>
-            RUNNER DETAILS
-          </Typography>
-          <Typography component="h1" sx={{ fontFamily: nh.sans, fontWeight: 800, fontSize: { xs: "1.3rem", sm: "1.8rem" }, mb: 0.5 }}>
-            {displayEnglishName || runner.name_zh.trim() || "—"}
-          </Typography>
-          {runner.name_zh.trim() ? (
-            <Typography sx={{ fontFamily: nh.sans, color: nh.muted, fontSize: "1.05rem", mb: 1 }}>{runner.name_zh}</Typography>
-          ) : null}
-          <Typography sx={{ fontFamily: nh.mono, color: nh.muted, fontSize: "0.72rem", mb: 1.25 }}>
-            BIB {runner.bib}
-            {runner.gender ? ` // ${runner.gender}` : ""} // {runner.category}
-          </Typography>
-          {race ? (
-            <MuiLink component={RouterLink} to={racePath(race.slug)} underline="hover" sx={{ color: nh.muted, fontFamily: nh.sans }}>
-              {race.name}
-            </MuiLink>
-          ) : null}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "repeat(2, 1fr)", md: "repeat(3, 1fr)" },
+            gap: 1,
+            mt: 2,
+          }}
+        >
+          <Box
+            sx={{
+              px: 1.25,
+              py: 1,
+              borderRadius: 1.25,
+              border: `1px solid ${nh.border}`,
+              bgcolor: "rgba(255,255,255,0.06)",
+            }}
+          >
+            <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>
+              POSITION
+            </Typography>
+            <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
+              {runner.position_overall ?? runner.result_status ?? "—"}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              px: 1.25,
+              py: 1,
+              borderRadius: 1.25,
+              border: `1px solid ${nh.border}`,
+              bgcolor: "rgba(255,255,255,0.06)",
+            }}
+          >
+            <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>
+              OFFICIAL
+            </Typography>
+            <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
+              {formatSeconds(runner.official_time_seconds)}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              px: 1.25,
+              py: 1,
+              borderRadius: 1.25,
+              border: `1px solid ${nh.border}`,
+              bgcolor: "rgba(255,255,255,0.06)",
+            }}
+          >
+            <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>
+              NET
+            </Typography>
+            <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
+              {runner.net_time_seconds == null ? "N/A" : formatSeconds(runner.net_time_seconds)}
+            </Typography>
+          </Box>
+        </Box>
 
-          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "repeat(2, 1fr)", md: "repeat(3, 1fr)" }, gap: 1, mt: 2 }}>
-            <Box sx={{ px: 1.25, py: 1, borderRadius: 1.25, border: `1px solid ${nh.border}`, bgcolor: "rgba(255,255,255,0.06)" }}>
-              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>POSITION</Typography>
-              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>{runner.position_overall ?? runner.result_status ?? "—"}</Typography>
-            </Box>
-            <Box sx={{ px: 1.25, py: 1, borderRadius: 1.25, border: `1px solid ${nh.border}`, bgcolor: "rgba(255,255,255,0.06)" }}>
-              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>OFFICIAL</Typography>
-              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>{formatSeconds(runner.official_time_seconds)}</Typography>
-            </Box>
-            <Box sx={{ px: 1.25, py: 1, borderRadius: 1.25, border: `1px solid ${nh.border}`, bgcolor: "rgba(255,255,255,0.06)" }}>
-              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>NET</Typography>
+        <Box sx={{ mt: 1.5 }}>
+          <Typography
+            sx={{
+              fontFamily: nh.mono,
+              fontSize: "0.65rem",
+              color: nh.muted,
+              letterSpacing: "0.08em",
+              mb: 0.75,
+            }}
+          >
+            RANKS
+          </Typography>
+          <Box sx={statRowSx}>
+            <Box
+              sx={{
+                px: 1.25,
+                py: 1,
+                borderRadius: 1.25,
+                border: `1px solid ${nh.border}`,
+                bgcolor: "rgba(255,255,255,0.06)",
+              }}
+            >
+              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>
+                OVERALL
+              </Typography>
               <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
-                {runner.net_time_seconds == null ? "N/A" : formatSeconds(runner.net_time_seconds)}
+                {rankWithCohort(runner.rank_overall, stats.cohort_size_overall)}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                px: 1.25,
+                py: 1,
+                borderRadius: 1.25,
+                border: `1px solid ${nh.border}`,
+                bgcolor: "rgba(255,255,255,0.06)",
+              }}
+            >
+              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>
+                GENDER
+              </Typography>
+              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
+                {rankWithCohort(runner.position_gender, stats.cohort_size_gender)}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                px: 1.25,
+                py: 1,
+                borderRadius: 1.25,
+                border: `1px solid ${nh.border}`,
+                bgcolor: "rgba(255,255,255,0.06)",
+              }}
+            >
+              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>
+                CATEGORY
+              </Typography>
+              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
+                {rankWithCohort(runner.rank_category, stats.cohort_size_category)}
               </Typography>
             </Box>
           </Box>
+        </Box>
 
-          <Box sx={{ mt: 1.5 }}>
-            <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted, letterSpacing: "0.08em", mb: 0.75 }}>
-              RANKS
-            </Typography>
-            <Box sx={statRowSx}>
-              <Box sx={{ px: 1.25, py: 1, borderRadius: 1.25, border: `1px solid ${nh.border}`, bgcolor: "rgba(255,255,255,0.06)" }}>
-                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>OVERALL</Typography>
-                <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
-                  {rankWithCohort(runner.rank_overall, stats.cohort_size_overall)}
-                </Typography>
-              </Box>
-              <Box sx={{ px: 1.25, py: 1, borderRadius: 1.25, border: `1px solid ${nh.border}`, bgcolor: "rgba(255,255,255,0.06)" }}>
-                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>GENDER</Typography>
-                <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
-                  {rankWithCohort(runner.position_gender, stats.cohort_size_gender)}
-                </Typography>
-              </Box>
-              <Box sx={{ px: 1.25, py: 1, borderRadius: 1.25, border: `1px solid ${nh.border}`, bgcolor: "rgba(255,255,255,0.06)" }}>
-                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>CATEGORY</Typography>
-                <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
-                  {rankWithCohort(runner.rank_category, stats.cohort_size_category)}
-                </Typography>
-              </Box>
+        <Box sx={{ mt: 1.5 }}>
+          <Typography
+            sx={{
+              fontFamily: nh.mono,
+              fontSize: "0.65rem",
+              color: nh.muted,
+              letterSpacing: "0.08em",
+              mb: 0.75,
+            }}
+          >
+            TOP
+          </Typography>
+          <Box sx={statRowSx}>
+            <Box
+              sx={{
+                px: 1.25,
+                py: 1,
+                borderRadius: 1.25,
+                border: `1px solid ${nh.border}`,
+                bgcolor: "rgba(255,255,255,0.06)",
+              }}
+            >
+              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>
+                OVERALL
+              </Typography>
+              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
+                {topPct(stats.faster_than_pct_overall)}
+              </Typography>
             </Box>
-          </Box>
-
-          <Box sx={{ mt: 1.5 }}>
-            <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted, letterSpacing: "0.08em", mb: 0.75 }}>
-              TOP
-            </Typography>
-            <Box sx={statRowSx}>
-              <Box sx={{ px: 1.25, py: 1, borderRadius: 1.25, border: `1px solid ${nh.border}`, bgcolor: "rgba(255,255,255,0.06)" }}>
-                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>OVERALL</Typography>
-                <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>{topPct(stats.faster_than_pct_overall)}</Typography>
-              </Box>
-              <Box sx={{ px: 1.25, py: 1, borderRadius: 1.25, border: `1px solid ${nh.border}`, bgcolor: "rgba(255,255,255,0.06)" }}>
-                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>GENDER</Typography>
-                <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>{topPct(stats.faster_than_pct_gender)}</Typography>
-              </Box>
-              <Box sx={{ px: 1.25, py: 1, borderRadius: 1.25, border: `1px solid ${nh.border}`, bgcolor: "rgba(255,255,255,0.06)" }}>
-                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>CATEGORY</Typography>
-                <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>{topPct(stats.faster_than_pct_category)}</Typography>
-              </Box>
+            <Box
+              sx={{
+                px: 1.25,
+                py: 1,
+                borderRadius: 1.25,
+                border: `1px solid ${nh.border}`,
+                bgcolor: "rgba(255,255,255,0.06)",
+              }}
+            >
+              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>
+                GENDER
+              </Typography>
+              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
+                {topPct(stats.faster_than_pct_gender)}
+              </Typography>
             </Box>
-          </Box>
-
-          <Box sx={{ mt: 1.5 }}>
-            <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted, letterSpacing: "0.08em", mb: 0.75 }}>
-              FASTER THAN
-            </Typography>
-            <Box sx={statRowSx}>
-              <Box sx={{ px: 1.25, py: 1, borderRadius: 1.25, border: `1px solid ${nh.border}`, bgcolor: "rgba(255,255,255,0.06)" }}>
-                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>OVERALL</Typography>
-                <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>{pct(stats.faster_than_pct_overall)}</Typography>
-              </Box>
-              <Box sx={{ px: 1.25, py: 1, borderRadius: 1.25, border: `1px solid ${nh.border}`, bgcolor: "rgba(255,255,255,0.06)" }}>
-                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>GENDER</Typography>
-                <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>{pct(stats.faster_than_pct_gender)}</Typography>
-              </Box>
-              <Box sx={{ px: 1.25, py: 1, borderRadius: 1.25, border: `1px solid ${nh.border}`, bgcolor: "rgba(255,255,255,0.06)" }}>
-                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>CATEGORY</Typography>
-                <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>{pct(stats.faster_than_pct_category)}</Typography>
-              </Box>
+            <Box
+              sx={{
+                px: 1.25,
+                py: 1,
+                borderRadius: 1.25,
+                border: `1px solid ${nh.border}`,
+                bgcolor: "rgba(255,255,255,0.06)",
+              }}
+            >
+              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>
+                CATEGORY
+              </Typography>
+              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
+                {topPct(stats.faster_than_pct_category)}
+              </Typography>
             </Box>
           </Box>
         </Box>
 
-        <Box sx={{ border: `1px solid ${nh.border}`, borderRadius: 2, bgcolor: nh.card, p: { xs: 2, sm: 2.5 } }}>
-          <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue, letterSpacing: "0.08em", mb: 1 }}>
-            OTHER RACES
+        <Box sx={{ mt: 1.5 }}>
+          <Typography
+            sx={{
+              fontFamily: nh.mono,
+              fontSize: "0.65rem",
+              color: nh.muted,
+              letterSpacing: "0.08em",
+              mb: 0.75,
+            }}
+          >
+            FASTER THAN
           </Typography>
-          {otherRacesLoading ? (
-            <CircularProgress size={20} sx={{ color: nh.blue }} />
-          ) : otherRaceRows.length === 0 ? (
-            <Typography sx={{ color: nh.muted }}>No other race results found for this runner.</Typography>
-          ) : (
-            <Box sx={{ display: "grid", gap: 1 }}>
-              {otherRaceRows.map((row) => (
-                <Box key={row.result_id} sx={{ border: `1px solid ${nh.border}`, borderRadius: 1.5, p: 1.25, bgcolor: "rgba(255,255,255,0.03)" }}>
+          <Box sx={statRowSx}>
+            <Box
+              sx={{
+                px: 1.25,
+                py: 1,
+                borderRadius: 1.25,
+                border: `1px solid ${nh.border}`,
+                bgcolor: "rgba(255,255,255,0.06)",
+              }}
+            >
+              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>
+                OVERALL
+              </Typography>
+              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
+                {pct(stats.faster_than_pct_overall)}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                px: 1.25,
+                py: 1,
+                borderRadius: 1.25,
+                border: `1px solid ${nh.border}`,
+                bgcolor: "rgba(255,255,255,0.06)",
+              }}
+            >
+              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>
+                GENDER
+              </Typography>
+              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
+                {pct(stats.faster_than_pct_gender)}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                px: 1.25,
+                py: 1,
+                borderRadius: 1.25,
+                border: `1px solid ${nh.border}`,
+                bgcolor: "rgba(255,255,255,0.06)",
+              }}
+            >
+              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>
+                CATEGORY
+              </Typography>
+              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
+                {pct(stats.faster_than_pct_category)}
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+
+      <Box
+        sx={{
+          border: `1px solid ${nh.border}`,
+          borderRadius: 2,
+          bgcolor: nh.card,
+          p: { xs: 2, sm: 2.5 },
+        }}
+      >
+        <Typography
+          sx={{
+            fontFamily: nh.mono,
+            fontSize: "0.65rem",
+            color: nh.blue,
+            letterSpacing: "0.08em",
+            mb: 1,
+          }}
+        >
+          OTHER RACES
+        </Typography>
+        {otherRacesLoading ? (
+          <CircularProgress size={20} sx={{ color: nh.blue }} />
+        ) : otherRaceRows.length === 0 ? (
+          <Typography sx={{ color: nh.muted }}>
+            No other race results found for this runner.
+          </Typography>
+        ) : (
+          <Box sx={{ display: "grid", gap: 1 }}>
+            {otherRaceRows.map((row) => (
+              <Box
+                key={row.result_id}
+                sx={{
+                  border: `1px solid ${nh.border}`,
+                  borderRadius: 1.5,
+                  p: 1.25,
+                  bgcolor: "rgba(255,255,255,0.03)",
+                }}
+              >
+                <MuiLink
+                  component={RouterLink}
+                  to={`/races/${row.race_id}/runners/${row.result_id}`}
+                  underline="none"
+                  sx={{
+                    color: nh.white,
+                    fontFamily: nh.sans,
+                    fontWeight: 700,
+                    "&:hover": { color: nh.blue },
+                  }}
+                >
+                  {formatRunnerNames(row)}
+                </MuiLink>
+                <Box sx={{ mt: 0.5 }}>
                   <MuiLink
                     component={RouterLink}
-                    to={`/races/${row.race_id}/runners/${row.result_id}`}
-                    underline="none"
-                    sx={{ color: nh.white, fontFamily: nh.sans, fontWeight: 700, "&:hover": { color: nh.blue } }}
+                    to={racePath(row.race_slug)}
+                    underline="hover"
+                    sx={{ color: nh.muted, fontFamily: nh.sans }}
                   >
-                    {formatRunnerNames(row)}
+                    {row.race_name}
                   </MuiLink>
-                  <Box sx={{ mt: 0.5 }}>
-                    <MuiLink component={RouterLink} to={racePath(row.race_slug)} underline="hover" sx={{ color: nh.muted, fontFamily: nh.sans }}>
-                      {row.race_name}
-                    </MuiLink>
-                  </Box>
-                  <Typography sx={{ mt: 0.6, color: nh.muted, fontFamily: nh.mono, fontSize: "0.7rem" }}>
-                    OFFICIAL {formatSeconds(row.official_time_seconds)} // NET{" "}
-                    {row.net_time_seconds == null ? "N/A" : formatSeconds(row.net_time_seconds)} // RANK{" "}
-                    {row.rank_overall ?? row.result_status ?? "—"}
-                  </Typography>
                 </Box>
-              ))}
-            </Box>
-          )}
-        </Box>
+                <Typography
+                  sx={{ mt: 0.6, color: nh.muted, fontFamily: nh.mono, fontSize: "0.7rem" }}
+                >
+                  OFFICIAL {formatSeconds(row.official_time_seconds)} {"//"} NET{" "}
+                  {row.net_time_seconds == null ? "N/A" : formatSeconds(row.net_time_seconds)}{" "}
+                  {"//"} RANK {row.rank_overall ?? row.result_status ?? "—"}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        )}
+      </Box>
     </>
   );
 }

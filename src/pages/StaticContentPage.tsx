@@ -14,7 +14,12 @@ interface StaticContentPageProps {
   sections: ReadonlyArray<{ heading: string; body: ReadonlyArray<string> }>;
 }
 
-export function StaticContentPage({ title, canonicalPath, intro, sections }: StaticContentPageProps) {
+export function StaticContentPage({
+  title,
+  canonicalPath,
+  intro,
+  sections,
+}: StaticContentPageProps) {
   const { mode } = useThemeMode();
   const nh = createNewHomeTheme(mode);
   const [site, setSite] = useState<SiteAggregates | null>(null);
@@ -57,25 +62,46 @@ export function StaticContentPage({ title, canonicalPath, intro, sections }: Sta
         flexDirection: "column",
       }}
     >
-      <SeoHead title={`${title} | speedhare`} description={pageDescription} canonicalPath={canonicalPath} />
+      <SeoHead
+        title={`${title} | speedhare`}
+        description={pageDescription}
+        canonicalPath={canonicalPath}
+      />
       <NewHomeNav activeDistance="all" navContext="all-races" />
 
       <Box sx={{ flex: 1, maxWidth: 840, width: "100%", mx: "auto", px: { xs: 2, sm: 3 }, py: 4 }}>
-        <Typography sx={{ fontFamily: nh.mono, fontSize: "0.7rem", letterSpacing: "0.14em", color: nh.blue, mb: 0.5 }}>
+        <Typography
+          sx={{
+            fontFamily: nh.mono,
+            fontSize: "0.7rem",
+            letterSpacing: "0.14em",
+            color: nh.blue,
+            mb: 0.5,
+          }}
+        >
           SPEEDHARE
         </Typography>
-        <Typography component="h1" sx={{ fontFamily: nh.sans, fontWeight: 800, fontSize: { xs: "1.9rem", sm: "2.4rem" }, mb: 2 }}>
+        <Typography
+          component="h1"
+          sx={{
+            fontFamily: nh.sans,
+            fontWeight: 800,
+            fontSize: { xs: "1.9rem", sm: "2.4rem" },
+            mb: 2,
+          }}
+        >
           {title}
         </Typography>
         {intro ? (
-          <Typography sx={{ color: nh.muted, lineHeight: 1.8, mb: 3 }}>
-            {intro}
-          </Typography>
+          <Typography sx={{ color: nh.muted, lineHeight: 1.8, mb: 3 }}>{intro}</Typography>
         ) : null}
 
         {sections.map((section) => (
           <Box key={section.heading} sx={{ mb: 3 }}>
-            <Typography component="h2" sx={{ fontFamily: nh.sans, fontWeight: 700, fontSize: "1.15rem", mb: 1 }}>
+            <Typography
+              component="h2"
+              sx={{ fontFamily: nh.sans, fontWeight: 700, fontSize: "1.15rem", mb: 1 }}
+            >
               {section.heading}
             </Typography>
             {section.body.map((paragraph) => (

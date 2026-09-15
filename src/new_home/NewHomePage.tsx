@@ -14,9 +14,11 @@ export function NewHomePage() {
   const { mode } = useThemeMode();
   const nh = createNewHomeTheme(mode);
   const [races, setRaces] = useState<RaceListItem[]>([]);
-  const [site, setSite] = useState<{ totalRaces: number; totalResults: number; distinctRaceTypes: number } | null>(
-    null,
-  );
+  const [site, setSite] = useState<{
+    totalRaces: number;
+    totalResults: number;
+    distinctRaceTypes: number;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -122,7 +124,14 @@ export function NewHomePage() {
             }}
           >
             <Box sx={{ flex: 1, height: "1px", bgcolor: nh.border }} />
-            <Typography sx={{ fontFamily: nh.mono, fontSize: "0.75rem", color: nh.muted, whiteSpace: "nowrap" }}>
+            <Typography
+              sx={{
+                fontFamily: nh.mono,
+                fontSize: "0.75rem",
+                color: nh.muted,
+                whiteSpace: "nowrap",
+              }}
+            >
               {site.totalRaces} EVENTS
             </Typography>
             <Box sx={{ flex: 1, height: "1px", bgcolor: nh.border }} />

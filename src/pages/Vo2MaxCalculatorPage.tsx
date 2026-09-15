@@ -82,24 +82,139 @@ const RACE_DISTANCES: RaceDistance[] = [
 
 const FITNESS_NORMS: Record<Gender, NormRow[]> = {
   male: [
-    { label: "18-29", minAge: 18, maxAge: 29, poorUpper: 35, fairUpper: 41, averageUpper: 46, goodUpper: 51, excellentUpper: 60 },
-    { label: "30-39", minAge: 30, maxAge: 39, poorUpper: 33, fairUpper: 39, averageUpper: 42, goodUpper: 48, excellentUpper: 56 },
-    { label: "40-49", minAge: 40, maxAge: 49, poorUpper: 31, fairUpper: 34, averageUpper: 38, goodUpper: 42, excellentUpper: 51 },
-    { label: "50-59", minAge: 50, maxAge: 59, poorUpper: 28, fairUpper: 31, averageUpper: 35, goodUpper: 38, excellentUpper: 45 },
-    { label: "60-69", minAge: 60, maxAge: 69, poorUpper: 25, fairUpper: 28, averageUpper: 31, goodUpper: 35, excellentUpper: 41 },
-    { label: "70+", minAge: 70, maxAge: null, poorUpper: 22, fairUpper: 25, averageUpper: 28, goodUpper: 32, excellentUpper: 37 },
+    {
+      label: "18-29",
+      minAge: 18,
+      maxAge: 29,
+      poorUpper: 35,
+      fairUpper: 41,
+      averageUpper: 46,
+      goodUpper: 51,
+      excellentUpper: 60,
+    },
+    {
+      label: "30-39",
+      minAge: 30,
+      maxAge: 39,
+      poorUpper: 33,
+      fairUpper: 39,
+      averageUpper: 42,
+      goodUpper: 48,
+      excellentUpper: 56,
+    },
+    {
+      label: "40-49",
+      minAge: 40,
+      maxAge: 49,
+      poorUpper: 31,
+      fairUpper: 34,
+      averageUpper: 38,
+      goodUpper: 42,
+      excellentUpper: 51,
+    },
+    {
+      label: "50-59",
+      minAge: 50,
+      maxAge: 59,
+      poorUpper: 28,
+      fairUpper: 31,
+      averageUpper: 35,
+      goodUpper: 38,
+      excellentUpper: 45,
+    },
+    {
+      label: "60-69",
+      minAge: 60,
+      maxAge: 69,
+      poorUpper: 25,
+      fairUpper: 28,
+      averageUpper: 31,
+      goodUpper: 35,
+      excellentUpper: 41,
+    },
+    {
+      label: "70+",
+      minAge: 70,
+      maxAge: null,
+      poorUpper: 22,
+      fairUpper: 25,
+      averageUpper: 28,
+      goodUpper: 32,
+      excellentUpper: 37,
+    },
   ],
   female: [
-    { label: "18-29", minAge: 18, maxAge: 29, poorUpper: 28, fairUpper: 32, averageUpper: 37, goodUpper: 41, excellentUpper: 56 },
-    { label: "30-39", minAge: 30, maxAge: 39, poorUpper: 26, fairUpper: 30, averageUpper: 34, goodUpper: 37, excellentUpper: 52 },
-    { label: "40-49", minAge: 40, maxAge: 49, poorUpper: 24, fairUpper: 27, averageUpper: 30, goodUpper: 33, excellentUpper: 45 },
-    { label: "50-59", minAge: 50, maxAge: 59, poorUpper: 22, fairUpper: 24, averageUpper: 27, goodUpper: 30, excellentUpper: 40 },
-    { label: "60-69", minAge: 60, maxAge: 69, poorUpper: 20, fairUpper: 22, averageUpper: 25, goodUpper: 28, excellentUpper: 37 },
-    { label: "70+", minAge: 70, maxAge: null, poorUpper: 17, fairUpper: 19, averageUpper: 22, goodUpper: 25, excellentUpper: 32 },
+    {
+      label: "18-29",
+      minAge: 18,
+      maxAge: 29,
+      poorUpper: 28,
+      fairUpper: 32,
+      averageUpper: 37,
+      goodUpper: 41,
+      excellentUpper: 56,
+    },
+    {
+      label: "30-39",
+      minAge: 30,
+      maxAge: 39,
+      poorUpper: 26,
+      fairUpper: 30,
+      averageUpper: 34,
+      goodUpper: 37,
+      excellentUpper: 52,
+    },
+    {
+      label: "40-49",
+      minAge: 40,
+      maxAge: 49,
+      poorUpper: 24,
+      fairUpper: 27,
+      averageUpper: 30,
+      goodUpper: 33,
+      excellentUpper: 45,
+    },
+    {
+      label: "50-59",
+      minAge: 50,
+      maxAge: 59,
+      poorUpper: 22,
+      fairUpper: 24,
+      averageUpper: 27,
+      goodUpper: 30,
+      excellentUpper: 40,
+    },
+    {
+      label: "60-69",
+      minAge: 60,
+      maxAge: 69,
+      poorUpper: 20,
+      fairUpper: 22,
+      averageUpper: 25,
+      goodUpper: 28,
+      excellentUpper: 37,
+    },
+    {
+      label: "70+",
+      minAge: 70,
+      maxAge: null,
+      poorUpper: 17,
+      fairUpper: 19,
+      averageUpper: 22,
+      goodUpper: 25,
+      excellentUpper: 32,
+    },
   ],
 };
 
-const CATEGORY_ORDER: FitnessCategory[] = ["Poor", "Fair", "Average", "Good", "Excellent", "Superior"];
+const CATEGORY_ORDER: FitnessCategory[] = [
+  "Poor",
+  "Fair",
+  "Average",
+  "Good",
+  "Excellent",
+  "Superior",
+];
 
 function parsePositiveNumber(value: string) {
   if (!value.trim()) return null;
@@ -167,7 +282,11 @@ function formatDuration(totalSeconds: number) {
 }
 
 function getNormRow(age: number, gender: Gender) {
-  return FITNESS_NORMS[gender].find((row) => age >= row.minAge && (row.maxAge == null || age <= row.maxAge)) ?? null;
+  return (
+    FITNESS_NORMS[gender].find(
+      (row) => age >= row.minAge && (row.maxAge == null || age <= row.maxAge),
+    ) ?? null
+  );
 }
 
 function getRating(vo2max: number, age: number, gender: Gender): RatingResult | null {
@@ -181,7 +300,11 @@ function getRating(vo2max: number, age: number, gender: Gender): RatingResult | 
     return { category: "Fair", categoryBlurb: "A developing aerobic base with room to grow.", row };
   }
   if (vo2max <= row.averageUpper) {
-    return { category: "Average", categoryBlurb: "Right around the middle of the general-population range.", row };
+    return {
+      category: "Average",
+      categoryBlurb: "Right around the middle of the general-population range.",
+      row,
+    };
   }
   if (vo2max <= row.goodUpper) {
     return { category: "Good", categoryBlurb: "Stronger than average for this age group.", row };
@@ -189,7 +312,11 @@ function getRating(vo2max: number, age: number, gender: Gender): RatingResult | 
   if (vo2max <= row.excellentUpper) {
     return { category: "Excellent", categoryBlurb: "Well above average aerobic fitness.", row };
   }
-  return { category: "Superior", categoryBlurb: "An exceptional score relative to the general population.", row };
+  return {
+    category: "Superior",
+    categoryBlurb: "An exceptional score relative to the general population.",
+    row,
+  };
 }
 
 function getCategoryRange(category: FitnessCategory, row: NormRow) {
@@ -337,7 +464,9 @@ export function Vo2MaxCalculatorPage() {
           return;
         }
         if (customMeters < 1500 || customMeters > 42195) {
-          setError("For the Daniels-style race estimate, use a distance between 1500 m and marathon.");
+          setError(
+            "For the Daniels-style race estimate, use a distance between 1500 m and marathon.",
+          );
           setResult(null);
           return;
         }
@@ -352,7 +481,10 @@ export function Vo2MaxCalculatorPage() {
 
       const timeMinutes = timeSeconds / 60;
       const velocityMetersPerMinute = distanceMeters / timeMinutes;
-      const oxygenCost = -4.6 + 0.182258 * velocityMetersPerMinute + 0.000104 * velocityMetersPerMinute * velocityMetersPerMinute;
+      const oxygenCost =
+        -4.6 +
+        0.182258 * velocityMetersPerMinute +
+        0.000104 * velocityMetersPerMinute * velocityMetersPerMinute;
       const vo2Fraction =
         0.8 +
         0.1894393 * Math.exp(-0.012778 * timeMinutes) +
@@ -365,7 +497,9 @@ export function Vo2MaxCalculatorPage() {
     }
 
     if (!Number.isFinite(vo2max) || vo2max <= 0) {
-      setError("That combination of inputs produced an invalid estimate. Please double-check the values.");
+      setError(
+        "That combination of inputs produced an invalid estimate. Please double-check the values.",
+      );
       setResult(null);
       return;
     }
@@ -425,11 +559,21 @@ export function Vo2MaxCalculatorPage() {
             >
               <Stack spacing={2.25}>
                 <Box>
-                  <Typography component="h1" sx={{ fontWeight: 800, fontSize: { xs: "1.65rem", sm: "2.1rem" }, mb: 0.75 }}>
+                  <Typography
+                    component="h1"
+                    sx={{ fontWeight: 800, fontSize: { xs: "1.65rem", sm: "2.1rem" }, mb: 0.75 }}
+                  >
                     VO2 Max Calculator
                   </Typography>
-                  <Typography sx={{ color: nh.muted, fontSize: { xs: "0.93rem", sm: "0.9rem" }, lineHeight: 1.6 }}>
-                    Estimate aerobic fitness from either a 12-minute Cooper test or a recent race result. Add age and gender to compare your score with general-population norms.
+                  <Typography
+                    sx={{
+                      color: nh.muted,
+                      fontSize: { xs: "0.93rem", sm: "0.9rem" },
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    Estimate aerobic fitness from either a 12-minute Cooper test or a recent race
+                    result. Add age and gender to compare your score with general-population norms.
                   </Typography>
                 </Box>
 
@@ -441,7 +585,12 @@ export function Vo2MaxCalculatorPage() {
                       resetOutput();
                     }}
                     sx={{
-                      "& .MuiTab-root": { color: nh.muted, textTransform: "none", minHeight: 44, fontWeight: 600 },
+                      "& .MuiTab-root": {
+                        color: nh.muted,
+                        textTransform: "none",
+                        minHeight: 44,
+                        fontWeight: 600,
+                      },
                       "& .Mui-selected": { color: nh.white },
                       "& .MuiTabs-indicator": { backgroundColor: nh.blue },
                     }}
@@ -585,10 +734,20 @@ export function Vo2MaxCalculatorPage() {
                 </Box>
 
                 <Stack direction="row" spacing={1.5} justifyContent="flex-end">
-                  <Button variant="contained" size="small" onClick={calculate} sx={containedButtonSx(nh)}>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    onClick={calculate}
+                    sx={containedButtonSx(nh)}
+                  >
                     Calculate
                   </Button>
-                  <Button variant="outlined" size="small" onClick={clearForm} sx={outlinedButtonSx(nh)}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={clearForm}
+                    sx={outlinedButtonSx(nh)}
+                  >
                     Clear
                   </Button>
                 </Stack>
@@ -614,12 +773,16 @@ export function Vo2MaxCalculatorPage() {
                   </Typography>
                   {result ? (
                     <Stack spacing={0.8}>
-                      <Typography sx={{ color: nh.muted, fontSize: "0.9rem" }}>{result.heading}</Typography>
+                      <Typography sx={{ color: nh.muted, fontSize: "0.9rem" }}>
+                        {result.heading}
+                      </Typography>
                       <Typography sx={{ fontWeight: 800, fontSize: { xs: "2rem", sm: "2.4rem" } }}>
                         {formatNumber(result.vo2max, 1)} ml/kg/min
                       </Typography>
                       <Typography sx={{ color: nh.white }}>{result.summary}</Typography>
-                      <Typography sx={{ color: nh.muted, fontSize: "0.9rem" }}>{result.formula}</Typography>
+                      <Typography sx={{ color: nh.muted, fontSize: "0.9rem" }}>
+                        {result.formula}
+                      </Typography>
                     </Stack>
                   ) : (
                     <Typography sx={{ color: nh.muted }}>
@@ -637,7 +800,9 @@ export function Vo2MaxCalculatorPage() {
                       bgcolor: "rgba(255,255,255,0.02)",
                     }}
                   >
-                    <Typography sx={{ fontWeight: 700, mb: 0.5 }}>Age and gender comparison</Typography>
+                    <Typography sx={{ fontWeight: 700, mb: 0.5 }}>
+                      Age and gender comparison
+                    </Typography>
                     <Stack spacing={1.25}>
                       <Box
                         sx={{
@@ -663,9 +828,12 @@ export function Vo2MaxCalculatorPage() {
                         <Typography sx={{ fontWeight: 700 }}>{result.rating.category}</Typography>
                       </Box>
                       <Typography sx={{ color: nh.white }}>
-                        {result.rating.categoryBlurb} Compared with {gender} norms for ages {result.rating.row.label}.
+                        {result.rating.categoryBlurb} Compared with {gender} norms for ages{" "}
+                        {result.rating.row.label}.
                       </Typography>
-                      <Typography sx={{ color: nh.muted, fontSize: "0.9rem" }}>{result.ratingNote}</Typography>
+                      <Typography sx={{ color: nh.muted, fontSize: "0.9rem" }}>
+                        {result.ratingNote}
+                      </Typography>
                       <Box
                         sx={{
                           display: "grid",
@@ -682,12 +850,18 @@ export function Vo2MaxCalculatorPage() {
                                 p: 1,
                                 borderRadius: 1.5,
                                 border: `1px solid ${isActive ? getCategoryColor(category, nh) : nh.border}`,
-                                bgcolor: isActive ? `${getCategoryColor(category, nh)}14` : "transparent",
+                                bgcolor: isActive
+                                  ? `${getCategoryColor(category, nh)}14`
+                                  : "transparent",
                               }}
                             >
-                              <Typography sx={{ fontWeight: 700, fontSize: "0.85rem", mb: 0.35 }}>{category}</Typography>
+                              <Typography sx={{ fontWeight: 700, fontSize: "0.85rem", mb: 0.35 }}>
+                                {category}
+                              </Typography>
                               <Typography sx={{ color: nh.muted, fontSize: "0.82rem" }}>
-                                {getCategoryRange(category, result.rating.row)}
+                                {result.rating
+                                  ? getCategoryRange(category, result.rating.row)
+                                  : null}
                               </Typography>
                             </Box>
                           );
@@ -711,14 +885,23 @@ export function Vo2MaxCalculatorPage() {
               <Stack spacing={1.25}>
                 <Typography sx={{ fontWeight: 700 }}>How to use it</Typography>
                 <Typography sx={{ color: nh.muted, lineHeight: 1.7 }}>
-                  Use the Cooper option if you have a 12-minute field test. Use the race option for a recent result between 1500 m and marathon. The race calculator applies Daniels-style equations that are commonly used for VDOT-style performance estimates.
+                  Use the Cooper option if you have a 12-minute field test. Use the race option for
+                  a recent result between 1500 m and marathon. The race calculator applies
+                  Daniels-style equations that are commonly used for VDOT-style performance
+                  estimates.
                 </Typography>
                 <Typography sx={{ color: nh.muted, lineHeight: 1.7 }}>
-                  Age and gender do not change the underlying VO2 max estimate. They only provide a general-population comparison band so the raw number is easier to interpret.
+                  Age and gender do not change the underlying VO2 max estimate. They only provide a
+                  general-population comparison band so the raw number is easier to interpret.
                 </Typography>
                 <Typography sx={{ color: nh.muted, lineHeight: 1.7 }}>
-                  This is an estimate, not a lab measurement. For training planning, you can also use the{" "}
-                  <Link component={RouterLink} to="/speed-distance-time-calculator" sx={{ color: nh.blue }}>
+                  This is an estimate, not a lab measurement. For training planning, you can also
+                  use the{" "}
+                  <Link
+                    component={RouterLink}
+                    to="/speed-distance-time-calculator"
+                    sx={{ color: nh.blue }}
+                  >
                     speed, distance, and time calculator
                   </Link>
                   .

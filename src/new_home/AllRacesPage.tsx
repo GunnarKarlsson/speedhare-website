@@ -88,10 +88,7 @@ export function AllRacesPage() {
         description="Browse Hong Kong road race results across 5K, 10K, half marathon, and marathon events."
         canonicalPath="/all-races"
       />
-      <NewHomeNav
-        navContext="all-races"
-        activeDistance={activeDistance}
-      />
+      <NewHomeNav navContext="all-races" activeDistance={activeDistance} />
       <Box sx={{ flex: 1, maxWidth: 800, width: "100%", mx: "auto", px: { xs: 2, sm: 3 }, py: 3 }}>
         <Typography
           sx={{
@@ -148,7 +145,9 @@ export function AllRacesPage() {
                 border: "0 !important",
                 color: nh.muted,
                 "& .MuiIconButton-root": { color: nh.white },
-                "& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows": { color: nh.muted },
+                "& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows": {
+                  color: nh.muted,
+                },
                 "& .MuiSelect-select, & .MuiInputBase-input": { color: nh.white },
                 "& .MuiOutlinedInput-notchedOutline": { borderColor: nh.border },
                 "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
@@ -168,7 +167,9 @@ export function AllRacesPage() {
           }}
         >
           <Box sx={{ flex: 1, height: "1px", bgcolor: nh.border }} />
-          <Typography sx={{ fontFamily: nh.mono, fontSize: "0.75rem", color: nh.muted, whiteSpace: "nowrap" }}>
+          <Typography
+            sx={{ fontFamily: nh.mono, fontSize: "0.75rem", color: nh.muted, whiteSpace: "nowrap" }}
+          >
             {filtered.length} EVENTS
           </Typography>
           <Box sx={{ flex: 1, height: "1px", bgcolor: nh.border }} />

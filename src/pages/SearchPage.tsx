@@ -112,10 +112,26 @@ export function SearchPage() {
       <NewHomeNav activeDistance="all" navContext="all-races" />
 
       <Box sx={{ flex: 1, maxWidth: 800, width: "100%", mx: "auto", px: { xs: 2, sm: 3 }, py: 3 }}>
-        <Typography sx={{ fontFamily: nh.mono, fontSize: "0.7rem", letterSpacing: "0.14em", color: nh.blue, mb: 0.5 }}>
+        <Typography
+          sx={{
+            fontFamily: nh.mono,
+            fontSize: "0.7rem",
+            letterSpacing: "0.14em",
+            color: nh.blue,
+            mb: 0.5,
+          }}
+        >
           SEARCH
         </Typography>
-        <Typography component="h1" sx={{ fontFamily: nh.sans, fontWeight: 800, fontSize: { xs: "1.75rem", sm: "2.25rem" }, mb: 2 }}>
+        <Typography
+          component="h1"
+          sx={{
+            fontFamily: nh.sans,
+            fontWeight: 800,
+            fontSize: { xs: "1.75rem", sm: "2.25rem" },
+            mb: 2,
+          }}
+        >
           Search results
         </Typography>
 
@@ -143,7 +159,12 @@ export function SearchPage() {
             input: {
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton edge="end" aria-label="search" onClick={submitSearch} sx={{ color: nh.muted }}>
+                  <IconButton
+                    edge="end"
+                    aria-label="search"
+                    onClick={submitSearch}
+                    sx={{ color: nh.muted }}
+                  >
                     <SearchIcon />
                   </IconButton>
                 </InputAdornment>
@@ -162,7 +183,10 @@ export function SearchPage() {
               Query: “{q}”
             </Typography>
             {error ? (
-              <Alert severity="error" sx={{ mb: 2, bgcolor: "rgba(248,113,113,0.12)", color: "#fecaca" }}>
+              <Alert
+                severity="error"
+                sx={{ mb: 2, bgcolor: "rgba(248,113,113,0.12)", color: "#fecaca" }}
+              >
                 {error}
               </Alert>
             ) : null}
@@ -170,7 +194,15 @@ export function SearchPage() {
 
             {!loading ? (
               <>
-                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", letterSpacing: "0.12em", color: nh.blue, mb: 1 }}>
+                <Typography
+                  sx={{
+                    fontFamily: nh.mono,
+                    fontSize: "0.65rem",
+                    letterSpacing: "0.12em",
+                    color: nh.blue,
+                    mb: 1,
+                  }}
+                >
                   RACES
                 </Typography>
                 {raceRows.length === 0 ? (
@@ -199,7 +231,15 @@ export function SearchPage() {
                             cursor: "pointer",
                           }}
                         >
-                          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, alignItems: "center", mb: 1 }}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexWrap: "wrap",
+                              gap: 1,
+                              alignItems: "center",
+                              mb: 1,
+                            }}
+                          >
                             <Typography
                               sx={{
                                 fontFamily: nh.mono,
@@ -216,14 +256,24 @@ export function SearchPage() {
                             >
                               {formatRaceType(r.race_type).toUpperCase()}
                             </Typography>
-                            <Typography sx={{ fontFamily: nh.mono, fontSize: "0.72rem", color: nh.muted }}>{r.race_date}</Typography>
+                            <Typography
+                              sx={{ fontFamily: nh.mono, fontSize: "0.72rem", color: nh.muted }}
+                            >
+                              {r.race_date}
+                            </Typography>
                           </Box>
                           <MuiLink
                             component={RouterLink}
                             to={racePath(r.race_slug)}
                             onClick={(event) => event.stopPropagation()}
                             underline="none"
-                            sx={{ color: nh.white, fontFamily: nh.sans, fontWeight: 700, fontSize: "1.05rem", "&:hover": { color: nh.blue } }}
+                            sx={{
+                              color: nh.white,
+                              fontFamily: nh.sans,
+                              fontWeight: 700,
+                              fontSize: "1.05rem",
+                              "&:hover": { color: nh.blue },
+                            }}
                           >
                             {r.race_name}
                           </MuiLink>
@@ -233,7 +283,15 @@ export function SearchPage() {
                   </Box>
                 )}
 
-                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", letterSpacing: "0.12em", color: nh.blue, mb: 1 }}>
+                <Typography
+                  sx={{
+                    fontFamily: nh.mono,
+                    fontSize: "0.65rem",
+                    letterSpacing: "0.12em",
+                    color: nh.blue,
+                    mb: 1,
+                  }}
+                >
                   RUNNERS
                 </Typography>
                 {runnerRows.length === 0 ? (
@@ -265,7 +323,13 @@ export function SearchPage() {
                           to={`/races/${r.race_id}/runners/${r.result_id}`}
                           onClick={(event) => event.stopPropagation()}
                           underline="none"
-                          sx={{ color: nh.white, fontFamily: nh.sans, fontWeight: 700, fontSize: "1.05rem", "&:hover": { color: nh.blue } }}
+                          sx={{
+                            color: nh.white,
+                            fontFamily: nh.sans,
+                            fontWeight: 700,
+                            fontSize: "1.05rem",
+                            "&:hover": { color: nh.blue },
+                          }}
                         >
                           {formatRunnerNames(r)}
                         </MuiLink>
@@ -280,10 +344,17 @@ export function SearchPage() {
                             {r.race_name}
                           </MuiLink>
                         </Box>
-                        <Typography sx={{ mt: 0.75, color: nh.muted, fontFamily: nh.mono, fontSize: "0.72rem" }}>
-                          OFFICIAL {formatSeconds(r.official_time_seconds)} // NET{" "}
-                          {r.net_time_seconds == null ? "N/A" : formatSeconds(r.net_time_seconds)} // RANK{" "}
-                          {r.rank_overall ?? r.result_status ?? "—"}
+                        <Typography
+                          sx={{
+                            mt: 0.75,
+                            color: nh.muted,
+                            fontFamily: nh.mono,
+                            fontSize: "0.72rem",
+                          }}
+                        >
+                          OFFICIAL {formatSeconds(r.official_time_seconds)} {"//"} NET{" "}
+                          {r.net_time_seconds == null ? "N/A" : formatSeconds(r.net_time_seconds)}{" "}
+                          {"//"} RANK {r.rank_overall ?? r.result_status ?? "—"}
                         </Typography>
                       </Box>
                     ))}

@@ -113,13 +113,31 @@ export function Layout() {
       </Container>
       <Box component="footer" sx={{ py: 2, textAlign: "center", color: "text.secondary" }}>
         <Box sx={{ display: "flex", justifyContent: "center", gap: 2, flexWrap: "wrap", mb: 0.5 }}>
-          <MuiLink component={RouterLink} to="/about" underline="hover" color="inherit" variant="caption">
+          <MuiLink
+            component={RouterLink}
+            to="/about"
+            underline="hover"
+            color="inherit"
+            variant="caption"
+          >
             About
           </MuiLink>
-          <MuiLink component={RouterLink} to="/terms" underline="hover" color="inherit" variant="caption">
+          <MuiLink
+            component={RouterLink}
+            to="/terms"
+            underline="hover"
+            color="inherit"
+            variant="caption"
+          >
             T&C
           </MuiLink>
-          <MuiLink component={RouterLink} to="/data-policy" underline="hover" color="inherit" variant="caption">
+          <MuiLink
+            component={RouterLink}
+            to="/data-policy"
+            underline="hover"
+            color="inherit"
+            variant="caption"
+          >
             Data Policy
           </MuiLink>
         </Box>

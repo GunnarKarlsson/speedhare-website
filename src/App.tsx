@@ -38,9 +38,15 @@ export default function App() {
         <Route path="races/:idOrSlug" element={<RaceDetailPage />} />
         <Route path="races/:raceId/runners/:resultId" element={<RunnerPage />} />
         <Route path="search" element={<SearchPage />} />
-        <Route path="stats" element={<Navigate to="/hong-kong-road-race-stats-5k-10k-half-marathon" replace />} />
+        <Route
+          path="stats"
+          element={<Navigate to="/hong-kong-road-race-stats-5k-10k-half-marathon" replace />}
+        />
         <Route path="hong-kong-road-race-stats-5k-10k-half-marathon" element={<StatsPage />} />
-        <Route path="calculator" element={<Navigate to="/speed-distance-time-calculator" replace />} />
+        <Route
+          path="calculator"
+          element={<Navigate to="/speed-distance-time-calculator" replace />}
+        />
         <Route path="speed-distance-time-calculator" element={<CalculatorPage />} />
         <Route path="vo2max-calculator" element={<Vo2MaxCalculatorPage />} />
         <Route element={<Layout />}>

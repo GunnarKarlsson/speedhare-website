@@ -90,13 +90,11 @@ export function getRoadRaceStats() {
 }
 
 export function getSummaryStats() {
-  return fetchJson<SummaryStatsResponse>(`${API}/stats/summary`).then(
-    (data): SiteAggregates => ({
-      totalRaces: data.total_races,
-      totalResults: data.total_results,
-      distinctRaceTypes: data.distinct_race_types,
-    }),
-  );
+  return fetchJson<SummaryStatsResponse>(`${API}/stats/summary`).then((data): SiteAggregates => ({
+    totalRaces: data.total_races,
+    totalResults: data.total_results,
+    distinctRaceTypes: data.distinct_race_types,
+  }));
 }
 
 export function searchRacesByRunner(q: string) {

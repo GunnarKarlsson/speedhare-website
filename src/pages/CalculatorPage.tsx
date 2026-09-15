@@ -333,10 +333,20 @@ export function CalculatorPage() {
           >
             <Stack spacing={2.25}>
               <Box>
-                <Typography component="h1" sx={{ fontWeight: 800, fontSize: { xs: "1.5rem", sm: "2rem" }, mb: 0.75 }}>
+                <Typography
+                  component="h1"
+                  sx={{ fontWeight: 800, fontSize: { xs: "1.5rem", sm: "2rem" }, mb: 0.75 }}
+                >
                   Speed Distance Time Calculator
                 </Typography>
-                <Typography sx={{ color: nh.muted, mb: 0.4, fontSize: { xs: "0.9rem", sm: "0.85rem" }, lineHeight: 1.45 }}>
+                <Typography
+                  sx={{
+                    color: nh.muted,
+                    mb: 0.4,
+                    fontSize: { xs: "0.9rem", sm: "0.85rem" },
+                    lineHeight: 1.45,
+                  }}
+                >
                   Choose a mode, enter the known values, and calculate the result.
                 </Typography>
                 <Box
@@ -364,7 +374,8 @@ export function CalculatorPage() {
                     display: "grid",
                     gridTemplateColumns: {
                       xs: "1fr",
-                      sm: mode === "time" ? "1fr" : `minmax(0, 1fr) ${DESKTOP_UNIT_SELECTOR_WIDTH}px`,
+                      sm:
+                        mode === "time" ? "1fr" : `minmax(0, 1fr) ${DESKTOP_UNIT_SELECTOR_WIDTH}px`,
                     },
                     gap: 1.25,
                     alignItems: "start",
@@ -445,14 +456,19 @@ export function CalculatorPage() {
                     </TextField>
                   ) : null}
                 </Box>
-
               </Stack>
 
               <Stack spacing={1.5}>
                 <Box
                   sx={{
-                    display: { xs: mode === "distance" ? "none" : "grid", sm: mode === "distance" ? "none" : "grid" },
-                    gridTemplateColumns: { xs: "1fr", sm: `minmax(0, 1fr) ${DESKTOP_UNIT_SELECTOR_WIDTH}px` },
+                    display: {
+                      xs: mode === "distance" ? "none" : "grid",
+                      sm: mode === "distance" ? "none" : "grid",
+                    },
+                    gridTemplateColumns: {
+                      xs: "1fr",
+                      sm: `minmax(0, 1fr) ${DESKTOP_UNIT_SELECTOR_WIDTH}px`,
+                    },
                     gap: 1.25,
                     width: "100%",
                     alignItems: "start",
@@ -498,8 +514,14 @@ export function CalculatorPage() {
 
                 <Box
                   sx={{
-                    display: { xs: mode === "speed" ? "none" : "grid", sm: mode === "speed" ? "none" : "grid" },
-                    gridTemplateColumns: { xs: "1fr", sm: `minmax(0, 1fr) ${DESKTOP_UNIT_SELECTOR_WIDTH}px` },
+                    display: {
+                      xs: mode === "speed" ? "none" : "grid",
+                      sm: mode === "speed" ? "none" : "grid",
+                    },
+                    gridTemplateColumns: {
+                      xs: "1fr",
+                      sm: `minmax(0, 1fr) ${DESKTOP_UNIT_SELECTOR_WIDTH}px`,
+                    },
                     gap: 1.25,
                     width: "100%",
                     alignItems: "start",
@@ -556,16 +578,29 @@ export function CalculatorPage() {
                   fullWidth
                   sx={{
                     ...fieldSx(nh),
-                    display: { xs: mode === "time" ? "none" : "block", sm: mode === "time" ? "none" : "block" },
+                    display: {
+                      xs: mode === "time" ? "none" : "block",
+                      sm: mode === "time" ? "none" : "block",
+                    },
                   }}
                 />
               </Stack>
 
               <Stack direction="row" spacing={1.5} justifyContent="flex-end">
-                <Button variant="contained" size="small" onClick={calculate} sx={containedButtonSx(nh)}>
+                <Button
+                  variant="contained"
+                  size="small"
+                  onClick={calculate}
+                  sx={containedButtonSx(nh)}
+                >
                   Calculate
                 </Button>
-                <Button variant="outlined" size="small" onClick={clearForm} sx={outlinedButtonSx(nh)}>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={clearForm}
+                  sx={outlinedButtonSx(nh)}
+                >
                   Clear
                 </Button>
               </Stack>

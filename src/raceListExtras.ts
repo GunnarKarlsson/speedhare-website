@@ -81,10 +81,7 @@ function formatThresholdMetrics(aggregates: unknown): LabeledMetric[] {
     const label = item.label;
     const count = num(item.count);
     if (typeof label !== "string" || count == null) continue;
-    const pct =
-      finishers && finishers > 0
-        ? ` (${((count / finishers) * 100).toFixed(1)}%)`
-        : "";
+    const pct = finishers && finishers > 0 ? ` (${((count / finishers) * 100).toFixed(1)}%)` : "";
     parts.push({
       label: humanizeThresholdLabel(label),
       value: `${count.toLocaleString()}${pct}`,

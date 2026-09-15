@@ -73,7 +73,8 @@ const GUIDE_SECTIONS: readonly GuideSection[] = [
           "This is one of the cleaner Hong Kong 5K options for runners who want a straightforward road effort with a big-event feel. It works well for beginners chasing a first timed finish and for faster runners looking for a controlled speed session.",
           "The Speedhare archive gives you a direct way to compare your result against the field and use the page as a benchmark before stepping up to a 10K later in the season.",
         ],
-        bestFor: "First 5K finishes, short speed checks, and runners building toward longer road races.",
+        bestFor:
+          "First 5K finishes, short speed checks, and runners building toward longer road races.",
         editionLinks: [
           {
             label: "View 2026 results and analytics",
@@ -101,7 +102,8 @@ const GUIDE_SECTIONS: readonly GuideSection[] = [
           "One of the clearest anchor events for runners searching terms like Hong Kong 10K or HK 10K race. The championship framing and consistently deep fields make it useful for both serious pacing targets and year-on-year comparisons.",
           "Speedhare already has multiple editions of this race family, so it is one of the best archives for comparing how the event evolves across seasons.",
         ],
-        bestFor: "Competitive runners, club athletes, and anyone who wants a strong benchmark 10K field.",
+        bestFor:
+          "Competitive runners, club athletes, and anyone who wants a strong benchmark 10K field.",
         editionLinks: [
           {
             label: "2025 results",
@@ -134,7 +136,8 @@ const GUIDE_SECTIONS: readonly GuideSection[] = [
           "Tai Po 10K gives runners another useful late-year Hong Kong 10K option outside the biggest city-centre race brands. It is a practical choice for runners who want a goal race after the autumn training block.",
           "Because Speedhare stores the full result page, you can check pacing context and placement against the wider field instead of relying on a flat PDF result list.",
         ],
-        bestFor: "Local runners targeting a solid late-season 10K and anyone wanting another benchmark after the October races.",
+        bestFor:
+          "Local runners targeting a solid late-season 10K and anyone wanting another benchmark after the October races.",
         editionLinks: [
           {
             label: "View 2025 results and analytics",
@@ -168,7 +171,8 @@ const GUIDE_SECTIONS: readonly GuideSection[] = [
           "The Mizuno Running Festival adds a late-December 10K option when many runners want one more hard effort before year end. It is a helpful race for testing holiday fitness and closing the year with a measurable result.",
           "With the Speedhare report, runners can compare percentile cutoffs and typical finishing bands instead of only checking their single finish time.",
         ],
-        bestFor: "Year-end fitness checks and runners who want a fast 10K target near the holidays.",
+        bestFor:
+          "Year-end fitness checks and runners who want a fast 10K target near the holidays.",
         editionLinks: [
           {
             label: "View 2023 results and analytics",
@@ -202,7 +206,8 @@ const GUIDE_SECTIONS: readonly GuideSection[] = [
           "This Easter-timed 10K gives runners another seasonal option when building rhythm through spring. It is especially useful for people who prefer a community race atmosphere instead of a pure championship focus.",
           "The Speedhare archive provides a stable reference point for anyone comparing race-day execution from one spring block to the next.",
         ],
-        bestFor: "Spring racing, club runners, and athletes who want another data point before summer.",
+        bestFor:
+          "Spring racing, club runners, and athletes who want another data point before summer.",
         editionLinks: [
           {
             label: "View 2024 results and analytics",
@@ -219,7 +224,8 @@ const GUIDE_SECTIONS: readonly GuideSection[] = [
           "This city race is a useful reference for runners who want a distinctly urban Hong Kong 10K experience. It also gives historical context to how local 10K racing looked before newer venues and event brands appeared.",
           "Older archives like this are especially helpful when you want to compare race density and finishing standards across different eras of Hong Kong road racing.",
         ],
-        bestFor: "Runners who enjoy urban courses and anyone exploring older Hong Kong 10K archives.",
+        bestFor:
+          "Runners who enjoy urban courses and anyone exploring older Hong Kong 10K archives.",
         editionLinks: [
           {
             label: "View 2019 results and analytics",
@@ -236,7 +242,8 @@ const GUIDE_SECTIONS: readonly GuideSection[] = [
           "The Shek Mun 10K archive is valuable because it adds historical depth to the Hong Kong 10K landscape on Speedhare. For runners researching long-running local events, it helps show how different race families have contributed to the current scene.",
           "Even as an older result set, it remains useful for context, comparison, and discovering race formats that shaped later Hong Kong 10K calendars.",
         ],
-        bestFor: "Archive research and runners who want a wider view of longstanding local 10K events.",
+        bestFor:
+          "Archive research and runners who want a wider view of longstanding local 10K events.",
         editionLinks: [
           {
             label: "View 2018 results and analytics",
@@ -264,7 +271,8 @@ const GUIDE_SECTIONS: readonly GuideSection[] = [
           "This is one of the most important references for runners looking up Hong Kong half marathon races. It combines a recognisable brand with a serious race feel, making it a useful target for stronger club runners and experienced amateurs.",
           "Speedhare has multiple ASICS half marathon archives, which makes this race family especially strong for comparing performance over time.",
         ],
-        bestFor: "Competitive half marathon runners and athletes tracking year-on-year improvements.",
+        bestFor:
+          "Competitive half marathon runners and athletes tracking year-on-year improvements.",
         editionLinks: [
           {
             label: "2025 championships",
@@ -289,7 +297,8 @@ const GUIDE_SECTIONS: readonly GuideSection[] = [
           "Tai Po Half Marathon gives runners a practical late-autumn half marathon target in Hong Kong. It works well for athletes who want a standalone goal race without waiting for a major winter marathon weekend.",
           "The Speedhare race page is useful for checking percentile cutoffs and seeing how your finish time compares with a broad range of local runners.",
         ],
-        bestFor: "Late-season half marathon goals and runners building toward a full marathon later on.",
+        bestFor:
+          "Late-season half marathon goals and runners building toward a full marathon later on.",
         editionLinks: [
           {
             label: "View 2025 results and analytics",
@@ -306,7 +315,8 @@ const GUIDE_SECTIONS: readonly GuideSection[] = [
           "The Mizuno half marathon archives help round out the historical side of Hong Kong half marathon racing on Speedhare. They are useful for runners who want more than the newest result pages and prefer to compare race fields across different years.",
           "Because multiple Mizuno editions are already archived, this is one of the better race families for historical comparisons.",
         ],
-        bestFor: "Historical comparisons and runners who want deeper Hong Kong half marathon archive coverage.",
+        bestFor:
+          "Historical comparisons and runners who want deeper Hong Kong half marathon archive coverage.",
         editionLinks: [
           {
             label: "2023 results",
@@ -435,7 +445,9 @@ export function HongKongRunningRacesPage() {
   const archiveLinkCount = useMemo(
     () =>
       GUIDE_SECTIONS.reduce(
-        (sum, section) => sum + section.races.reduce((sectionSum, race) => sectionSum + race.editionLinks.length, 0),
+        (sum, section) =>
+          sum +
+          section.races.reduce((sectionSum, race) => sectionSum + race.editionLinks.length, 0),
         0,
       ),
     [],
@@ -508,9 +520,25 @@ export function HongKongRunningRacesPage() {
       />
       <NewHomeNav activeDistance="all" navContext="all-races" />
 
-      <Box sx={{ flex: 1, maxWidth: 1080, width: "100%", mx: "auto", px: { xs: 2, sm: 3 }, py: { xs: 3, sm: 4 } }}>
+      <Box
+        sx={{
+          flex: 1,
+          maxWidth: 1080,
+          width: "100%",
+          mx: "auto",
+          px: { xs: 2, sm: 3 },
+          py: { xs: 3, sm: 4 },
+        }}
+      >
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5, alignItems: "center", mb: 2 }}>
-          <Typography sx={{ fontFamily: nh.mono, fontSize: "0.72rem", letterSpacing: "0.14em", color: nh.blue }}>
+          <Typography
+            sx={{
+              fontFamily: nh.mono,
+              fontSize: "0.72rem",
+              letterSpacing: "0.14em",
+              color: nh.blue,
+            }}
+          >
             HONG KONG RACE GUIDE
           </Typography>
           <Box
@@ -522,7 +550,14 @@ export function HongKongRunningRacesPage() {
               bgcolor: nh.blueBadgeBg,
             }}
           >
-            <Typography sx={{ fontFamily: nh.mono, fontSize: "0.68rem", letterSpacing: "0.08em", color: nh.blue }}>
+            <Typography
+              sx={{
+                fontFamily: nh.mono,
+                fontSize: "0.68rem",
+                letterSpacing: "0.08em",
+                color: nh.blue,
+              }}
+            >
               UPDATED FOR 2026
             </Typography>
           </Box>
@@ -532,11 +567,15 @@ export function HongKongRunningRacesPage() {
           <Link component={RouterLink} to="/" sx={smallCapsLinkSx(nh.muted)}>
             HOME
           </Link>
-          <Typography sx={{ fontFamily: nh.mono, fontSize: "0.72rem", color: nh.faint }}>/</Typography>
+          <Typography sx={{ fontFamily: nh.mono, fontSize: "0.72rem", color: nh.faint }}>
+            /
+          </Typography>
           <Link component={RouterLink} to="/all-races" sx={smallCapsLinkSx(nh.muted)}>
             ALL RACES
           </Link>
-          <Typography sx={{ fontFamily: nh.mono, fontSize: "0.72rem", color: nh.faint }}>/</Typography>
+          <Typography sx={{ fontFamily: nh.mono, fontSize: "0.72rem", color: nh.faint }}>
+            /
+          </Typography>
           <Typography sx={{ fontFamily: nh.mono, fontSize: "0.72rem", color: nh.white }}>
             HONG KONG RUNNING RACES
           </Typography>
@@ -556,14 +595,16 @@ export function HongKongRunningRacesPage() {
         </Typography>
 
         <Typography sx={{ color: nh.muted, lineHeight: 1.85, maxWidth: 820, mb: 1.5 }}>
-          Looking for the best Hong Kong 10K, 5K, and half marathon races? This guide brings together the recurring
-          road-race families already archived on Speedhare so runners can compare events, understand the typical time
-          of year they happen, and jump straight into past results and analytics.
+          Looking for the best Hong Kong 10K, 5K, and half marathon races? This guide brings
+          together the recurring road-race families already archived on Speedhare so runners can
+          compare events, understand the typical time of year they happen, and jump straight into
+          past results and analytics.
         </Typography>
         <Typography sx={{ color: nh.muted, lineHeight: 1.85, maxWidth: 820, mb: 3 }}>
-          It is designed as an evergreen Hong Kong race hub with an SEO-friendly URL, clear distance-based sections,
-          and internal result links only. Official organiser links can be added later, but for now the focus stays on
-          Speedhare's own race archives and performance data.
+          It is designed as an evergreen Hong Kong race hub with an SEO-friendly URL, clear
+          distance-based sections, and internal result links only. Official organiser links can be
+          added later, but for now the focus stays on Speedhare&apos;s own race archives and
+          performance data.
         </Typography>
 
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.25, mb: 4 }}>
@@ -612,16 +653,29 @@ export function HongKongRunningRacesPage() {
                 p: 2,
               }}
             >
-              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.68rem", color: nh.blue, letterSpacing: "0.12em", mb: 0.75 }}>
+              <Typography
+                sx={{
+                  fontFamily: nh.mono,
+                  fontSize: "0.68rem",
+                  color: nh.blue,
+                  letterSpacing: "0.12em",
+                  mb: 0.75,
+                }}
+              >
                 {item.label}
               </Typography>
-              <Typography sx={{ fontWeight: 800, fontSize: { xs: "1.05rem", sm: "1.2rem" } }}>{item.value}</Typography>
+              <Typography sx={{ fontWeight: 800, fontSize: { xs: "1.05rem", sm: "1.2rem" } }}>
+                {item.value}
+              </Typography>
             </Box>
           ))}
         </Box>
 
         <Box sx={{ mb: 5 }}>
-          <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: "1.35rem", sm: "1.7rem" }, mb: 2 }}>
+          <Typography
+            component="h2"
+            sx={{ fontWeight: 800, fontSize: { xs: "1.35rem", sm: "1.7rem" }, mb: 2 }}
+          >
             Quick Planner
           </Typography>
           <Box
@@ -641,11 +695,23 @@ export function HongKongRunningRacesPage() {
                   p: 2,
                 }}
               >
-                <Typography sx={{ fontFamily: nh.mono, fontSize: "0.68rem", color: nh.blue, letterSpacing: "0.1em", mb: 0.75 }}>
-                  {row.distance} // {row.timing}
+                <Typography
+                  sx={{
+                    fontFamily: nh.mono,
+                    fontSize: "0.68rem",
+                    color: nh.blue,
+                    letterSpacing: "0.1em",
+                    mb: 0.75,
+                  }}
+                >
+                  {row.distance} {"//"} {row.timing}
                 </Typography>
-                <Typography sx={{ fontWeight: 700, fontSize: "1.02rem", mb: 1 }}>{row.label}</Typography>
-                <Typography sx={{ color: nh.muted, lineHeight: 1.75, mb: 1.5 }}>{row.why}</Typography>
+                <Typography sx={{ fontWeight: 700, fontSize: "1.02rem", mb: 1 }}>
+                  {row.label}
+                </Typography>
+                <Typography sx={{ color: nh.muted, lineHeight: 1.75, mb: 1.5 }}>
+                  {row.why}
+                </Typography>
                 <Link component={RouterLink} to={racePath(row.slug)} sx={smallCapsLinkSx(nh.blue)}>
                   VIEW RELATED ARCHIVE
                 </Link>
@@ -656,16 +722,31 @@ export function HongKongRunningRacesPage() {
 
         {GUIDE_SECTIONS.map((section) => (
           <Box key={section.id} id={section.id} sx={{ scrollMarginTop: 96, mb: 5 }}>
-            <Typography sx={{ fontFamily: nh.mono, fontSize: "0.72rem", color: nh.blue, letterSpacing: "0.14em", mb: 0.75 }}>
+            <Typography
+              sx={{
+                fontFamily: nh.mono,
+                fontSize: "0.72rem",
+                color: nh.blue,
+                letterSpacing: "0.14em",
+                mb: 0.75,
+              }}
+            >
               {section.eyebrow}
             </Typography>
-            <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: "1.5rem", sm: "1.95rem" }, mb: 1.25 }}>
+            <Typography
+              component="h2"
+              sx={{ fontWeight: 800, fontSize: { xs: "1.5rem", sm: "1.95rem" }, mb: 1.25 }}
+            >
               {section.title}
             </Typography>
             <Typography sx={{ color: nh.muted, lineHeight: 1.85, maxWidth: 860, mb: 2 }}>
               {section.intro}
             </Typography>
-            <Link component={RouterLink} to={section.browsePath} sx={{ ...smallCapsLinkSx(nh.blue), display: "inline-block", mb: 2.5 }}>
+            <Link
+              component={RouterLink}
+              to={section.browsePath}
+              sx={{ ...smallCapsLinkSx(nh.blue), display: "inline-block", mb: 2.5 }}
+            >
               {section.browseLabel}
             </Link>
 
@@ -686,10 +767,22 @@ export function HongKongRunningRacesPage() {
                     p: { xs: 2, sm: 2.5 },
                   }}
                 >
-                  <Typography sx={{ fontFamily: nh.mono, fontSize: "0.68rem", color: nh.blue, letterSpacing: "0.08em", mb: 1 }}>
-                    {race.distanceLabel.toUpperCase()} // {race.typicalTiming.toUpperCase()} // {race.area.toUpperCase()}
+                  <Typography
+                    sx={{
+                      fontFamily: nh.mono,
+                      fontSize: "0.68rem",
+                      color: nh.blue,
+                      letterSpacing: "0.08em",
+                      mb: 1,
+                    }}
+                  >
+                    {race.distanceLabel.toUpperCase()} {"//"} {race.typicalTiming.toUpperCase()}{" "}
+                    {"//"} {race.area.toUpperCase()}
                   </Typography>
-                  <Typography component="h3" sx={{ fontWeight: 800, fontSize: { xs: "1.15rem", sm: "1.35rem" }, mb: 1.25 }}>
+                  <Typography
+                    component="h3"
+                    sx={{ fontWeight: 800, fontSize: { xs: "1.15rem", sm: "1.35rem" }, mb: 1.25 }}
+                  >
                     {race.name}
                   </Typography>
                   {race.description.map((paragraph) => (
@@ -705,10 +798,20 @@ export function HongKongRunningRacesPage() {
                       borderTop: `1px solid ${nh.border}`,
                     }}
                   >
-                    <Typography sx={{ fontFamily: nh.mono, fontSize: "0.68rem", color: nh.faint, letterSpacing: "0.1em", mb: 0.6 }}>
+                    <Typography
+                      sx={{
+                        fontFamily: nh.mono,
+                        fontSize: "0.68rem",
+                        color: nh.faint,
+                        letterSpacing: "0.1em",
+                        mb: 0.6,
+                      }}
+                    >
                       BEST FOR
                     </Typography>
-                    <Typography sx={{ color: nh.white, lineHeight: 1.7 }}>{race.bestFor}</Typography>
+                    <Typography sx={{ color: nh.white, lineHeight: 1.7 }}>
+                      {race.bestFor}
+                    </Typography>
                   </Box>
 
                   <Box
@@ -720,7 +823,12 @@ export function HongKongRunningRacesPage() {
                     }}
                   >
                     {race.editionLinks.map((link) => (
-                      <Link key={link.slug} component={RouterLink} to={racePath(link.slug)} sx={smallCapsLinkSx(nh.blue)}>
+                      <Link
+                        key={link.slug}
+                        component={RouterLink}
+                        to={racePath(link.slug)}
+                        sx={smallCapsLinkSx(nh.blue)}
+                      >
                         {link.label}
                       </Link>
                     ))}
@@ -732,7 +840,10 @@ export function HongKongRunningRacesPage() {
         ))}
 
         <Box sx={{ mb: 2 }}>
-          <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: "1.4rem", sm: "1.8rem" }, mb: 2 }}>
+          <Typography
+            component="h2"
+            sx={{ fontWeight: 800, fontSize: { xs: "1.4rem", sm: "1.8rem" }, mb: 2 }}
+          >
             Frequently Asked Questions About Hong Kong Races
           </Typography>
           <Box sx={{ display: "grid", gridTemplateColumns: "1fr", gap: 2 }}>
