@@ -1,9 +1,9 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { SeoHead } from "../components/SeoHead";
+import { useSiteCatalog } from "../hooks/useSiteCatalog";
 import { NewHomeFooter } from "../new_home/NewHomeFooter";
 import { NewHomeNav } from "../new_home/NewHomeNav";
-import { fetchAllRacesForNewHome, type SiteAggregates } from "../new_home/newHomeData";
 import { createNewHomeTheme } from "../new_home/newHomeTheme";
 import { useThemeMode } from "../new_home/themeMode";
 
@@ -22,29 +22,7 @@ export function StaticContentPage({
 }: StaticContentPageProps) {
   const { mode } = useThemeMode();
   const nh = createNewHomeTheme(mode);
-  const [site, setSite] = useState<SiteAggregates | null>(null);
-  const [hasRaceCatalog, setHasRaceCatalog] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    void (async () => {
-      try {
-        const { site: s, races: all } = await fetchAllRacesForNewHome();
-        if (!cancelled) {
-          setSite(s);
-          setHasRaceCatalog(all.length > 0);
-        }
-      } catch {
-        if (!cancelled) {
-          setSite(null);
-          setHasRaceCatalog(false);
-        }
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const { site, hasRaceCatalog } = useSiteCatalog();
 
   const pageDescription = useMemo(() => {
     if (intro) return intro;

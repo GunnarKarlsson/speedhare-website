@@ -1,30 +1,64 @@
-export interface RaceListItem {
+/** Primitive values stored on race result-file metadata. */
+export type RaceMetadataValue = string | number | boolean | null;
+
+/**
+ * Metadata from the race source file. Known keys are documented; extra keys may appear.
+ * Version is `data-version` or `version`.
+ */
+export interface RaceMetadata {
+  "data-version"?: string | number;
+  version?: string | number;
+  source?: string;
+  source_pdf?: string;
+  timing?: string;
+  layout?: string;
+  output_file_name?: string;
+  [key: string]: RaceMetadataValue | undefined;
+}
+
+export interface RaceAggregatesCounts {
+  finishers_with_time?: number;
+}
+
+export interface RaceAggregatesDistribution {
+  mean_seconds?: number;
+  median_seconds?: number;
+  top_10pc?: number;
+  top_25pc?: number;
+  top_50pc?: number;
+  top_75pc?: number;
+}
+
+export interface RaceAggregatesThreshold {
+  label: string;
+  count: number;
+}
+
+export interface RaceAggregates {
+  counts?: RaceAggregatesCounts;
+  distribution?: RaceAggregatesDistribution;
+  thresholds?: RaceAggregatesThreshold[];
+}
+
+export interface RaceSummary {
   id: number;
   slug: string;
   name: string;
   date: string;
   race_type: string;
   location: string | null;
-  metadata: unknown;
-  aggregates: unknown;
+  metadata: RaceMetadata;
+  aggregates: RaceAggregates;
 }
+
+export type RaceListItem = RaceSummary;
+export type RaceDetail = RaceSummary;
 
 export interface Paginated<T> {
   items: T[];
   page: number;
   page_size: number;
   total: number;
-}
-
-export interface RaceDetail {
-  id: number;
-  slug: string;
-  name: string;
-  date: string;
-  race_type: string;
-  location: string | null;
-  metadata: unknown;
-  aggregates: unknown;
 }
 
 export interface RunnerResultRow {

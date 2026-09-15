@@ -2,10 +2,11 @@ import { Alert, Box, CircularProgress, Link as MuiLink, Typography } from "@mui/
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getRace, getRunnerDetail, searchRacesByRunner } from "../api";
+import { LabeledMetricBox } from "../components/LabeledMetricBox";
 import { SeoHead } from "../components/SeoHead";
 import { formatEnglishRunnerName, formatRunnerNames, formatSeconds } from "../format";
+import { useSiteCatalog } from "../hooks/useSiteCatalog";
 import { NewHomeFooter } from "../new_home/NewHomeFooter";
-import { fetchAllRacesForNewHome, type SiteAggregates } from "../new_home/newHomeData";
 import { NewHomeNav } from "../new_home/NewHomeNav";
 import { createNewHomeTheme } from "../new_home/newHomeTheme";
 import { racePath } from "../racePaths";
@@ -25,29 +26,7 @@ export function RunnerPage() {
   const [error, setError] = useState<string | null>(null);
   const [otherRaceRows, setOtherRaceRows] = useState<SearchRunnerItem[]>([]);
   const [otherRacesLoading, setOtherRacesLoading] = useState(false);
-  const [site, setSite] = useState<SiteAggregates | null>(null);
-  const [hasRaceCatalog, setHasRaceCatalog] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    void (async () => {
-      try {
-        const { site: s, races: all } = await fetchAllRacesForNewHome();
-        if (!cancelled) {
-          setSite(s);
-          setHasRaceCatalog(all.length > 0);
-        }
-      } catch {
-        if (!cancelled) {
-          setSite(null);
-          setHasRaceCatalog(false);
-        }
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const { site, hasRaceCatalog } = useSiteCatalog();
 
   useEffect(() => {
     if (!Number.isFinite(rId) || !Number.isFinite(resId)) {
@@ -261,54 +240,21 @@ function RunnerDetailBody({
             mt: 2,
           }}
         >
-          <Box
-            sx={{
-              px: 1.25,
-              py: 1,
-              borderRadius: 1.25,
-              border: `1px solid ${nh.border}`,
-              bgcolor: "rgba(255,255,255,0.06)",
-            }}
-          >
-            <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>
-              POSITION
-            </Typography>
-            <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
-              {runner.position_overall ?? runner.result_status ?? "—"}
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              px: 1.25,
-              py: 1,
-              borderRadius: 1.25,
-              border: `1px solid ${nh.border}`,
-              bgcolor: "rgba(255,255,255,0.06)",
-            }}
-          >
-            <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>
-              OFFICIAL
-            </Typography>
-            <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
-              {formatSeconds(runner.official_time_seconds)}
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              px: 1.25,
-              py: 1,
-              borderRadius: 1.25,
-              border: `1px solid ${nh.border}`,
-              bgcolor: "rgba(255,255,255,0.06)",
-            }}
-          >
-            <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>
-              NET
-            </Typography>
-            <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
-              {runner.net_time_seconds == null ? "N/A" : formatSeconds(runner.net_time_seconds)}
-            </Typography>
-          </Box>
+          <LabeledMetricBox
+            nh={nh}
+            label="POSITION"
+            value={String(runner.position_overall ?? runner.result_status ?? "—")}
+          />
+          <LabeledMetricBox
+            nh={nh}
+            label="OFFICIAL"
+            value={formatSeconds(runner.official_time_seconds)}
+          />
+          <LabeledMetricBox
+            nh={nh}
+            label="NET"
+            value={runner.net_time_seconds == null ? "N/A" : formatSeconds(runner.net_time_seconds)}
+          />
         </Box>
 
         <Box sx={{ mt: 1.5 }}>
@@ -324,54 +270,21 @@ function RunnerDetailBody({
             RANKS
           </Typography>
           <Box sx={statRowSx}>
-            <Box
-              sx={{
-                px: 1.25,
-                py: 1,
-                borderRadius: 1.25,
-                border: `1px solid ${nh.border}`,
-                bgcolor: "rgba(255,255,255,0.06)",
-              }}
-            >
-              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>
-                OVERALL
-              </Typography>
-              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
-                {rankWithCohort(runner.rank_overall, stats.cohort_size_overall)}
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                px: 1.25,
-                py: 1,
-                borderRadius: 1.25,
-                border: `1px solid ${nh.border}`,
-                bgcolor: "rgba(255,255,255,0.06)",
-              }}
-            >
-              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>
-                GENDER
-              </Typography>
-              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
-                {rankWithCohort(runner.position_gender, stats.cohort_size_gender)}
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                px: 1.25,
-                py: 1,
-                borderRadius: 1.25,
-                border: `1px solid ${nh.border}`,
-                bgcolor: "rgba(255,255,255,0.06)",
-              }}
-            >
-              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.blue }}>
-                CATEGORY
-              </Typography>
-              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
-                {rankWithCohort(runner.rank_category, stats.cohort_size_category)}
-              </Typography>
-            </Box>
+            <LabeledMetricBox
+              nh={nh}
+              label="OVERALL"
+              value={rankWithCohort(runner.rank_overall, stats.cohort_size_overall)}
+            />
+            <LabeledMetricBox
+              nh={nh}
+              label="GENDER"
+              value={rankWithCohort(runner.position_gender, stats.cohort_size_gender)}
+            />
+            <LabeledMetricBox
+              nh={nh}
+              label="CATEGORY"
+              value={rankWithCohort(runner.rank_category, stats.cohort_size_category)}
+            />
           </Box>
         </Box>
 
@@ -388,54 +301,24 @@ function RunnerDetailBody({
             TOP
           </Typography>
           <Box sx={statRowSx}>
-            <Box
-              sx={{
-                px: 1.25,
-                py: 1,
-                borderRadius: 1.25,
-                border: `1px solid ${nh.border}`,
-                bgcolor: "rgba(255,255,255,0.06)",
-              }}
-            >
-              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>
-                OVERALL
-              </Typography>
-              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
-                {topPct(stats.faster_than_pct_overall)}
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                px: 1.25,
-                py: 1,
-                borderRadius: 1.25,
-                border: `1px solid ${nh.border}`,
-                bgcolor: "rgba(255,255,255,0.06)",
-              }}
-            >
-              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>
-                GENDER
-              </Typography>
-              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
-                {topPct(stats.faster_than_pct_gender)}
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                px: 1.25,
-                py: 1,
-                borderRadius: 1.25,
-                border: `1px solid ${nh.border}`,
-                bgcolor: "rgba(255,255,255,0.06)",
-              }}
-            >
-              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>
-                CATEGORY
-              </Typography>
-              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
-                {topPct(stats.faster_than_pct_category)}
-              </Typography>
-            </Box>
+            <LabeledMetricBox
+              nh={nh}
+              label="OVERALL"
+              value={topPct(stats.faster_than_pct_overall)}
+              color={nh.muted}
+            />
+            <LabeledMetricBox
+              nh={nh}
+              label="GENDER"
+              value={topPct(stats.faster_than_pct_gender)}
+              color={nh.muted}
+            />
+            <LabeledMetricBox
+              nh={nh}
+              label="CATEGORY"
+              value={topPct(stats.faster_than_pct_category)}
+              color={nh.muted}
+            />
           </Box>
         </Box>
 
@@ -452,54 +335,24 @@ function RunnerDetailBody({
             FASTER THAN
           </Typography>
           <Box sx={statRowSx}>
-            <Box
-              sx={{
-                px: 1.25,
-                py: 1,
-                borderRadius: 1.25,
-                border: `1px solid ${nh.border}`,
-                bgcolor: "rgba(255,255,255,0.06)",
-              }}
-            >
-              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>
-                OVERALL
-              </Typography>
-              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
-                {pct(stats.faster_than_pct_overall)}
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                px: 1.25,
-                py: 1,
-                borderRadius: 1.25,
-                border: `1px solid ${nh.border}`,
-                bgcolor: "rgba(255,255,255,0.06)",
-              }}
-            >
-              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>
-                GENDER
-              </Typography>
-              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
-                {pct(stats.faster_than_pct_gender)}
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                px: 1.25,
-                py: 1,
-                borderRadius: 1.25,
-                border: `1px solid ${nh.border}`,
-                bgcolor: "rgba(255,255,255,0.06)",
-              }}
-            >
-              <Typography sx={{ fontFamily: nh.mono, fontSize: "0.65rem", color: nh.muted }}>
-                CATEGORY
-              </Typography>
-              <Typography sx={{ fontFamily: nh.sans, fontWeight: 700 }}>
-                {pct(stats.faster_than_pct_category)}
-              </Typography>
-            </Box>
+            <LabeledMetricBox
+              nh={nh}
+              label="OVERALL"
+              value={pct(stats.faster_than_pct_overall)}
+              color={nh.muted}
+            />
+            <LabeledMetricBox
+              nh={nh}
+              label="GENDER"
+              value={pct(stats.faster_than_pct_gender)}
+              color={nh.muted}
+            />
+            <LabeledMetricBox
+              nh={nh}
+              label="CATEGORY"
+              value={pct(stats.faster_than_pct_category)}
+              color={nh.muted}
+            />
           </Box>
         </Box>
       </Box>
