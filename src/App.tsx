@@ -4,7 +4,7 @@ import { Layout } from "./components/Layout";
 import { AllRacesPage } from "./new_home/AllRacesPage";
 import { HongKongRunningRacesPage } from "./new_home/HongKongRunningRacesPage";
 import { NewHomePage } from "./new_home/NewHomePage";
-import { ThemeModeProvider } from "./new_home/themeMode";
+import { ThemeModeProvider } from "./new_home/ThemeModeProvider";
 import { CalculatorPage } from "./pages/CalculatorPage";
 import { AboutPage, DataPolicyPage, TermsConditionsPage } from "./pages/InfoPages";
 import { RaceDetailPage } from "./pages/RaceDetailPage";

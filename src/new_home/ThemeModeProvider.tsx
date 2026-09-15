@@ -1,13 +1,5 @@
-import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
-
-export type ThemeMode = "dark" | "light";
-
-interface ThemeModeContextValue {
-  mode: ThemeMode;
-  toggleMode: () => void;
-}
-
-const ThemeModeContext = createContext<ThemeModeContextValue | undefined>(undefined);
+import { useMemo, useState, type ReactNode } from "react";
+import { ThemeModeContext, type ThemeMode, type ThemeModeContextValue } from "./themeMode";
 
 function getInitialMode(): ThemeMode {
   const saved = localStorage.getItem("preferred-theme");
@@ -32,12 +24,4 @@ export function ThemeModeProvider({ children }: { children: ReactNode }) {
   );
 
   return <ThemeModeContext.Provider value={value}>{children}</ThemeModeContext.Provider>;
-}
-
-export function useThemeMode(): ThemeModeContextValue {
-  const value = useContext(ThemeModeContext);
-  if (!value) {
-    throw new Error("useThemeMode must be used inside ThemeModeProvider");
-  }
-  return value;
 }
