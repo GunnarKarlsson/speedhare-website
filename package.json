@@ -8,7 +8,6 @@
   },
   "scripts": {
     "dev": "vite",
-    "dev-docker": "VITE_API_ORIGIN=http://127.0.0.1:80 vite",
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
