@@ -1,0 +1,35 @@
+{
+  "name": "race-results-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "vite",
+    "dev-docker": "VITE_API_ORIGIN=http://127.0.0.1:80 vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "s3:sync": "aws s3 sync dist/ s3://speedhare.io --delete",
+    "cf:invalidate": "aws cloudfront create-invalidation --distribution-id E3E90CX64A9PDU --paths \"/*\"",
+    "deploy": "npm run build && npm run s3:sync && npm run cf:invalidate"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.4.0",
+    "@mui/material": "^6.4.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.6.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.4.0",
+    "typescript": "~5.7.0",
+    "vite": "^6.2.0"
+  }
+}

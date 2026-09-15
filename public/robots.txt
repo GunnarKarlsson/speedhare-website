@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Keep query search pages out of index.
+Disallow: /search
+
+Sitemap: https://speedhare.io/sitemap.xml
