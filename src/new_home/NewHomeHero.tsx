@@ -9,7 +9,7 @@ import type { RaceListItem } from "../types";
 import { formatShortRaceDate } from "./formatRaceDate";
 import { createNewHomeTheme } from "./newHomeTheme";
 import { badgeSxForRaceType } from "./badgeStyle";
-import type { SiteAggregates } from "./newHomeData";
+import type { SiteAggregates } from "../types";
 import { useThemeMode } from "./themeMode";
 
 interface NewHomeHeroProps {

@@ -1,7 +1,7 @@
 import { Alert, Box, CircularProgress, Link as MuiLink, Typography } from "@mui/material";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getRace, getRunnerDetail, searchRacesByRunner } from "../api";
+import { getRace, getRunnerDetail, isAbortError, searchRacesByRunner } from "../api";
 import { LabeledMetricBox } from "../components/LabeledMetricBox";
 import { SeoHead } from "../components/SeoHead";
 import { formatEnglishRunnerName, formatRunnerNames, formatSeconds } from "../format";
@@ -34,53 +34,52 @@ export function RunnerPage() {
       setLoading(false);
       return;
     }
-    let cancelled = false;
-    (async () => {
+    const ac = new AbortController();
+    void (async () => {
       setLoading(true);
       setError(null);
       setRace(null);
       try {
-        const [d, r] = await Promise.all([getRunnerDetail(rId, resId), getRace(rId)]);
-        if (!cancelled) {
-          setData(d);
-          setRace(r);
-        }
+        const [d, r] = await Promise.all([
+          getRunnerDetail(rId, resId, ac.signal),
+          getRace(rId, ac.signal),
+        ]);
+        if (ac.signal.aborted) return;
+        setData(d);
+        setRace(r);
       } catch (e) {
-        if (!cancelled) {
-          setError(e instanceof Error ? e.message : "Failed to load runner");
-        }
+        if (isAbortError(e)) return;
+        setError(e instanceof Error ? e.message : "Failed to load runner");
       } finally {
-        if (!cancelled) setLoading(false);
+        if (!ac.signal.aborted) setLoading(false);
       }
     })();
     return () => {
-      cancelled = true;
+      ac.abort();
     };
   }, [rId, resId]);
 
   useEffect(() => {
     if (!data) return;
-    let cancelled = false;
-    (async () => {
+    const ac = new AbortController();
+    void (async () => {
       setOtherRacesLoading(true);
       try {
         const q = data.runner.name_en.trim() || data.runner.name_zh.trim();
-        const search = await searchRacesByRunner(q);
-        if (!cancelled) {
-          setOtherRaceRows(
-            search.runners.filter((row) => !(row.race_id === rId && row.result_id === resId)),
-          );
-        }
-      } catch {
-        if (!cancelled) {
-          setOtherRaceRows([]);
-        }
+        const search = await searchRacesByRunner(q, ac.signal);
+        if (ac.signal.aborted) return;
+        setOtherRaceRows(
+          search.runners.filter((row) => !(row.race_id === rId && row.result_id === resId)),
+        );
+      } catch (e) {
+        if (isAbortError(e)) return;
+        setOtherRaceRows([]);
       } finally {
-        if (!cancelled) setOtherRacesLoading(false);
+        if (!ac.signal.aborted) setOtherRacesLoading(false);
       }
     })();
     return () => {
-      cancelled = true;
+      ac.abort();
     };
   }, [data, rId, resId]);
 

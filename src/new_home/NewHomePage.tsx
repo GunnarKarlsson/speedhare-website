@@ -1,8 +1,7 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { SeoHead } from "../components/SeoHead";
-import type { RaceListItem } from "../types";
-import { fetchAllRacesForNewHome } from "./newHomeData";
+import { useRaceCatalog } from "../hooks/useSiteCatalog";
 import { createNewHomeTheme } from "./newHomeTheme";
 import { useThemeMode } from "./themeMode";
 import { NewHomeFooter } from "./NewHomeFooter";
@@ -13,41 +12,7 @@ import { NewHomeRaceCard } from "./NewHomeRaceCard";
 export function NewHomePage() {
   const { mode } = useThemeMode();
   const nh = createNewHomeTheme(mode);
-  const [races, setRaces] = useState<RaceListItem[]>([]);
-  const [site, setSite] = useState<{
-    totalRaces: number;
-    totalResults: number;
-    distinctRaceTypes: number;
-  } | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    setLoading(true);
-    setError(null);
-    void (async () => {
-      try {
-        const { races: all, site: s } = await fetchAllRacesForNewHome();
-        if (!cancelled) {
-          setRaces(all);
-          setSite(s);
-        }
-      } catch (e) {
-        if (!cancelled) {
-          setError(e instanceof Error ? e.message : "Failed to load races");
-          setRaces([]);
-          setSite(null);
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
+  const { races, site, loading, error } = useRaceCatalog();
   const latestTwo = useMemo(() => races.slice(0, 2), [races]);
 
   return (

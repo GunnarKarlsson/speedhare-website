@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getRace, getRaceBySlug, getRaceResults } from "../../api";
+import { getRace, getRaceBySlug, getRaceResults, isAbortError } from "../../api";
 import { racePath } from "../../racePaths";
 import type { RaceDetail, ResultsSortKey, RunnerResultRow, SortOrder } from "../../types";
 
@@ -27,7 +27,7 @@ export function useRaceDetail(idOrSlug: string | undefined) {
       setRaceLoading(false);
       return;
     }
-    let cancelled = false;
+    const ac = new AbortController();
     setRaceLoading(true);
     setRace(null);
     setResults([]);
@@ -37,44 +37,51 @@ export function useRaceDetail(idOrSlug: string | undefined) {
       try {
         const r =
           isLegacyIdRoute && Number.isFinite(legacyRaceId)
-            ? await getRace(legacyRaceId)
-            : await getRaceBySlug(raceLookup);
-        if (!cancelled) {
-          setRace(r);
-          if (isLegacyIdRoute) {
-            navigate(racePath(r.slug), { replace: true });
-          }
+            ? await getRace(legacyRaceId, ac.signal)
+            : await getRaceBySlug(raceLookup, ac.signal);
+        if (ac.signal.aborted) return;
+        setRace(r);
+        if (isLegacyIdRoute) {
+          navigate(racePath(r.slug), { replace: true });
         }
       } catch (e) {
-        if (!cancelled) setError(e instanceof Error ? e.message : "Failed to load race");
+        if (isAbortError(e)) return;
+        setError(e instanceof Error ? e.message : "Failed to load race");
       } finally {
-        if (!cancelled) setRaceLoading(false);
+        if (!ac.signal.aborted) setRaceLoading(false);
       }
     })();
     return () => {
-      cancelled = true;
+      ac.abort();
     };
   }, [isLegacyIdRoute, legacyRaceId, navigate, raceLookup]);
 
   useEffect(() => {
     if (!race) return;
-    let cancelled = false;
+    const ac = new AbortController();
     setResultsLoading(true);
     void (async () => {
       try {
-        const data = await getRaceResults(race.id, page + 1, pageSize, sortBy, sortOrder);
-        if (!cancelled) {
-          setResults(data.items);
-          setResultsTotal(data.total);
-        }
+        const data = await getRaceResults(
+          race.id,
+          page + 1,
+          pageSize,
+          sortBy,
+          sortOrder,
+          ac.signal,
+        );
+        if (ac.signal.aborted) return;
+        setResults(data.items);
+        setResultsTotal(data.total);
       } catch (e) {
-        if (!cancelled) setError(e instanceof Error ? e.message : "Failed to load results");
+        if (isAbortError(e)) return;
+        setError(e instanceof Error ? e.message : "Failed to load results");
       } finally {
-        if (!cancelled) setResultsLoading(false);
+        if (!ac.signal.aborted) setResultsLoading(false);
       }
     })();
     return () => {
-      cancelled = true;
+      ac.abort();
     };
   }, [page, pageSize, race, sortBy, sortOrder]);
 

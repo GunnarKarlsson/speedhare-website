@@ -13,14 +13,15 @@ import {
 } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getRoadRaceStats, getSummaryStats } from "../api";
+import { getRoadRaceStats, isAbortError } from "../api";
+import { loadSiteSummary } from "../catalog";
 import { SeoHead } from "../components/SeoHead";
 import { racePath } from "../racePaths";
 import { NewHomeFooter } from "../new_home/NewHomeFooter";
-import type { SiteAggregates } from "../new_home/newHomeData";
 import { NewHomeNav } from "../new_home/NewHomeNav";
 import { createNewHomeTheme } from "../new_home/newHomeTheme";
 import { useThemeMode } from "../new_home/themeMode";
+import type { SiteAggregates } from "../types";
 import {
   STATS_TABLES,
   compareStatsValues,
@@ -50,16 +51,19 @@ export function StatsPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let cancelled = false;
+    const ac = new AbortController();
 
     void (async () => {
       try {
         setLoading(true);
         setError(null);
 
-        const [siteAggregates, stats] = await Promise.all([getSummaryStats(), getRoadRaceStats()]);
+        const [siteAggregates, stats] = await Promise.all([
+          loadSiteSummary(ac.signal),
+          getRoadRaceStats(ac.signal),
+        ]);
 
-        if (!cancelled) {
+        if (!ac.signal.aborted) {
           setSite(siteAggregates);
           setRowsByType({
             "5k": stats.five_k.map(mapFiveKRow),
@@ -68,22 +72,21 @@ export function StatsPage() {
           });
         }
       } catch (e) {
-        if (!cancelled) {
-          setError(e instanceof Error ? e.message : "Failed to load stats");
-          setSite(null);
-          setRowsByType({
-            "5k": [],
-            "10k": [],
-            half: [],
-          });
-        }
+        if (isAbortError(e) || ac.signal.aborted) return;
+        setError(e instanceof Error ? e.message : "Failed to load stats");
+        setSite(null);
+        setRowsByType({
+          "5k": [],
+          "10k": [],
+          half: [],
+        });
       } finally {
-        if (!cancelled) setLoading(false);
+        if (!ac.signal.aborted) setLoading(false);
       }
     })();
 
     return () => {
-      cancelled = true;
+      ac.abort();
     };
   }, []);
 

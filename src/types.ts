@@ -54,6 +54,12 @@ export interface RaceSummary {
 export type RaceListItem = RaceSummary;
 export type RaceDetail = RaceSummary;
 
+export interface SiteAggregates {
+  totalRaces: number;
+  totalResults: number;
+  distinctRaceTypes: number;
+}
+
 export interface Paginated<T> {
   items: T[];
   page: number;

@@ -9,8 +9,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
-import { searchRacesByRunner } from "../api";
+import { useEffect, useState } from "react";
+import { isAbortError, searchRacesByRunner } from "../api";
 import { SeoHead } from "../components/SeoHead";
 import { useSiteCatalog } from "../hooks/useSiteCatalog";
 import { NewHomeFooter } from "../new_home/NewHomeFooter";
@@ -43,28 +43,34 @@ export function SearchPage() {
     else setSearchParams({ q: trimmed });
   };
 
-  const load = useCallback(async () => {
+  useEffect(() => {
     if (!q) {
       setRaceRows([]);
       setRunnerRows([]);
+      setLoading(false);
+      setError(null);
       return;
     }
+    const ac = new AbortController();
     setLoading(true);
     setError(null);
-    try {
-      const data = await searchRacesByRunner(q);
-      setRaceRows(data.races);
-      setRunnerRows(data.runners);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Search failed");
-    } finally {
-      setLoading(false);
-    }
+    void searchRacesByRunner(q, ac.signal)
+      .then((data) => {
+        if (ac.signal.aborted) return;
+        setRaceRows(data.races);
+        setRunnerRows(data.runners);
+      })
+      .catch((e) => {
+        if (isAbortError(e)) return;
+        setError(e instanceof Error ? e.message : "Search failed");
+        setRaceRows([]);
+        setRunnerRows([]);
+      })
+      .finally(() => {
+        if (!ac.signal.aborted) setLoading(false);
+      });
+    return () => ac.abort();
   }, [q]);
-
-  useEffect(() => {
-    void load();
-  }, [load]);
 
   return (
     <Box

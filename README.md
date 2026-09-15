@@ -42,7 +42,7 @@ Restart Vite after changing `.env`.
 | Script                 | Description                                                                                          |
 | ---------------------- | ---------------------------------------------------------------------------------------------------- |
 | `npm run dev`          | Vite dev server                                                                                      |
-| `npm run build`        | Production build → `dist/`                                                                           |
+| `npm run build`        | Production build → `dist/` (writes `sitemap.xml` from the API)                                       |
 | `npm run preview`      | Serve the production build locally                                                                   |
 | `npm run typecheck`    | TypeScript (`tsc --noEmit`)                                                                          |
 | `npm run lint`         | ESLint                                                                                               |
@@ -56,7 +56,7 @@ Restart Vite after changing `.env`.
 npm run ci
 ```
 
-GitHub Actions runs `npm run ci` on pushes and pull requests to `main`.
+GitHub Actions runs `npm run ci` on pushes and pull requests to `main`. Production builds write `dist/sitemap.xml` from the public API (static routes plus each race). If that fetch fails, the sitemap still includes the static pages.
 
 ## License
 

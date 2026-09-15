@@ -1,6 +1,6 @@
 import { Box, Link, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import type { SiteAggregates } from "./newHomeData";
+import type { SiteAggregates } from "../types";
 import { createNewHomeTheme } from "./newHomeTheme";
 import { useThemeMode } from "./themeMode";
 

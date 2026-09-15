@@ -11,7 +11,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src eslint.config.mjs vite.config.ts",
+    "lint": "eslint src eslint.config.mjs vite.config.ts vite.sitemap.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",

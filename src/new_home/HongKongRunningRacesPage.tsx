@@ -1,11 +1,11 @@
 import { Box, CircularProgress, Link, Typography } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { SeoHead } from "../components/SeoHead";
+import { useSiteCatalog } from "../hooks/useSiteCatalog";
 import { racePath } from "../racePaths";
 import { NewHomeFooter } from "./NewHomeFooter";
 import { NewHomeNav } from "./NewHomeNav";
-import { fetchAllRacesForNewHome, type SiteAggregates } from "./newHomeData";
 import { createNewHomeTheme } from "./newHomeTheme";
 import { useThemeMode } from "./themeMode";
 
@@ -414,29 +414,7 @@ function smallCapsLinkSx(color: string) {
 export function HongKongRunningRacesPage() {
   const { mode } = useThemeMode();
   const nh = createNewHomeTheme(mode);
-  const [site, setSite] = useState<SiteAggregates | null>(null);
-  const [hasRaceCatalog, setHasRaceCatalog] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    void (async () => {
-      try {
-        const { site: siteAggregates, races } = await fetchAllRacesForNewHome();
-        if (!cancelled) {
-          setSite(siteAggregates);
-          setHasRaceCatalog(races.length > 0);
-        }
-      } catch {
-        if (!cancelled) {
-          setSite(null);
-          setHasRaceCatalog(false);
-        }
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const { site, hasRaceCatalog } = useSiteCatalog();
 
   const raceFamilyCount = useMemo(
     () => GUIDE_SECTIONS.reduce((sum, section) => sum + section.races.length, 0),

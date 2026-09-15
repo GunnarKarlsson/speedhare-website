@@ -2,9 +2,7 @@ import { Box, CircularProgress, TablePagination, Typography } from "@mui/materia
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { SeoHead } from "../components/SeoHead";
-import type { RaceListItem } from "../types";
-import type { SiteAggregates } from "./newHomeData";
-import { fetchAllRacesForNewHome } from "./newHomeData";
+import { useRaceCatalog } from "../hooks/useSiteCatalog";
 import { NewHomeFooter } from "./NewHomeFooter";
 import type { NavDistanceFilter } from "./NewHomeNav";
 import { NewHomeNav } from "./NewHomeNav";
@@ -25,38 +23,9 @@ export function AllRacesPage() {
   const nh = createNewHomeTheme(mode);
   const [searchParams] = useSearchParams();
   const activeDistance = distanceFromSearchParam(searchParams.get("distance"));
-  const [site, setSite] = useState<SiteAggregates | null>(null);
-  const [races, setRaces] = useState<RaceListItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { races, site, loading, error } = useRaceCatalog();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);
-
-  useEffect(() => {
-    let cancelled = false;
-    void (async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const { site: s, races: all } = await fetchAllRacesForNewHome();
-        if (!cancelled) {
-          setSite(s);
-          setRaces(all);
-        }
-      } catch (e) {
-        if (!cancelled) {
-          setSite(null);
-          setRaces([]);
-          setError(e instanceof Error ? e.message : "Failed to load races");
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   const filtered = useMemo(
     () => races.filter((r) => raceMatchesDistance(r, activeDistance)),

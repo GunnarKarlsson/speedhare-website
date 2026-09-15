@@ -1,32 +1,36 @@
 import type {
   CommonRoadRaceStatsRow,
-  RoadRaceStatsResponse,
+  Paginated,
   RaceDetail,
   RaceListItem,
+  ResultsSortKey,
+  RoadRaceStatsResponse,
   RunnerDetailResponse,
   RunnerResultRow,
-  ResultsSortKey,
-  Paginated,
   SearchResponse,
-  SummaryStatsResponse,
+  SiteAggregates,
   SortOrder,
+  SummaryStatsResponse,
 } from "./types";
 import { formatEventTitle } from "./format";
-import type { SiteAggregates } from "./new_home/newHomeData";
+import {
+  apiV1Base as apiV1BaseFromOrigin,
+  raceBySlugUrl as buildRaceBySlugUrl,
+  raceResultsUrl as buildRaceResultsUrl,
+  racesCollectionUrl as buildRacesCollectionUrl,
+  searchRacesByRunnerUrl as buildSearchRacesByRunnerUrl,
+} from "./apiUrls";
 
 export function apiV1Base(origin: string | undefined = import.meta.env.VITE_API_ORIGIN): string {
-  const raw = origin?.trim() ?? "";
-  const trimmed = raw.replace(/\/$/, "");
-  return trimmed ? `${trimmed}/api/v1` : "/api/v1";
+  return apiV1BaseFromOrigin(origin);
 }
 
 export function racesCollectionUrl(page: number, pageSize: number, base = apiV1Base()): string {
-  const q = new URLSearchParams({ page: String(page), page_size: String(pageSize) });
-  return `${base}/races?${q}`;
+  return buildRacesCollectionUrl(page, pageSize, base);
 }
 
 export function raceBySlugUrl(slug: string, base = apiV1Base()): string {
-  return `${base}/races/by-slug/${encodeURIComponent(slug)}`;
+  return buildRaceBySlugUrl(slug, base);
 }
 
 export function raceResultsUrl(
@@ -37,23 +41,21 @@ export function raceResultsUrl(
   order: SortOrder,
   base = apiV1Base(),
 ): string {
-  const q = new URLSearchParams({
-    page: String(page),
-    page_size: String(pageSize),
-    sort,
-    order,
-  });
-  return `${base}/races/${raceId}/results?${q}`;
+  return buildRaceResultsUrl(raceId, page, pageSize, sort, order, base);
 }
 
 export function searchRacesByRunnerUrl(q: string, base = apiV1Base()): string {
-  return `${base}/search/races_by_runner?${new URLSearchParams({ q })}`;
+  return buildSearchRacesByRunnerUrl(q, base);
 }
 
 const API = apiV1Base();
 
-async function fetchJson<T>(path: string): Promise<T> {
-  const res = await fetch(path);
+export function isAbortError(error: unknown): boolean {
+  return error instanceof Error && error.name === "AbortError";
+}
+
+async function fetchJson<T>(path: string, signal?: AbortSignal): Promise<T> {
+  const res = await fetch(path, signal ? { signal } : undefined);
   if (!res.ok) {
     const text = await res.text();
     throw new Error(`${res.status} ${res.statusText}: ${text}`);
@@ -73,19 +75,21 @@ function normalizeRoadRaceStatsRow<T extends CommonRoadRaceStatsRow>(item: T): T
   return { ...item, name: formatEventTitle(item.name) };
 }
 
-export function getRaces(page: number, pageSize: number) {
-  return fetchJson<Paginated<RaceListItem>>(racesCollectionUrl(page, pageSize)).then((data) => ({
-    ...data,
-    items: data.items.map(normalizeRace),
-  }));
+export function getRaces(page: number, pageSize: number, signal?: AbortSignal) {
+  return fetchJson<Paginated<RaceListItem>>(racesCollectionUrl(page, pageSize), signal).then(
+    (data) => ({
+      ...data,
+      items: data.items.map(normalizeRace),
+    }),
+  );
 }
 
-export function getRace(id: number) {
-  return fetchJson<RaceDetail>(`${API}/races/${id}`).then(normalizeRaceDetail);
+export function getRace(id: number, signal?: AbortSignal) {
+  return fetchJson<RaceDetail>(`${API}/races/${id}`, signal).then(normalizeRaceDetail);
 }
 
-export function getRaceBySlug(slug: string) {
-  return fetchJson<RaceDetail>(raceBySlugUrl(slug)).then(normalizeRaceDetail);
+export function getRaceBySlug(slug: string, signal?: AbortSignal) {
+  return fetchJson<RaceDetail>(raceBySlugUrl(slug), signal).then(normalizeRaceDetail);
 }
 
 export function getRaceResults(
@@ -94,32 +98,38 @@ export function getRaceResults(
   pageSize: number,
   sort: ResultsSortKey,
   order: SortOrder,
+  signal?: AbortSignal,
 ) {
-  return fetchJson<Paginated<RunnerResultRow>>(raceResultsUrl(raceId, page, pageSize, sort, order));
+  return fetchJson<Paginated<RunnerResultRow>>(
+    raceResultsUrl(raceId, page, pageSize, sort, order),
+    signal,
+  );
 }
 
-export function getRunnerDetail(raceId: number, resultId: number) {
-  return fetchJson<RunnerDetailResponse>(`${API}/races/${raceId}/runners/${resultId}`);
+export function getRunnerDetail(raceId: number, resultId: number, signal?: AbortSignal) {
+  return fetchJson<RunnerDetailResponse>(`${API}/races/${raceId}/runners/${resultId}`, signal);
 }
 
-export function getRoadRaceStats() {
-  return fetchJson<RoadRaceStatsResponse>(`${API}/stats/road-races`).then((data) => ({
+export function getRoadRaceStats(signal?: AbortSignal) {
+  return fetchJson<RoadRaceStatsResponse>(`${API}/stats/road-races`, signal).then((data) => ({
     five_k: data.five_k.map(normalizeRoadRaceStatsRow),
     ten_k: data.ten_k.map(normalizeRoadRaceStatsRow),
     half_marathon: data.half_marathon.map(normalizeRoadRaceStatsRow),
   }));
 }
 
-export function getSummaryStats() {
-  return fetchJson<SummaryStatsResponse>(`${API}/stats/summary`).then((data): SiteAggregates => ({
-    totalRaces: data.total_races,
-    totalResults: data.total_results,
-    distinctRaceTypes: data.distinct_race_types,
-  }));
+export function getSummaryStats(signal?: AbortSignal) {
+  return fetchJson<SummaryStatsResponse>(`${API}/stats/summary`, signal).then(
+    (data): SiteAggregates => ({
+      totalRaces: data.total_races,
+      totalResults: data.total_results,
+      distinctRaceTypes: data.distinct_race_types,
+    }),
+  );
 }
 
-export function searchRacesByRunner(q: string) {
-  return fetchJson<SearchResponse>(searchRacesByRunnerUrl(q)).then((data) => ({
+export function searchRacesByRunner(q: string, signal?: AbortSignal) {
+  return fetchJson<SearchResponse>(searchRacesByRunnerUrl(q), signal).then((data) => ({
     races: data.races.map((item) => ({
       ...item,
       race_name: formatEventTitle(item.race_name),

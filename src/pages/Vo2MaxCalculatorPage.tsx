@@ -12,12 +12,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { SeoHead } from "../components/SeoHead";
+import { useSiteCatalog } from "../hooks/useSiteCatalog";
 import { NewHomeFooter } from "../new_home/NewHomeFooter";
 import { NewHomeNav } from "../new_home/NewHomeNav";
-import { fetchAllRacesForNewHome, type SiteAggregates } from "../new_home/newHomeData";
 import { createNewHomeTheme } from "../new_home/newHomeTheme";
 import { useThemeMode } from "../new_home/themeMode";
 
@@ -366,36 +366,7 @@ export function Vo2MaxCalculatorPage() {
   const [gender, setGender] = useState<Gender | "">("");
   const [result, setResult] = useState<CalculationResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [site, setSite] = useState<SiteAggregates | null>(null);
-  const [hasRaceData, setHasRaceData] = useState(false);
-  const [siteLoading, setSiteLoading] = useState(true);
-
-  useEffect(() => {
-    let cancelled = false;
-    void (async () => {
-      try {
-        setSiteLoading(true);
-        const { site: nextSite, races } = await fetchAllRacesForNewHome();
-        if (!cancelled) {
-          setSite(nextSite);
-          setHasRaceData(races.length > 0);
-        }
-      } catch {
-        if (!cancelled) {
-          setSite(null);
-          setHasRaceData(false);
-        }
-      } finally {
-        if (!cancelled) {
-          setSiteLoading(false);
-        }
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const { site, hasRaceCatalog: hasRaceData, loading: siteLoading } = useSiteCatalog();
 
   const selectedRaceDistance = useMemo(
     () => RACE_DISTANCES.find((option) => option.value === raceDistance) ?? RACE_DISTANCES[3],
