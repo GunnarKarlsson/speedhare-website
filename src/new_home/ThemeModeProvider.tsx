@@ -4,8 +4,12 @@ import { createAppTheme } from "../theme";
 import { ThemeModeContext, type ThemeMode, type ThemeModeContextValue } from "./themeMode";
 
 function getInitialMode(): ThemeMode {
-  const saved = localStorage.getItem("preferred-theme");
-  return saved === "light" ? "light" : "dark";
+  try {
+    const saved = localStorage.getItem("preferred-theme");
+    return saved === "light" ? "light" : "dark";
+  } catch {
+    return "dark";
+  }
 }
 
 export function ThemeModeProvider({ children }: { children: ReactNode }) {
@@ -17,7 +21,11 @@ export function ThemeModeProvider({ children }: { children: ReactNode }) {
       toggleMode: () => {
         setMode((prev) => {
           const next: ThemeMode = prev === "dark" ? "light" : "dark";
-          localStorage.setItem("preferred-theme", next);
+          try {
+            localStorage.setItem("preferred-theme", next);
+          } catch {
+            // Ignore private-mode / quota failures.
+          }
           return next;
         });
       },

@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
   apiV1Base,
+  raceByIdUrl,
   raceBySlugUrl,
   raceResultsUrl,
   racesCollectionUrl,
+  runnerDetailUrl,
   searchRacesByRunnerUrl,
 } from "./api";
 
@@ -34,6 +36,8 @@ describe("API URL builders", () => {
     expect(raceBySlugUrl("foo/bar", base)).toBe(
       "https://api.speedhare.io/api/v1/races/by-slug/foo%2Fbar",
     );
+    expect(raceByIdUrl(9, base)).toBe("https://api.speedhare.io/api/v1/races/9");
+    expect(runnerDetailUrl(9, 3, base)).toBe("https://api.speedhare.io/api/v1/races/9/runners/3");
     expect(searchRacesByRunnerUrl("chan tai", base)).toBe(
       "https://api.speedhare.io/api/v1/search/races_by_runner?q=chan+tai",
     );

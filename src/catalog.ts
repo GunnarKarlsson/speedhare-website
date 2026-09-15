@@ -14,6 +14,13 @@ let summaryInFlight: Promise<SiteAggregates> | undefined;
 let catalogCache: RaceCatalog | undefined;
 let catalogInFlight: Promise<RaceCatalog> | undefined;
 
+export function resetCatalogCacheForTests(): void {
+  summaryCache = undefined;
+  summaryInFlight = undefined;
+  catalogCache = undefined;
+  catalogInFlight = undefined;
+}
+
 export function siteHasRaces(site: SiteAggregates | null | undefined): boolean {
   return (site?.totalRaces ?? 0) > 0;
 }

@@ -17,6 +17,10 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     return { hasError: true };
   }
 
+  componentDidCatch(error: Error, info: { componentStack?: string | null }) {
+    console.error("Uncaught render error", error, info.componentStack);
+  }
+
   handleRetry = () => {
     this.setState({ hasError: false });
   };

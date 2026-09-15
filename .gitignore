@@ -21,5 +21,5 @@ pnpm-debug.log*
 .vscode/
 .idea/
 
-# Local deploy helper
+# Local leftover; production deploy is GitHub Actions only
 scripts/run-aws.mjs

@@ -13,6 +13,22 @@ export function raceBySlugUrl(slug: string, base: string): string {
   return `${base}/races/by-slug/${encodeURIComponent(slug)}`;
 }
 
+export function raceByIdUrl(id: number, base: string): string {
+  return `${base}/races/${id}`;
+}
+
+export function runnerDetailUrl(raceId: number, resultId: number, base: string): string {
+  return `${base}/races/${raceId}/runners/${resultId}`;
+}
+
+export function summaryStatsUrl(base: string): string {
+  return `${base}/stats/summary`;
+}
+
+export function roadRaceStatsUrl(base: string): string {
+  return `${base}/stats/road-races`;
+}
+
 export function raceResultsUrl(
   raceId: number,
   page: number,

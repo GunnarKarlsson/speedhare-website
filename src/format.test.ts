@@ -22,6 +22,11 @@ describe("formatSeconds", () => {
     expect(formatSeconds(3600)).toBe("1:00:00");
     expect(formatSeconds(3661)).toBe("1:01:01");
   });
+
+  it("rounds fractional seconds", () => {
+    expect(formatSeconds(75.4)).toBe("1:15");
+    expect(formatSeconds(75.6)).toBe("1:16");
+  });
 });
 
 describe("formatEventTitle", () => {

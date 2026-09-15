@@ -15,10 +15,14 @@ import type {
 import { formatEventTitle } from "./format";
 import {
   apiV1Base as apiV1BaseFromOrigin,
+  raceByIdUrl as buildRaceByIdUrl,
   raceBySlugUrl as buildRaceBySlugUrl,
   raceResultsUrl as buildRaceResultsUrl,
   racesCollectionUrl as buildRacesCollectionUrl,
+  roadRaceStatsUrl as buildRoadRaceStatsUrl,
+  runnerDetailUrl as buildRunnerDetailUrl,
   searchRacesByRunnerUrl as buildSearchRacesByRunnerUrl,
+  summaryStatsUrl as buildSummaryStatsUrl,
 } from "./apiUrls";
 
 export function apiV1Base(origin: string | undefined = import.meta.env.VITE_API_ORIGIN): string {
@@ -31,6 +35,22 @@ export function racesCollectionUrl(page: number, pageSize: number, base = apiV1B
 
 export function raceBySlugUrl(slug: string, base = apiV1Base()): string {
   return buildRaceBySlugUrl(slug, base);
+}
+
+export function raceByIdUrl(id: number, base = apiV1Base()): string {
+  return buildRaceByIdUrl(id, base);
+}
+
+export function runnerDetailUrl(raceId: number, resultId: number, base = apiV1Base()): string {
+  return buildRunnerDetailUrl(raceId, resultId, base);
+}
+
+export function summaryStatsUrl(base = apiV1Base()): string {
+  return buildSummaryStatsUrl(base);
+}
+
+export function roadRaceStatsUrl(base = apiV1Base()): string {
+  return buildRoadRaceStatsUrl(base);
 }
 
 export function raceResultsUrl(
@@ -47,8 +67,6 @@ export function raceResultsUrl(
 export function searchRacesByRunnerUrl(q: string, base = apiV1Base()): string {
   return buildSearchRacesByRunnerUrl(q, base);
 }
-
-const API = apiV1Base();
 
 export function isAbortError(error: unknown): boolean {
   return error instanceof Error && error.name === "AbortError";
@@ -85,7 +103,7 @@ export function getRaces(page: number, pageSize: number, signal?: AbortSignal) {
 }
 
 export function getRace(id: number, signal?: AbortSignal) {
-  return fetchJson<RaceDetail>(`${API}/races/${id}`, signal).then(normalizeRaceDetail);
+  return fetchJson<RaceDetail>(raceByIdUrl(id), signal).then(normalizeRaceDetail);
 }
 
 export function getRaceBySlug(slug: string, signal?: AbortSignal) {
@@ -107,11 +125,11 @@ export function getRaceResults(
 }
 
 export function getRunnerDetail(raceId: number, resultId: number, signal?: AbortSignal) {
-  return fetchJson<RunnerDetailResponse>(`${API}/races/${raceId}/runners/${resultId}`, signal);
+  return fetchJson<RunnerDetailResponse>(runnerDetailUrl(raceId, resultId), signal);
 }
 
 export function getRoadRaceStats(signal?: AbortSignal) {
-  return fetchJson<RoadRaceStatsResponse>(`${API}/stats/road-races`, signal).then((data) => ({
+  return fetchJson<RoadRaceStatsResponse>(roadRaceStatsUrl(), signal).then((data) => ({
     five_k: data.five_k.map(normalizeRoadRaceStatsRow),
     ten_k: data.ten_k.map(normalizeRoadRaceStatsRow),
     half_marathon: data.half_marathon.map(normalizeRoadRaceStatsRow),
@@ -119,7 +137,7 @@ export function getRoadRaceStats(signal?: AbortSignal) {
 }
 
 export function getSummaryStats(signal?: AbortSignal) {
-  return fetchJson<SummaryStatsResponse>(`${API}/stats/summary`, signal).then(
+  return fetchJson<SummaryStatsResponse>(summaryStatsUrl(), signal).then(
     (data): SiteAggregates => ({
       totalRaces: data.total_races,
       totalResults: data.total_results,

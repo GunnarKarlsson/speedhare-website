@@ -34,6 +34,7 @@ export default tseslint.config(
       ...react.configs.flat["jsx-runtime"].rules,
       ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+      // Off: current data-fetch effects trip React 19 compiler-era hooks rules.
       "react-hooks/set-state-in-effect": "off",
       "react-hooks/static-components": "off",
       "react-hooks/immutability": "off",
