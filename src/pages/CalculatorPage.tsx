@@ -17,6 +17,14 @@ import type { SiteAggregates } from "../new_home/newHomeData";
 import { fetchAllRacesForNewHome } from "../new_home/newHomeData";
 import { createNewHomeTheme } from "../new_home/newHomeTheme";
 import { useThemeMode } from "../new_home/themeMode";
+import {
+  formatDuration,
+  formatDurationLong,
+  formatNumber,
+  formatPace,
+  parsePositiveNumber,
+  parseTimeToSeconds,
+} from "../calculatorParse";
 
 type CalculationMode = "time" | "speed" | "distance";
 
@@ -80,82 +88,6 @@ const FORMULAS: Record<CalculationMode, string> = {
 };
 
 const DESKTOP_UNIT_SELECTOR_WIDTH = 180;
-
-function parsePositiveNumber(value: string) {
-  if (!value.trim()) return null;
-  const parsed = Number(value);
-  if (!Number.isFinite(parsed) || parsed <= 0) return null;
-  return parsed;
-}
-
-function parseTimeToSeconds(value: string) {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-
-  const parts = trimmed.split(":").map((part) => part.trim());
-  if (parts.length > 3 || parts.some((part) => !/^\d+(\.\d+)?$/.test(part))) {
-    return null;
-  }
-
-  const values = parts.map(Number);
-  if (values.some((part) => !Number.isFinite(part) || part < 0)) {
-    return null;
-  }
-
-  if (values.length === 1) {
-    return values[0] > 0 ? values[0] : null;
-  }
-
-  if (values.length === 2) {
-    const [minutes, seconds] = values;
-    if (seconds >= 60) return null;
-    const total = minutes * 60 + seconds;
-    return total > 0 ? total : null;
-  }
-
-  const [hours, minutes, seconds] = values;
-  if (minutes >= 60 || seconds >= 60) return null;
-  const total = hours * 3600 + minutes * 60 + seconds;
-  return total > 0 ? total : null;
-}
-
-function formatDuration(totalSeconds: number) {
-  const rounded = Math.max(0, Math.round(totalSeconds));
-  const hours = Math.floor(rounded / 3600);
-  const minutes = Math.floor((rounded % 3600) / 60);
-  const seconds = rounded % 60;
-
-  return [hours, minutes, seconds].map((part) => String(part).padStart(2, "0")).join(":");
-}
-
-function formatPace(totalSeconds: number) {
-  const rounded = Math.max(0, Math.round(totalSeconds));
-  const hours = Math.floor(rounded / 3600);
-  const minutes = Math.floor((rounded % 3600) / 60);
-  const seconds = rounded % 60;
-
-  if (hours === 0) {
-    return `${minutes}:${String(seconds).padStart(2, "0")}`;
-  }
-
-  return `${hours}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-}
-
-function formatDurationLong(totalSeconds: number) {
-  const rounded = Math.max(0, Math.round(totalSeconds));
-  const hours = Math.floor(rounded / 3600);
-  const minutes = Math.floor((rounded % 3600) / 60);
-  const seconds = rounded % 60;
-
-  return `${hours} hours, ${minutes} minutes, ${seconds} seconds`;
-}
-
-function formatNumber(value: number, maximumFractionDigits = 4) {
-  return new Intl.NumberFormat("en-US", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits,
-  }).format(value);
-}
 
 export function CalculatorPage() {
   const { mode: themeMode } = useThemeMode();

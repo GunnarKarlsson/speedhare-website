@@ -52,5 +52,11 @@ export default tseslint.config(
       globals: globals.node,
     },
   },
+  {
+    files: ["src/**/*.test.ts"],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
   eslintConfigPrettier,
 );

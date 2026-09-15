@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, type ReactNode } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 import { AllRacesPage } from "./new_home/AllRacesPage";
 import { HongKongRunningRacesPage } from "./new_home/HongKongRunningRacesPage";
 import { NewHomePage } from "./new_home/NewHomePage";
@@ -21,34 +22,44 @@ function ScrollToTopOnRouteChange() {
   return null;
 }
 
+function RouteErrorBoundary({ children }: { children: ReactNode }) {
+  const { pathname } = useLocation();
+  return <ErrorBoundary key={pathname}>{children}</ErrorBoundary>;
+}
+
 export default function App() {
   return (
     <>
       <ScrollToTopOnRouteChange />
-      <Routes>
-        <Route path="/" element={<NewHomePage />} />
-        <Route path="new_home" element={<Navigate to="/" replace />} />
-        <Route path="all-races" element={<AllRacesPage />} />
-        <Route path="hong-kong-10k-5k-half-marathon-race" element={<HongKongRunningRacesPage />} />
-        <Route path="about" element={<AboutPage />} />
-        <Route path="terms" element={<TermsConditionsPage />} />
-        <Route path="data-policy" element={<DataPolicyPage />} />
-        <Route path="races/:idOrSlug" element={<RaceDetailPage />} />
-        <Route path="races/:raceId/runners/:resultId" element={<RunnerPage />} />
-        <Route path="search" element={<SearchPage />} />
-        <Route
-          path="stats"
-          element={<Navigate to="/hong-kong-road-race-stats-5k-10k-half-marathon" replace />}
-        />
-        <Route path="hong-kong-road-race-stats-5k-10k-half-marathon" element={<StatsPage />} />
-        <Route
-          path="calculator"
-          element={<Navigate to="/speed-distance-time-calculator" replace />}
-        />
-        <Route path="speed-distance-time-calculator" element={<CalculatorPage />} />
-        <Route path="vo2max-calculator" element={<Vo2MaxCalculatorPage />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <RouteErrorBoundary>
+        <Routes>
+          <Route path="/" element={<NewHomePage />} />
+          <Route path="new_home" element={<Navigate to="/" replace />} />
+          <Route path="all-races" element={<AllRacesPage />} />
+          <Route
+            path="hong-kong-10k-5k-half-marathon-race"
+            element={<HongKongRunningRacesPage />}
+          />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="terms" element={<TermsConditionsPage />} />
+          <Route path="data-policy" element={<DataPolicyPage />} />
+          <Route path="races/:idOrSlug" element={<RaceDetailPage />} />
+          <Route path="races/:raceId/runners/:resultId" element={<RunnerPage />} />
+          <Route path="search" element={<SearchPage />} />
+          <Route
+            path="stats"
+            element={<Navigate to="/hong-kong-road-race-stats-5k-10k-half-marathon" replace />}
+          />
+          <Route path="hong-kong-road-race-stats-5k-10k-half-marathon" element={<StatsPage />} />
+          <Route
+            path="calculator"
+            element={<Navigate to="/speed-distance-time-calculator" replace />}
+          />
+          <Route path="speed-distance-time-calculator" element={<CalculatorPage />} />
+          <Route path="vo2max-calculator" element={<Vo2MaxCalculatorPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </RouteErrorBoundary>
     </>
   );
 }

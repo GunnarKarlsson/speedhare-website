@@ -39,16 +39,18 @@ Restart Vite after changing `.env`.
 
 ## Scripts
 
-| Script                 | Description                                                                                 |
-| ---------------------- | ------------------------------------------------------------------------------------------- |
-| `npm run dev`          | Vite dev server                                                                             |
-| `npm run build`        | Production build → `dist/`                                                                  |
-| `npm run preview`      | Serve the production build locally                                                          |
-| `npm run typecheck`    | TypeScript (`tsc --noEmit`)                                                                 |
-| `npm run lint`         | ESLint                                                                                      |
-| `npm run format`       | Prettier write                                                                              |
-| `npm run format:check` | Prettier check                                                                              |
-| `npm run ci`           | `format:check` → `lint` → `typecheck` → `npm audit --omit=dev --audit-level=high` → `build` |
+| Script                 | Description                                                                                          |
+| ---------------------- | ---------------------------------------------------------------------------------------------------- |
+| `npm run dev`          | Vite dev server                                                                                      |
+| `npm run build`        | Production build → `dist/`                                                                           |
+| `npm run preview`      | Serve the production build locally                                                                   |
+| `npm run typecheck`    | TypeScript (`tsc --noEmit`)                                                                          |
+| `npm run lint`         | ESLint                                                                                               |
+| `npm run format`       | Prettier write                                                                                       |
+| `npm run format:check` | Prettier check                                                                                       |
+| `npm test`             | Vitest (single run)                                                                                  |
+| `npm run test:watch`   | Vitest watch mode                                                                                    |
+| `npm run ci`           | `format:check` → `lint` → `typecheck` → `test` → `npm audit --omit=dev --audit-level=high` → `build` |
 
 ```bash
 npm run ci
