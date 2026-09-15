@@ -1,8 +1,16 @@
 {
-  "name": "race-results-frontend",
+  "name": "speedhare",
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "description": "Hong Kong race analytics — results and performance data for road races",
+  "homepage": "https://speedhare.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GunnarKarlsson/speedhare-website.git"
+  },
+  "author": "Bahn Labs Ltd",
+  "license": "MIT",
   "engines": {
     "node": ">=18"
   },
