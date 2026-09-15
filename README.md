@@ -6,7 +6,7 @@
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vite.dev)
-[![Node](https://img.shields.io/badge/node-%3E%3D20-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org)
+[![Node](https://img.shields.io/badge/Node-20-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org)
 
 Hong Kong race analytics — comprehensive race results and performance data for road races.
 
@@ -18,7 +18,7 @@ Data comes from public result files released by organizers — not from scraping
 
 ## Run locally
 
-Requires [Node.js](https://nodejs.org) 20 or newer.
+Requires [Node.js](https://nodejs.org) 20.
 
 ```bash
 npm install
@@ -71,3 +71,5 @@ Only tags matching `v*.*.*` (for example `v0.2.0`) participate in this flow. Tag
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+Font files in `src/fonts/` are Ioskeley Mono, licensed under the SIL Open Font License 1.1 — see [src/fonts/LICENSE](src/fonts/LICENSE).
