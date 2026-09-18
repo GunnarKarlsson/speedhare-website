@@ -220,7 +220,7 @@ export function NewHomeNav({ activeDistance, navContext = "home" }: NewHomeNavPr
               "&:hover": { textDecoration: "underline" },
             }}
           >
-            NEW: Speed Distance Time Calculator
+            NEW: Speed Distance Time Calculator 🏃 
           </Link>
         </Box>
       ) : null}
