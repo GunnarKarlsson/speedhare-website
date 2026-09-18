@@ -4,9 +4,9 @@ import { Link as RouterLink } from "react-router-dom";
 import { SeoHead } from "../components/SeoHead";
 import { useSiteCatalog } from "../hooks/useSiteCatalog";
 import { racePath } from "../racePaths";
-import { NewHomeFooter } from "./NewHomeFooter";
-import { NewHomeNav } from "./NewHomeNav";
-import { createNewHomeTheme } from "./newHomeTheme";
+import { HomeFooter } from "./HomeFooter";
+import { HomeNav } from "./HomeNav";
+import { createHomeTheme } from "./homeTheme";
 import { useThemeMode } from "./themeMode";
 
 interface ArchiveLink {
@@ -413,7 +413,7 @@ function smallCapsLinkSx(color: string) {
 
 export function HongKongRunningRacesPage() {
   const { mode } = useThemeMode();
-  const nh = createNewHomeTheme(mode);
+  const nh = createHomeTheme(mode);
   const { site, hasRaceCatalog } = useSiteCatalog();
 
   const raceFamilyCount = useMemo(
@@ -496,7 +496,7 @@ export function HongKongRunningRacesPage() {
         ]}
         jsonLd={schemaData}
       />
-      <NewHomeNav activeDistance="all" navContext="all-races" />
+      <HomeNav activeDistance="all" navContext="all-races" />
 
       <Box
         sx={{
@@ -846,7 +846,7 @@ export function HongKongRunningRacesPage() {
       </Box>
 
       {site ? (
-        <NewHomeFooter site={site} hasRaceData={hasRaceCatalog} />
+        <HomeFooter site={site} hasRaceData={hasRaceCatalog} />
       ) : (
         <Box sx={{ display: "flex", justifyContent: "center", py: 3 }}>
           <CircularProgress size={20} sx={{ color: nh.blue }} />

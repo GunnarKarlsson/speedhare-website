@@ -1,9 +1,9 @@
 import { createTheme } from "@mui/material/styles";
-import { createNewHomeTheme } from "./new_home/newHomeTheme";
-import type { ThemeMode } from "./new_home/themeMode";
+import { createHomeTheme } from "./home/homeTheme";
+import type { ThemeMode } from "./home/themeMode";
 
 export function createAppTheme(mode: ThemeMode) {
-  const nh = createNewHomeTheme(mode);
+  const nh = createHomeTheme(mode);
   return createTheme({
     palette: {
       mode,

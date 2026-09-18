@@ -2,10 +2,10 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { SeoHead } from "../components/SeoHead";
 import { useSiteCatalog } from "../hooks/useSiteCatalog";
-import { NewHomeFooter } from "../new_home/NewHomeFooter";
-import { NewHomeNav } from "../new_home/NewHomeNav";
-import { createNewHomeTheme } from "../new_home/newHomeTheme";
-import { useThemeMode } from "../new_home/themeMode";
+import { HomeFooter } from "../home/HomeFooter";
+import { HomeNav } from "../home/HomeNav";
+import { createHomeTheme } from "../home/homeTheme";
+import { useThemeMode } from "../home/themeMode";
 
 interface StaticContentPageProps {
   title: string;
@@ -21,7 +21,7 @@ export function StaticContentPage({
   sections,
 }: StaticContentPageProps) {
   const { mode } = useThemeMode();
-  const nh = createNewHomeTheme(mode);
+  const nh = createHomeTheme(mode);
   const { site, hasRaceCatalog } = useSiteCatalog();
 
   const pageDescription = useMemo(() => {
@@ -45,7 +45,7 @@ export function StaticContentPage({
         description={pageDescription}
         canonicalPath={canonicalPath}
       />
-      <NewHomeNav activeDistance="all" navContext="all-races" />
+      <HomeNav activeDistance="all" navContext="all-races" />
 
       <Box sx={{ flex: 1, maxWidth: 840, width: "100%", mx: "auto", px: { xs: 2, sm: 3 }, py: 4 }}>
         <Typography
@@ -92,7 +92,7 @@ export function StaticContentPage({
       </Box>
 
       {site ? (
-        <NewHomeFooter site={site} hasRaceData={hasRaceCatalog} />
+        <HomeFooter site={site} hasRaceData={hasRaceCatalog} />
       ) : (
         <Box sx={{ display: "flex", justifyContent: "center", py: 3 }}>
           <CircularProgress size={20} sx={{ color: nh.blue }} />

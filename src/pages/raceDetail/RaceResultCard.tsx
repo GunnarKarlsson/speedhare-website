@@ -2,7 +2,7 @@ import { Box, Link as MuiLink, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { LabeledMetricBox } from "../../components/LabeledMetricBox";
 import { formatEnglishRunnerName, formatSeconds } from "../../format";
-import type { NewHomeTheme } from "../../new_home/newHomeTheme";
+import type { HomeTheme } from "../../home/homeTheme";
 import type { RunnerResultRow } from "../../types";
 
 export function RaceResultCard({
@@ -12,7 +12,7 @@ export function RaceResultCard({
 }: {
   raceId: number;
   row: RunnerResultRow;
-  nh: NewHomeTheme;
+  nh: HomeTheme;
 }) {
   return (
     <Box

@@ -3,11 +3,11 @@ import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { SeoHead } from "../components/SeoHead";
 import { useRaceCatalog } from "../hooks/useSiteCatalog";
-import { NewHomeFooter } from "./NewHomeFooter";
-import type { NavDistanceFilter } from "./NewHomeNav";
-import { NewHomeNav } from "./NewHomeNav";
-import { NewHomeRaceCard } from "./NewHomeRaceCard";
-import { createNewHomeTheme } from "./newHomeTheme";
+import { HomeFooter } from "./HomeFooter";
+import type { NavDistanceFilter } from "./HomeNav";
+import { HomeNav } from "./HomeNav";
+import { HomeRaceCard } from "./HomeRaceCard";
+import { createHomeTheme } from "./homeTheme";
 import { raceMatchesDistance } from "./raceMatchesDistance";
 import { useThemeMode } from "./themeMode";
 
@@ -20,7 +20,7 @@ function distanceFromSearchParam(raw: string | null): NavDistanceFilter {
 
 export function AllRacesPage() {
   const { mode } = useThemeMode();
-  const nh = createNewHomeTheme(mode);
+  const nh = createHomeTheme(mode);
   const [searchParams] = useSearchParams();
   const activeDistance = distanceFromSearchParam(searchParams.get("distance"));
   const { races, site, loading, error } = useRaceCatalog();
@@ -57,7 +57,7 @@ export function AllRacesPage() {
         description="Browse Hong Kong road race results across 5K, 10K, half marathon, and marathon events."
         canonicalPath="/all-races"
       />
-      <NewHomeNav navContext="all-races" activeDistance={activeDistance} />
+      <HomeNav navContext="all-races" activeDistance={activeDistance} />
       <Box sx={{ flex: 1, maxWidth: 800, width: "100%", mx: "auto", px: { xs: 2, sm: 3 }, py: 3 }}>
         <Typography
           sx={{
@@ -97,7 +97,7 @@ export function AllRacesPage() {
         ) : (
           <>
             {paged.map((race, idx) => (
-              <NewHomeRaceCard key={race.id} race={race} titleAccent={idx === 0 && page === 0} />
+              <HomeRaceCard key={race.id} race={race} titleAccent={idx === 0 && page === 0} />
             ))}
             <TablePagination
               component="div"
@@ -145,7 +145,7 @@ export function AllRacesPage() {
         </Box>
       </Box>
       {site ? (
-        <NewHomeFooter site={site} hasRaceData={races.length > 0} />
+        <HomeFooter site={site} hasRaceData={races.length > 0} />
       ) : (
         <Box sx={{ py: 3, borderTop: `1px solid ${nh.border}` }} />
       )}

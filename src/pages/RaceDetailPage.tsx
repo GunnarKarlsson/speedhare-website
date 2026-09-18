@@ -3,9 +3,9 @@ import { Alert, Box, CircularProgress, Typography, useMediaQuery, useTheme } fro
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { SeoHead } from "../components/SeoHead";
-import { NewHomeNav } from "../new_home/NewHomeNav";
-import { createNewHomeTheme } from "../new_home/newHomeTheme";
-import { useThemeMode } from "../new_home/themeMode";
+import { HomeNav } from "../home/HomeNav";
+import { createHomeTheme } from "../home/homeTheme";
+import { useThemeMode } from "../home/themeMode";
 import { RaceDetailSummary } from "./raceDetail/RaceDetailSummary";
 import { RaceResultCard } from "./raceDetail/RaceResultCard";
 import { RESULTS_SORT_COLUMNS, buildRaceDetailView } from "./raceDetail/raceDetailView";
@@ -14,7 +14,7 @@ import { useRaceDetail } from "./raceDetail/useRaceDetail";
 
 export function RaceDetailPage() {
   const { mode } = useThemeMode();
-  const nh = createNewHomeTheme(mode);
+  const nh = createHomeTheme(mode);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { idOrSlug } = useParams<{ idOrSlug: string }>();
@@ -37,7 +37,7 @@ export function RaceDetailPage() {
         }
         canonicalPath={view?.canonicalPath ?? "/races"}
       />
-      <NewHomeNav activeDistance="all" navContext="all-races" />
+      <HomeNav activeDistance="all" navContext="all-races" />
       <Box sx={{ maxWidth: 800, mx: "auto", px: { xs: 2, sm: 3 }, py: 3 }}>
         {detail.error ? (
           <Alert severity="error" sx={{ mb: 2 }}>

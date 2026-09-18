@@ -1,5 +1,5 @@
 import { TablePagination } from "@mui/material";
-import type { NewHomeTheme } from "../../new_home/newHomeTheme";
+import type { HomeTheme } from "../../home/homeTheme";
 
 interface ResultsPaginationProps {
   count: number;
@@ -7,7 +7,7 @@ interface ResultsPaginationProps {
   pageSize: number;
   onPageChange: (page: number) => void;
   onPageSizeChange: (pageSize: number) => void;
-  nh: NewHomeTheme;
+  nh: HomeTheme;
   isMobile: boolean;
   sx?: { mb?: number; mt?: number };
 }

@@ -7,12 +7,12 @@ import { raceListExtras } from "../raceListExtras";
 import { racePath } from "../racePaths";
 import type { RaceListItem } from "../types";
 import { formatShortRaceDate } from "./formatRaceDate";
-import { createNewHomeTheme } from "./newHomeTheme";
+import { createHomeTheme } from "./homeTheme";
 import { badgeSxForRaceType } from "./badgeStyle";
 import type { SiteAggregates } from "../types";
 import { useThemeMode } from "./themeMode";
 
-interface NewHomeHeroProps {
+interface HomeHeroProps {
   site: SiteAggregates;
   latestRaces: RaceListItem[];
   /** When true, race list data was returned from the API (not only aggregate metadata). */
@@ -25,9 +25,9 @@ function metricFromExtras(race: RaceListItem, label: "Finishers" | "Mean" | "Med
   return m?.value ?? "—";
 }
 
-export function NewHomeHero({ site, latestRaces, hasRaceData }: NewHomeHeroProps) {
+export function HomeHero({ site, latestRaces, hasRaceData }: HomeHeroProps) {
   const { mode } = useThemeMode();
-  const nh = createNewHomeTheme(mode);
+  const nh = createHomeTheme(mode);
   const stat = (k: string, v: string) => (
     <Box>
       <Typography

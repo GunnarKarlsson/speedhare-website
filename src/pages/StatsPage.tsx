@@ -17,10 +17,10 @@ import { getRoadRaceStats, isAbortError } from "../api";
 import { loadSiteSummary } from "../catalog";
 import { SeoHead } from "../components/SeoHead";
 import { racePath } from "../racePaths";
-import { NewHomeFooter } from "../new_home/NewHomeFooter";
-import { NewHomeNav } from "../new_home/NewHomeNav";
-import { createNewHomeTheme } from "../new_home/newHomeTheme";
-import { useThemeMode } from "../new_home/themeMode";
+import { HomeFooter } from "../home/HomeFooter";
+import { HomeNav } from "../home/HomeNav";
+import { createHomeTheme } from "../home/homeTheme";
+import { useThemeMode } from "../home/themeMode";
 import type { SiteAggregates } from "../types";
 import {
   STATS_TABLES,
@@ -39,7 +39,7 @@ import {
 export function StatsPage() {
   const navigate = useNavigate();
   const { mode } = useThemeMode();
-  const nh = createNewHomeTheme(mode);
+  const nh = createHomeTheme(mode);
   const [site, setSite] = useState<SiteAggregates | null>(null);
   const [rowsByType, setRowsByType] = useState<Record<StatsRaceType, StatsRow[]>>({
     "5k": [],
@@ -130,7 +130,7 @@ export function StatsPage() {
         description="Sortable race statistics tables for 5K, 10K, and half marathon events on Speedhare."
         canonicalPath="/hong-kong-road-race-stats-5k-10k-half-marathon"
       />
-      <NewHomeNav activeDistance="all" navContext="stats" />
+      <HomeNav activeDistance="all" navContext="stats" />
 
       <Box
         sx={{
@@ -306,7 +306,7 @@ export function StatsPage() {
       </Box>
 
       {site ? (
-        <NewHomeFooter site={site} hasRaceData={site.totalRaces > 0} />
+        <HomeFooter site={site} hasRaceData={site.totalRaces > 0} />
       ) : (
         <Box sx={{ py: 3, borderTop: `1px solid ${nh.border}` }} />
       )}

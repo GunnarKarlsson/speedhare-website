@@ -12,12 +12,12 @@ import { raceListExtras } from "../raceListExtras";
 import { racePath } from "../racePaths";
 import type { RaceListItem } from "../types";
 import { badgeSxForRaceType } from "./badgeStyle";
-import { createNewHomeTheme } from "./newHomeTheme";
+import { createHomeTheme } from "./homeTheme";
 import { useThemeMode } from "./themeMode";
 
 const PERCENTILE_LABELS = ["Top 10%", "Top 25%", "Top 50%", "Top 75%"] as const;
 
-interface NewHomeRaceCardProps {
+interface HomeRaceCardProps {
   race: RaceListItem;
   titleAccent?: boolean;
 }
@@ -29,9 +29,9 @@ function summaryValue(
   return extras.summaryMetrics.find((m) => m.label === label)?.value ?? "—";
 }
 
-export function NewHomeRaceCard({ race, titleAccent }: NewHomeRaceCardProps) {
+export function HomeRaceCard({ race, titleAccent }: HomeRaceCardProps) {
   const { mode } = useThemeMode();
-  const nh = createNewHomeTheme(mode);
+  const nh = createHomeTheme(mode);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const extras = raceListExtras(race.aggregates, race.metadata);

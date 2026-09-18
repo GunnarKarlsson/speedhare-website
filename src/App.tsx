@@ -1,9 +1,9 @@
 import { useEffect, type ReactNode } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { ErrorBoundary } from "./components/ErrorBoundary";
-import { AllRacesPage } from "./new_home/AllRacesPage";
-import { HongKongRunningRacesPage } from "./new_home/HongKongRunningRacesPage";
-import { NewHomePage } from "./new_home/NewHomePage";
+import { AllRacesPage } from "./home/AllRacesPage";
+import { HongKongRunningRacesPage } from "./home/HongKongRunningRacesPage";
+import { HomePage } from "./home/HomePage";
 import { CalculatorPage } from "./pages/CalculatorPage";
 import { AboutPage, DataPolicyPage, TermsConditionsPage } from "./pages/InfoPages";
 import { RaceDetailPage } from "./pages/RaceDetailPage";
@@ -33,7 +33,7 @@ export default function App() {
       <ScrollToTopOnRouteChange />
       <RouteErrorBoundary>
         <Routes>
-          <Route path="/" element={<NewHomePage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="new_home" element={<Navigate to="/" replace />} />
           <Route path="all-races" element={<AllRacesPage />} />
           <Route

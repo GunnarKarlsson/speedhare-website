@@ -1,18 +1,18 @@
 import { Box, Link, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import type { SiteAggregates } from "../types";
-import { createNewHomeTheme } from "./newHomeTheme";
+import { createHomeTheme } from "./homeTheme";
 import { useThemeMode } from "./themeMode";
 
-interface NewHomeFooterProps {
+interface HomeFooterProps {
   site: SiteAggregates;
   /** Race list API returned at least one event (same semantics as home hero “LIVE”). */
   hasRaceData: boolean;
 }
 
-export function NewHomeFooter({ site, hasRaceData }: NewHomeFooterProps) {
+export function HomeFooter({ site, hasRaceData }: HomeFooterProps) {
   const { mode } = useThemeMode();
-  const nh = createNewHomeTheme(mode);
+  const nh = createHomeTheme(mode);
   const colTitle = (t: string) => (
     <Typography
       sx={{

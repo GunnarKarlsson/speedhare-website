@@ -1,12 +1,12 @@
 import { Box, Link as MuiLink, Typography } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { formatRaceType, formatRunnerNames, formatSeconds } from "../../format";
-import { badgeSxForRaceType } from "../../new_home/badgeStyle";
-import type { NewHomeTheme } from "../../new_home/newHomeTheme";
+import { badgeSxForRaceType } from "../../home/badgeStyle";
+import type { HomeTheme } from "../../home/homeTheme";
 import { racePath } from "../../racePaths";
 import type { SearchRaceItem, SearchRunnerItem } from "../../types";
 
-export function SearchRaceResults({ races, nh }: { races: SearchRaceItem[]; nh: NewHomeTheme }) {
+export function SearchRaceResults({ races, nh }: { races: SearchRaceItem[]; nh: HomeTheme }) {
   const navigate = useNavigate();
 
   return (
@@ -100,7 +100,7 @@ export function SearchRunnerResults({
   nh,
 }: {
   runners: SearchRunnerItem[];
-  nh: NewHomeTheme;
+  nh: HomeTheme;
 }) {
   const navigate = useNavigate();
 

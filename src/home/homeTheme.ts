@@ -17,7 +17,7 @@ import {
 
 import type { ThemeMode } from "./themeMode";
 
-export interface NewHomeTheme {
+export interface HomeTheme {
   bg: string;
   card: string;
   cardHover: string;
@@ -39,7 +39,7 @@ export interface NewHomeTheme {
   mono: string;
 }
 
-export function createNewHomeTheme(mode: ThemeMode): NewHomeTheme {
+export function createHomeTheme(mode: ThemeMode): HomeTheme {
   if (mode === "dark") {
     return {
       bg: SITE_BACKGROUND,

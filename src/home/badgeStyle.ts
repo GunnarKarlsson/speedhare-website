@@ -1,8 +1,8 @@
-import type { NewHomeTheme } from "./newHomeTheme";
+import type { HomeTheme } from "./homeTheme";
 
 export function badgeSxForRaceType(
   raceType: string,
-  nh: NewHomeTheme,
+  nh: HomeTheme,
 ): { borderColor: string; bgcolor: string } {
   const t = raceType.toLowerCase();
   if (t.includes("half")) {

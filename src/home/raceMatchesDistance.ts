@@ -1,5 +1,5 @@
 import type { RaceListItem } from "../types";
-import type { NavDistanceFilter } from "./NewHomeNav";
+import type { NavDistanceFilter } from "./HomeNav";
 
 export function raceMatchesDistance(race: RaceListItem, filter: NavDistanceFilter): boolean {
   if (filter === "all") return true;

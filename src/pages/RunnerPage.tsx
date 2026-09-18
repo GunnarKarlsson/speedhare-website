@@ -6,16 +6,16 @@ import { LabeledMetricBox } from "../components/LabeledMetricBox";
 import { SeoHead } from "../components/SeoHead";
 import { formatEnglishRunnerName, formatRunnerNames, formatSeconds } from "../format";
 import { useSiteCatalog } from "../hooks/useSiteCatalog";
-import { NewHomeFooter } from "../new_home/NewHomeFooter";
-import { NewHomeNav } from "../new_home/NewHomeNav";
-import { createNewHomeTheme } from "../new_home/newHomeTheme";
+import { HomeFooter } from "../home/HomeFooter";
+import { HomeNav } from "../home/HomeNav";
+import { createHomeTheme } from "../home/homeTheme";
 import { racePath } from "../racePaths";
-import { useThemeMode } from "../new_home/themeMode";
+import { useThemeMode } from "../home/themeMode";
 import type { RaceDetail, RunnerDetailResponse, SearchRunnerItem } from "../types";
 
 export function RunnerPage() {
   const { mode } = useThemeMode();
-  const nh = createNewHomeTheme(mode);
+  const nh = createHomeTheme(mode);
   const { raceId, resultId } = useParams<{ raceId: string; resultId: string }>();
   const rId = raceId ? parseInt(raceId, 10) : NaN;
   const resId = resultId ? parseInt(resultId, 10) : NaN;
@@ -107,7 +107,7 @@ export function RunnerPage() {
         canonicalPath={invalidIds ? undefined : `/races/${rId}/runners/${resId}`}
         robots="noindex,follow"
       />
-      <NewHomeNav activeDistance="all" navContext="all-races" />
+      <HomeNav activeDistance="all" navContext="all-races" />
       <Box sx={{ flex: 1, maxWidth: 800, width: "100%", mx: "auto", px: { xs: 2, sm: 3 }, py: 3 }}>
         {invalidIds ? (
           <Alert severity="error">Invalid race or runner id</Alert>
@@ -126,7 +126,7 @@ export function RunnerPage() {
         )}
       </Box>
       {site ? (
-        <NewHomeFooter site={site} hasRaceData={hasRaceCatalog} />
+        <HomeFooter site={site} hasRaceData={hasRaceCatalog} />
       ) : (
         <Box sx={{ py: 3, borderTop: `1px solid ${nh.border}` }} />
       )}
@@ -141,7 +141,7 @@ function RunnerDetailBody({
   otherRaceRows,
   otherRacesLoading,
 }: {
-  nh: ReturnType<typeof createNewHomeTheme>;
+  nh: ReturnType<typeof createHomeTheme>;
   data: RunnerDetailResponse;
   race: RaceDetail | null;
   otherRaceRows: SearchRunnerItem[];

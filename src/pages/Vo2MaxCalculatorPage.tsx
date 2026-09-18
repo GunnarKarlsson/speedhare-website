@@ -16,10 +16,10 @@ import { useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { SeoHead } from "../components/SeoHead";
 import { useSiteCatalog } from "../hooks/useSiteCatalog";
-import { NewHomeFooter } from "../new_home/NewHomeFooter";
-import { NewHomeNav } from "../new_home/NewHomeNav";
-import { createNewHomeTheme } from "../new_home/newHomeTheme";
-import { useThemeMode } from "../new_home/themeMode";
+import { HomeFooter } from "../home/HomeFooter";
+import { HomeNav } from "../home/HomeNav";
+import { createHomeTheme } from "../home/homeTheme";
+import { useThemeMode } from "../home/themeMode";
 
 type CalculatorMethod = "cooper" | "race";
 type Gender = "male" | "female";
@@ -336,7 +336,7 @@ function getCategoryRange(category: FitnessCategory, row: NormRow) {
   }
 }
 
-function getCategoryColor(category: FitnessCategory, nh: ReturnType<typeof createNewHomeTheme>) {
+function getCategoryColor(category: FitnessCategory, nh: ReturnType<typeof createHomeTheme>) {
   switch (category) {
     case "Poor":
       return "#ef4444";
@@ -355,7 +355,7 @@ function getCategoryColor(category: FitnessCategory, nh: ReturnType<typeof creat
 
 export function Vo2MaxCalculatorPage() {
   const { mode: themeMode } = useThemeMode();
-  const nh = createNewHomeTheme(themeMode);
+  const nh = createHomeTheme(themeMode);
   const [method, setMethod] = useState<CalculatorMethod>("cooper");
   const [cooperDistance, setCooperDistance] = useState("");
   const [cooperUnit, setCooperUnit] = useState("km");
@@ -509,7 +509,7 @@ export function Vo2MaxCalculatorPage() {
         description="Estimate VO2 max from a 12-minute Cooper test or a recent race result, with optional age and gender comparison."
         canonicalPath="/vo2max-calculator"
       />
-      <NewHomeNav activeDistance="all" />
+      <HomeNav activeDistance="all" />
 
       <Box sx={{ flex: 1, maxWidth: 920, width: "100%", mx: "auto", px: { xs: 2, sm: 3 }, py: 3 }}>
         {siteLoading ? (
@@ -884,7 +884,7 @@ export function Vo2MaxCalculatorPage() {
       </Box>
 
       {site ? (
-        <NewHomeFooter site={site} hasRaceData={hasRaceData} />
+        <HomeFooter site={site} hasRaceData={hasRaceData} />
       ) : (
         <Box sx={{ py: 3, borderTop: `1px solid ${nh.border}` }} />
       )}
@@ -892,7 +892,7 @@ export function Vo2MaxCalculatorPage() {
   );
 }
 
-function fieldSx(nh: ReturnType<typeof createNewHomeTheme>) {
+function fieldSx(nh: ReturnType<typeof createHomeTheme>) {
   return {
     "& .MuiOutlinedInput-root": {
       color: nh.white,
@@ -907,7 +907,7 @@ function fieldSx(nh: ReturnType<typeof createNewHomeTheme>) {
   };
 }
 
-function outlinedButtonSx(nh: ReturnType<typeof createNewHomeTheme>) {
+function outlinedButtonSx(nh: ReturnType<typeof createHomeTheme>) {
   return {
     borderColor: nh.border,
     color: nh.white,
@@ -918,7 +918,7 @@ function outlinedButtonSx(nh: ReturnType<typeof createNewHomeTheme>) {
   };
 }
 
-function containedButtonSx(nh: ReturnType<typeof createNewHomeTheme>) {
+function containedButtonSx(nh: ReturnType<typeof createHomeTheme>) {
   return {
     bgcolor: nh.blue,
     color: "#03131b",

@@ -3,28 +3,28 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, IconButton, Link } from "@mui/material";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
-import { createNewHomeTheme } from "./newHomeTheme";
+import { createHomeTheme } from "./homeTheme";
 import { useThemeMode } from "./themeMode";
 
-export type NewHomeNavContext = "home" | "all-races" | "stats";
+export type HomeNavContext = "home" | "all-races" | "stats";
 
 export type NavDistanceFilter = "all" | "5k" | "10k" | "half";
 
-interface NewHomeNavProps {
+interface HomeNavProps {
   activeDistance: NavDistanceFilter;
   /** When `all-races`, the "All races" link is highlighted (you are on the table page). */
-  navContext?: NewHomeNavContext;
+  navContext?: HomeNavContext;
 }
 
 function distanceToAllRacesHref(id: NavDistanceFilter): string {
   return id === "all" ? "/all-races" : `/all-races?distance=${id}`;
 }
 
-export function NewHomeNav({ activeDistance, navContext = "home" }: NewHomeNavProps) {
+export function HomeNav({ activeDistance, navContext = "home" }: HomeNavProps) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { mode, toggleMode } = useThemeMode();
-  const nh = createNewHomeTheme(mode);
+  const nh = createHomeTheme(mode);
   const bannerDividerColor = "#a7b7c9";
   const showCalculatorBanner = pathname !== "/speed-distance-time-calculator";
 
@@ -220,7 +220,7 @@ export function NewHomeNav({ activeDistance, navContext = "home" }: NewHomeNavPr
               "&:hover": { textDecoration: "underline" },
             }}
           >
-            NEW: Speed Distance Time Calculator 🏃 
+            NEW: Speed Distance Time Calculator 🏃
           </Link>
         </Box>
       ) : null}

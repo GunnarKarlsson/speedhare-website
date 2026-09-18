@@ -2,16 +2,16 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { SeoHead } from "../components/SeoHead";
 import { useRaceCatalog } from "../hooks/useSiteCatalog";
-import { createNewHomeTheme } from "./newHomeTheme";
+import { createHomeTheme } from "./homeTheme";
 import { useThemeMode } from "./themeMode";
-import { NewHomeFooter } from "./NewHomeFooter";
-import { NewHomeHero } from "./NewHomeHero";
-import { NewHomeNav } from "./NewHomeNav";
-import { NewHomeRaceCard } from "./NewHomeRaceCard";
+import { HomeFooter } from "./HomeFooter";
+import { HomeHero } from "./HomeHero";
+import { HomeNav } from "./HomeNav";
+import { HomeRaceCard } from "./HomeRaceCard";
 
-export function NewHomePage() {
+export function HomePage() {
   const { mode } = useThemeMode();
-  const nh = createNewHomeTheme(mode);
+  const nh = createHomeTheme(mode);
   const { races, site, loading, error } = useRaceCatalog();
   const latestTwo = useMemo(() => races.slice(0, 2), [races]);
 
@@ -30,7 +30,7 @@ export function NewHomePage() {
         description="Comprehensive race results and performance analytics for road races in Hong Kong."
         canonicalPath="/"
       />
-      <NewHomeNav activeDistance="all" />
+      <HomeNav activeDistance="all" />
 
       {loading ? (
         <Box sx={{ display: "flex", justifyContent: "center", py: 12 }}>
@@ -42,7 +42,7 @@ export function NewHomePage() {
         </Box>
       ) : site ? (
         <>
-          <NewHomeHero site={site} latestRaces={latestTwo} hasRaceData={races.length > 0} />
+          <HomeHero site={site} latestRaces={latestTwo} hasRaceData={races.length > 0} />
 
           <Box sx={{ maxWidth: 800, mx: "auto", px: { xs: 2, sm: 3 }, pb: 2 }}>
             <Typography
@@ -72,7 +72,7 @@ export function NewHomePage() {
               <Typography sx={{ color: nh.muted }}>No races available.</Typography>
             ) : (
               races.map((race, idx) => (
-                <NewHomeRaceCard key={race.id} race={race} titleAccent={idx === 0} />
+                <HomeRaceCard key={race.id} race={race} titleAccent={idx === 0} />
               ))
             )}
           </Box>
@@ -102,7 +102,7 @@ export function NewHomePage() {
             <Box sx={{ flex: 1, height: "1px", bgcolor: nh.border }} />
           </Box>
 
-          <NewHomeFooter site={site} hasRaceData={races.length > 0} />
+          <HomeFooter site={site} hasRaceData={races.length > 0} />
         </>
       ) : null}
     </Box>

@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import type { NewHomeTheme } from "../new_home/newHomeTheme";
+import type { HomeTheme } from "../home/homeTheme";
 
 export function LabeledMetricBox({
   label,
@@ -9,7 +9,7 @@ export function LabeledMetricBox({
 }: {
   label: string;
   value: string;
-  nh: NewHomeTheme;
+  nh: HomeTheme;
   color?: string;
 }) {
   const resolvedColor = color ?? nh.blue;

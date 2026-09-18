@@ -3,8 +3,8 @@ import PlaceIcon from "@mui/icons-material/Place";
 import { Box, Typography } from "@mui/material";
 import { LabeledMetricBox } from "../../components/LabeledMetricBox";
 import { formatRaceType } from "../../format";
-import { badgeSxForRaceType } from "../../new_home/badgeStyle";
-import type { NewHomeTheme } from "../../new_home/newHomeTheme";
+import { badgeSxForRaceType } from "../../home/badgeStyle";
+import type { HomeTheme } from "../../home/homeTheme";
 import type { RaceDetail } from "../../types";
 import type { RaceDetailView } from "./raceDetailView";
 
@@ -15,7 +15,7 @@ export function RaceDetailSummary({
 }: {
   race: RaceDetail;
   view: RaceDetailView;
-  nh: NewHomeTheme;
+  nh: HomeTheme;
 }) {
   const typeBadge = badgeSxForRaceType(race.race_type, nh);
   const { extras, metadataVersion, metadataChips, showMetadataSection, topMetrics } = view;
@@ -150,7 +150,7 @@ export function RaceDetailSummary({
   );
 }
 
-function SectionLabel({ nh, children }: { nh: NewHomeTheme; children: string }) {
+function SectionLabel({ nh, children }: { nh: HomeTheme; children: string }) {
   return (
     <Typography
       sx={{

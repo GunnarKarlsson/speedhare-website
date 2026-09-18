@@ -13,16 +13,16 @@ import { useEffect, useState } from "react";
 import { isAbortError, searchRacesByRunner } from "../api";
 import { SeoHead } from "../components/SeoHead";
 import { useSiteCatalog } from "../hooks/useSiteCatalog";
-import { NewHomeFooter } from "../new_home/NewHomeFooter";
-import { NewHomeNav } from "../new_home/NewHomeNav";
-import { createNewHomeTheme } from "../new_home/newHomeTheme";
-import { useThemeMode } from "../new_home/themeMode";
+import { HomeFooter } from "../home/HomeFooter";
+import { HomeNav } from "../home/HomeNav";
+import { createHomeTheme } from "../home/homeTheme";
+import { useThemeMode } from "../home/themeMode";
 import type { SearchRaceItem, SearchRunnerItem } from "../types";
 import { SearchRaceResults, SearchRunnerResults } from "./search/SearchResultLists";
 
 export function SearchPage() {
   const { mode } = useThemeMode();
-  const nh = createNewHomeTheme(mode);
+  const nh = createHomeTheme(mode);
   const [params, setSearchParams] = useSearchParams();
   const q = params.get("q")?.trim() ?? "";
   const [localQ, setLocalQ] = useState(q);
@@ -89,7 +89,7 @@ export function SearchPage() {
         canonicalPath="/search"
         robots="noindex,follow"
       />
-      <NewHomeNav activeDistance="all" navContext="all-races" />
+      <HomeNav activeDistance="all" navContext="all-races" />
 
       <Box sx={{ flex: 1, maxWidth: 800, width: "100%", mx: "auto", px: { xs: 2, sm: 3 }, py: 3 }}>
         <Typography
@@ -182,7 +182,7 @@ export function SearchPage() {
         )}
       </Box>
       {site ? (
-        <NewHomeFooter site={site} hasRaceData={hasRaceCatalog} />
+        <HomeFooter site={site} hasRaceData={hasRaceCatalog} />
       ) : (
         <Box sx={{ py: 3, borderTop: `1px solid ${nh.border}` }} />
       )}
