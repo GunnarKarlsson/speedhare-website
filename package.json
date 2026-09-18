@@ -1,7 +1,7 @@
 {
   "name": "speedhare",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "Hong Kong race analytics — results and performance data for road races",
   "homepage": "https://speedhare.io",
